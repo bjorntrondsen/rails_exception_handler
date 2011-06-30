@@ -7,6 +7,7 @@ class ExceptionHandler::Parser
 
   def relevant_info
     info = {}
+    info[:app_name] = Rails.application.class.parent_name
     info[:class_name] = @exception.class.to_s
     info[:message] = @exception.to_s
     info[:trace] = @exception.backtrace.join("\n")
