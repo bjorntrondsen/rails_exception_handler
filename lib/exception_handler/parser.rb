@@ -25,7 +25,7 @@ class ExceptionHandler::Parser
       return true
     end
     #Ignore requests with user_agents matching this regxp as they can be assumed to have been made by bots
-    if(@request.user_agent =~ /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot)\b/i)
+    if(@request.user_agent =~ /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot)\b/i)
       return true
     end
     return false
