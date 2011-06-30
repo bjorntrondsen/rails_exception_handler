@@ -20,6 +20,7 @@ class ExceptionHandler::Handler
   end
 
   def response
+    @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout)
     ErrorResponseController.action(:index).call(@env)
   end
 end
