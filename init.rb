@@ -7,4 +7,4 @@ require 'exception_handler'
   ActiveSupport::Dependencies.autoload_once_paths.delete(path) if(Rails.env == 'production')
 end
 
-Rails::Application.middleware.use ExceptionHandler# if Rails.env == 'production'
+Rails.application.middleware.use ExceptionHandler# if Rails.env == 'production'
