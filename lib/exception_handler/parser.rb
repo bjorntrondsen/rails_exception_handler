@@ -21,8 +21,7 @@ class ExceptionHandler::Parser
 
   def ignore?
     #Ignore routing errors in requests without a referer as they are going to be bots in 99.99235% of the cases
-    routing_errors = [ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound]
-    if(routing_errors.include?(@exception.class) && @request.referer.blank?)
+    if(routing_error? && @request.referer.blank?)
       return true
     end
     #Ignore requests with user_agents matching this regxp as they can be assumed to have been made by bots
@@ -30,6 +29,11 @@ class ExceptionHandler::Parser
       return true
     end
     return false
+  end
+
+  def routing_error?
+    routing_errors = [ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound]
+    routing_errors.include?(@exception.class)
   end
 
   def user_info
