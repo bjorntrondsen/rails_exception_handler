@@ -7,4 +7,5 @@ require 'exception_handler'
   ActiveSupport::Dependencies.autoload_once_paths.delete(path) if(Rails.env == 'production')
 end
 
+Rails.application.paths.app.views << File.join(File.dirname(__FILE__), 'lib/app/views')
 Rails.application.middleware.use ExceptionHandler# if Rails.env == 'production'

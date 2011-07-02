@@ -2,14 +2,15 @@ class ExceptionHandler::Handler
   def initialize(env, exception)
     @exception = exception
     @env = env
+    @parsed_error = nil
   end
 
   def handle_exception
     controller = @env['action_controller.instance']
     request = ActionDispatch::Request.new(@env)
-    parsed_error = ExceptionHandler::Parser.new(@exception, request, controller)
-    ErrorMessage.create(parsed_error.relevant_info) unless(parsed_error.ignore?)
-    log_error(parsed_error.relevant_info)
+    @parsed_error = ExceptionHandler::Parser.new(@exception, request, controller)
+    ErrorMessage.create(@parsed_error.relevant_info) unless(@parsed_error.ignore?)
+    log_error(@parsed_error.relevant_info)
     return response
   end
   
@@ -22,7 +23,11 @@ class ExceptionHandler::Handler
   private
 
   def response
-    @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout)
-    ErrorResponseController.action(:index).call(@env)
+    @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout) # Store the layout
+    if(@parsed_error.routing_error?)
+      ErrorResponseController.action(:err404).call(@env)
+    else
+      ErrorResponseController.action(:err500).call(@env)
+    end
   end
 end
