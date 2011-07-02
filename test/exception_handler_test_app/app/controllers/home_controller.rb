@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index
+  def action_with_error
     raise "error"
   end
 end
