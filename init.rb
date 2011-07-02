@@ -1,4 +1,5 @@
 require 'exception_handler'
+require 'patch/show_exceptions.rb'
 
 %w{ models controllers }.each do |dir|
   path = File.join(File.dirname(__FILE__), 'lib/app', dir)

@@ -1,4 +1,4 @@
-
+# This patch enables the exception handler to catch routing errors
 module ActionDispatch
   class ShowExceptions
     private
