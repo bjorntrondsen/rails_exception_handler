@@ -23,7 +23,11 @@ class ExceptionHandler::Handler
   private
 
   def response
-    @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout) # Store the layout
+    begin
+      @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout) # Store the layout
+    rescue
+      @env['layout_for_exception_response'] = 'application'
+    end
     if(@parsed_error.routing_error?)
       ErrorResponseController.action(:err404).call(@env)
     else
