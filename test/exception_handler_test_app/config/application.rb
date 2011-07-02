@@ -38,5 +38,7 @@ module ExceptionHandlerTestApp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    config.session_store :active_record_store
   end
 end

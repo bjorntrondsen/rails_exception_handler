@@ -1,3 +1,3 @@
 ExceptionHandlerTestApp::Application.routes.draw do
-  root :to => "home#index"
+  match 'home/action_with_error' => 'home#action_with_error'
 end

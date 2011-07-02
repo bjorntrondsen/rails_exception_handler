@@ -1,8 +1,13 @@
-require "rack/test"
 require "test/unit"
+require "rack/test"
 
-require File.dirname(File.expand_path(__FILE__)) + '/exception_handler_test_app/config/environment.rb'
-Rails.env = 'test'
+# Load rails environment
+ENV["RAILS_ENV"] = 'test'
+require_relative 'exception_handler_test_app/config/environment.rb'
+
+# Run any available migration
+ActiveRecord::Migrator.migrate File.expand_path("exception_handler_test_app/db/migrate/", __FILE__)
+
 
 class ExceptionHandlerTest < Test::Unit::TestCase
   include Rack::Test::Methods
@@ -11,8 +16,8 @@ class ExceptionHandlerTest < Test::Unit::TestCase
     Rails.application.app
   end
 
-  def test_catches_routing_errors
-    get "/home"
+  def test_catches_rails_exceptions
+    get "/home/action_with_error"
     assert_equal("An error has occurred", last_response.body)
   end
 
