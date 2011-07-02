@@ -1,4 +1,4 @@
-class ExceptionHandler
+class RailsExceptionHandler
   def initialize(app)
     @app = app
   end

@@ -1,4 +1,4 @@
-class ExceptionHandler::Parser
+class RailsExceptionHandler::Parser
   def initialize(exception, request, controller)
     @exception = exception
     @request  = request
