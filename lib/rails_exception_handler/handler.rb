@@ -1,4 +1,4 @@
-class ExceptionHandler::Handler
+class RailsExceptionHandler::Handler
   def initialize(env, exception)
     @exception = exception
     @env = env
@@ -8,7 +8,7 @@ class ExceptionHandler::Handler
   def handle_exception
     controller = @env['action_controller.instance']
     request = ActionDispatch::Request.new(@env)
-    @parsed_error = ExceptionHandler::Parser.new(@exception, request, controller)
+    @parsed_error = RailsExceptionHandler::Parser.new(@exception, request, controller)
     ErrorMessage.create(@parsed_error.relevant_info) unless(@parsed_error.ignore?)
     log_error(@parsed_error.relevant_info)
     return response
