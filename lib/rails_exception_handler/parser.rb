@@ -16,6 +16,7 @@ class RailsExceptionHandler::Parser
     info[:params] =       @request.params.inspect
     info[:user_agent] =   @request.user_agent
     info[:user_info] =    user_info
+    info[:created_at] =   Time.now
     return info
   end
 
