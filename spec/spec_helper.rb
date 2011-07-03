@@ -1,19 +1,14 @@
 
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path(File.dirname(__FILE__)) + '/exception_handler_test_app/config/environment.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/test_macros.rb'
 
 require "rspec/rails"
 require "rack/test"
 
-module RackTestHelper
-  def app # Needed by Rack::Test
-    Rails.application.app
-  end
-end
-
 RSpec.configure do |config|
   config.include Rack::Test::Methods
-  config.include RackTestHelper
+  config.include TestMacros
   config.around do |example|
     ErrorMessage.delete_all
     example.call
