@@ -44,7 +44,8 @@ describe "rails-exception_handler" do
     msg.class_name.should ==    'NoMethodError'
     msg.message.should ==       "undefined method `foo' for nil:NilClass"
     msg.trace.should match      /exception_handler_test_app\/app\/controllers\/home_controller.rb:3:in `controller_error'/
-    msg.params.should ==        '{"controller"=>"home", "action"=>"controller_error"}'
+    msg.params.should match     /"controller"=>"home"/
+    msg.params.should match     /"action"=>"controller_error"/
     msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
     msg.target_url.should ==    'http://example.org/home/controller_error'
     msg.referer_url.should ==   'http://google.com/'
