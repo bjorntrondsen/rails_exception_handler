@@ -1,5 +1,5 @@
 
 *~
 *.swp
-test/exception_handler_test_app/config/database.yml
+spec/exception_handler_test_app/config/database.yml
 TODO*
