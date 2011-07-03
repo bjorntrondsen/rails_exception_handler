@@ -36,6 +36,16 @@ describe "rails-exception_handler" do
     ErrorMessage.first.class_name.should == 'SyntaxError'
   end
 
+  it "should append the failed controllers view layout when rendering the response" do
+    get "/home/view_error"
+    last_response.body.should match(/this_is_the_home_view/)
+  end
+
+  it "should fall back to using the application layout on routing errors" do
+    get "/incorrect_route"
+    last_response.body.should match(/this_is_the_application_view/)
+  end
+
   it "should store the correct information in the database" do
     get "/home/controller_error", {}, {'HTTP_REFERER' => 'http://google.com/', 'HTTP_USER_AGENT' => 'Mozilla/4.0 (compatible; MSIE 8.0)'}
     ErrorMessage.count.should == 1
@@ -43,7 +53,7 @@ describe "rails-exception_handler" do
     msg.app_name.should ==      'ExceptionHandlerTestApp'
     msg.class_name.should ==    'NoMethodError'
     msg.message.should ==       "undefined method `foo' for nil:NilClass"
-    msg.trace.should match      /exception_handler_test_app\/app\/controllers\/home_controller.rb:3:in `controller_error'/
+    msg.trace.should match      /exception_handler_test_app\/app\/controllers\/home_controller.rb:5:in `controller_error'/
     msg.params.should match     /"controller"=>"home"/
     msg.params.should match     /"action"=>"controller_error"/
     msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'

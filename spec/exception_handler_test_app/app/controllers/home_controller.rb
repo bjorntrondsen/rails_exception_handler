@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  layout 'home'
+
   def controller_error
     nil.foo
     render(:text => 'did not fail')
