@@ -16,7 +16,7 @@ class RailsExceptionHandler::Handler
   
   def log_error(info)
     message = "#{info[:class_name]} (#{info[:message]}):\n  "
-    message += Rails.backtrace_cleaner.clean(info[:trace].split("\n")).join("\n")
+    message += Rails.backtrace_cleaner.clean(info[:trace].split("\n"), :noise).join("\n")
     Rails.logger.fatal(message)
   end
   
