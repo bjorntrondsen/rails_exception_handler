@@ -1,0 +1,7 @@
+
+task :default => :test
+
+desc 'Run tests'
+task :test do
+  system "bundle exec rspec spec/integration_spec.rb"
+end

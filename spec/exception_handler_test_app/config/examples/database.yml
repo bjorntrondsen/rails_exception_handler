@@ -1,0 +1,13 @@
+
+test: &test
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: exception_handler_test_app_test
+  pool: 5
+  username: root
+  password: admin
+  socket: /var/run/mysqld/mysqld.sock
+
+exception_database:
+  <<: *test

@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+Dir.chdir(File.expand_path(File.dirname(__FILE__)) + "/../")
+
+source = "config/examples/database.yml"
+target = "config/database.yml"
+
+if File.exist?(target)
+  puts "#{target} already exists"
+else
+  FileUtils.cp(source, target)
+  puts "#{target} copied"
+end
+
+system "bundle"
+system "bundle exec rake db:create --trace RAILS_ENV=test"
+system "bundle exec rake db:migrate --trace RAILS_ENV=test"
