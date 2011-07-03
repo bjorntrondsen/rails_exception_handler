@@ -6,7 +6,7 @@ describe RailsExceptionHandler::Handler do
   end
 
   describe ".handle_exception" do
-    it "should store an error message in the database with correct data" do
+    it "should store an error message in the database" do
       @handler.handle_exception
       ErrorMessage.count.should == 1
       msg = ErrorMessage.first
@@ -16,7 +16,7 @@ describe RailsExceptionHandler::Handler do
       msg.trace.should match      /active_support\/whiny_nil/
       msg.params.should match     /\"foo\"=>\"bar\"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
-      msg.target_url.should ==    'http://example.org/home/?foo=bar'
+      msg.target_url.should ==    'http://example.org/home?foo=bar'
       msg.referer_url.should ==   'http://google.com/'
       msg.created_at.should be >  5.seconds.ago
       msg.created_at.should be <  Time.now
