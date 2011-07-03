@@ -7,15 +7,15 @@ class RailsExceptionHandler::Parser
 
   def relevant_info
     info = {}
-    info[:app_name] = Rails.application.class.parent_name
-    info[:class_name] = @exception.class.to_s
-    info[:message] = @exception.to_s
-    info[:trace] = @exception.backtrace.join("\n")
-    info[:target_url] = @request.url
-    info[:referer_url] = @request.referer
-    info[:params] = @request.params.inspect
-    info[:user_agent] = @request.user_agent
-    info[:user_info] = user_info
+    info[:app_name] =     Rails.application.class.parent_name
+    info[:class_name] =   @exception.class.to_s
+    info[:message] =      @exception.to_s
+    info[:trace] =        @exception.backtrace.join("\n")
+    info[:target_url] =   @request.url
+    info[:referer_url] =  @request.referer
+    info[:params] =       @request.params.inspect
+    info[:user_agent] =   @request.user_agent
+    info[:user_info] =    user_info
     return info
   end
 
@@ -35,6 +35,8 @@ class RailsExceptionHandler::Parser
     routing_errors = [ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound]
     routing_errors.include?(@exception.class)
   end
+
+  private
 
   def user_info
     if(@controller.respond_to?(:current_user))
