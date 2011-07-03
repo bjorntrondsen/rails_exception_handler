@@ -3,12 +3,12 @@ class RailsExceptionHandler::Handler
     @exception = exception
     @env = env
     @parsed_error = nil
+    @controller = @env['action_controller.instance']
   end
 
   def handle_exception
-    controller = @env['action_controller.instance']
     request = ActionDispatch::Request.new(@env)
-    @parsed_error = RailsExceptionHandler::Parser.new(@exception, request, controller)
+    @parsed_error = RailsExceptionHandler::Parser.new(@exception, request, @controller)
     ErrorMessage.create(@parsed_error.relevant_info) unless(@parsed_error.ignore?)
     log_error(@parsed_error.relevant_info)
     return response
@@ -24,14 +24,11 @@ class RailsExceptionHandler::Handler
 
   def response
     begin
-      @env['layout_for_exception_response'] = @env['action_controller.instance'].send(:_default_layout) # Store the layout
+      @env['layout_for_exception_response'] = @controller.send(:_default_layout) # Store the layout of the request that failed
     rescue
-      @env['layout_for_exception_response'] = 'application'
+      @env['layout_for_exception_response'] = 'application' # Fall back on routing errors that doesnt have _default_layout set
     end
-    if(@parsed_error.routing_error?)
-      ErrorResponseController.action(:err404).call(@env)
-    else
-      ErrorResponseController.action(:err500).call(@env)
-    end
+    action_name = @parsed_error.routing_error? ? :err404 : :err500
+    ErrorResponseController.action(action_name).call(@env)
   end
 end
