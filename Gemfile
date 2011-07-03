@@ -5,5 +5,5 @@ group :test do
   gem "rails", '3.0.7'
   gem "rspec-rails"
   gem "rack-test", '0.5.7'
-  gem "mysql2"
+  gem "mysql2", '0.2.6'
 end
