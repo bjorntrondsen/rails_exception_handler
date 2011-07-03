@@ -1,3 +1,6 @@
+
+require 'fileutils'
+
 module TestMacros
   def app # Used by by Rack::Test to get the application object
     Rails.application.app
@@ -15,5 +18,23 @@ module TestMacros
     rescue Exception => e
       exception = e
     end
+  end
+
+  def clear_test_log
+    File.open(log_path, 'w') {|f| f.write('') }
+  end
+
+  def read_test_log
+    data = ""
+    File.open(log_path, 'r').each_line do |line|
+      data += line + '\n'
+    end
+    return data
+  end
+
+  private
+
+  def log_path
+    File.expand_path(File.dirname(__FILE__)) + '/exception_handler_test_app/log/test.log'
   end
 end
