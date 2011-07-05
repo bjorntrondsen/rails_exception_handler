@@ -39,17 +39,25 @@ describe RailsExceptionHandler::Handler do
   end
 
   describe '.response' do
-    it "should call err404 on routing errors" do
-      exception = create_exception
-      exception.stub!(:class => ActiveRecord::RecordNotFound)
-      handler = RailsExceptionHandler::Handler.new(create_env, exception)
-      ErrorResponseController.should_receive(:action).with(:err404).and_return(mock(Object, :call => true))
-      handler.handle_exception
+    it "should call index action on ErrorResponseController" do
+      ErrorResponseController.should_receive(:action).with(:index).and_return(mock(Object, :call => true))
+      @handler.handle_exception
     end
 
-    it "should call err500 on all other errors" do
-      ErrorResponseController.should_receive(:action).with(:err500).and_return(mock(Object, :call => true))
-      @handler.handle_exception
+    it "should set response_code to '404' on routing errors" do
+      exception = create_exception
+      env = create_env
+      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      handler = RailsExceptionHandler::Handler.new(env, exception)
+      handler.handle_exception
+      env['exception_handler.response_code'].should == '404'
+    end
+
+    it "should set response_code to '500' on all other errors" do
+      env = create_env
+      handler = RailsExceptionHandler::Handler.new(env, create_exception)
+      handler.handle_exception
+      env['exception_handler.response_code'].should == '500'
     end
 
     it "should save the layout in env" do
@@ -57,14 +65,14 @@ describe RailsExceptionHandler::Handler do
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.instance_variable_set("@controller",mock(Object, :_default_layout => 'home'))
       handler.handle_exception
-      env['layout_for_exception_response'].should == 'home'
+      env['exception_handler.layout'].should == 'home'
     end
 
     it "should use the fallback layout when no layout is defined" do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
-      env['layout_for_exception_response'].should == 'application'
+      env['exception_handler.layout'].should == 'application'
     end
   end
 end
