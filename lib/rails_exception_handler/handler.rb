@@ -9,7 +9,13 @@ class RailsExceptionHandler::Handler
   def handle_exception
     request = ActionDispatch::Request.new(@env)
     @parsed_error = RailsExceptionHandler::Parser.new(@exception, request, @controller)
-    ErrorMessage.create(@parsed_error.relevant_info) unless(@parsed_error.ignore?)
+    unless(@parsed_error.ignore?)
+      if(RailsExceptionHandler.configuration.storage_strategy == :active_record)
+        ErrorMessage.create(@parsed_error.relevant_info)
+      else
+        raise "RailsExceptionHandler: Storage strategy not recognized."
+      end
+    end
     log_error(@parsed_error.relevant_info)
     return response
   end

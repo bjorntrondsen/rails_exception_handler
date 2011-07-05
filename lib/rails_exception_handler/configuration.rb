@@ -1,5 +1,5 @@
 class RailsExceptionHandler::Configuration
-  attr_accessor :environments, :catch_routing_errors, :responses
+  attr_accessor :storage_strategy, :environments, :catch_routing_errors, :responses
 
   def initialize
     @environments = [:production]
