@@ -15,7 +15,7 @@ class RailsExceptionHandler
 
   def self.configure
     yield configuration
-    return unless configuration.environments.include?(Rails.env)
+    return unless configuration.environments.include?(Rails.env.to_sym)
 
     Rails.configuration.middleware.use RailsExceptionHandler
 
