@@ -1,9 +1,6 @@
 class ErrorResponseController < ActionController::Base
-  def err500
-    render(:layout => @_env['layout_for_exception_response'])
-  end
-
-  def err404
-    render(:layout => @_env['layout_for_exception_response'])
+  def index
+    render(:text => RailsExceptionHandler.configuration.responses[@_env['exception_handler.response_code']],
+           :layout => @_env['exception_handler.layout'])
   end
 end

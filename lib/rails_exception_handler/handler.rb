@@ -24,11 +24,11 @@ class RailsExceptionHandler::Handler
 
   def response
     begin
-      @env['layout_for_exception_response'] = @controller.send(:_default_layout) # Store the layout of the request that failed
+      @env['exception_handler.layout'] = @controller.send(:_default_layout) # Store the layout of the request that failed
     rescue
-      @env['layout_for_exception_response'] = 'application' # Fall back on routing errors that doesnt have _default_layout set
+      @env['exception_handler.layout'] = 'application' # Fall back on routing errors that doesnt have _default_layout set
     end
-    action_name = @parsed_error.routing_error? ? :err404 : :err500
-    ErrorResponseController.action(action_name).call(@env)
+    @env['exception_handler.response_code'] = @parsed_error.routing_error? ? '404' : '500'
+    ErrorResponseController.action(:index).call(@env)
   end
 end
