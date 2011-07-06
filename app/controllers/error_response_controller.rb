@@ -1,4 +1,4 @@
-class ErrorResponseController < ActionController::Base
+class ErrorResponseController < ApplicationController
   def index
     render(:text => RailsExceptionHandler.configuration.responses[@_env['exception_handler.response_code']],
            :layout => @_env['exception_handler.layout'])
