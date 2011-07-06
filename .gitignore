@@ -2,4 +2,5 @@
 *~
 *.swp
 spec/exception_handler_test_app/config/database.yml
+pkg/
 TODO*
