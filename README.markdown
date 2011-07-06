@@ -29,6 +29,7 @@ RailsExceptionHandler.configure do |config|
   config.catch_routing_errors = false                           # Defaults to true
   config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
   config.responses['500'] = "<h1>500</h1><p>Internal server error</p>"
+  config.fallback_layout = 'home'                               # Defaults to 'application'
 end
 ```
 
