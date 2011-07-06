@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/rails_exception_handler/configuration.rb",
     "lib/rails_exception_handler/handler.rb",
     "lib/rails_exception_handler/parser.rb",
+    "rails_exception_handler.gemspec",
     "spec/exception_handler_test_app/.gitignore",
     "spec/exception_handler_test_app/Gemfile",
     "spec/exception_handler_test_app/Gemfile.lock",
