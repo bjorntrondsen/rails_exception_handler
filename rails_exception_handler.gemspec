@@ -13,8 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{}
   s.email = %q{contact@sharagoz.com}
   s.extra_rdoc_files = [
-    "README.markdown",
-    "TODO"
+    "README.markdown"
   ]
   s.files = [
     ".travis.yml",

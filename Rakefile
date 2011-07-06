@@ -19,6 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{}
   gem.email = "contact@sharagoz.com"
   gem.authors = ["Sharagoz"]
+  gem.extra_rdoc_files = ['README.markdown']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
