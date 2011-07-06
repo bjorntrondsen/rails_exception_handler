@@ -32,3 +32,7 @@ class RailsExceptionHandler
     end
   end
 end
+
+require 'rails_exception_handler/configuration.rb'
+require 'rails_exception_handler/handler.rb'
+require 'rails_exception_handler/parser.rb'
