@@ -42,7 +42,7 @@ class RailsExceptionHandler::Parser
   def user_info
     if(@controller.respond_to?(:current_user))
       current_user = @controller.current_user
-      [:login, :username, :email].each do |field|
+      [:login, :username, :user_name, :email].each do |field|
         return current_user.send(field) if(current_user.respond_to?(field))
       end
     end
