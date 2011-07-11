@@ -40,6 +40,16 @@ module TestMacros
     return data
   end
 
+  def reset_configuration
+    RailsExceptionHandler.configure do |config|
+      config.storage_strategy = :active_record
+      config.environments = [:test]
+      config.ignore_crawlers = false
+      config.ignore_routing_errors = false
+      config.fallback_layout = 'application'
+    end
+  end
+
   private
 
   def log_path
