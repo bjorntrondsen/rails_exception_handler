@@ -17,7 +17,7 @@ class RailsExceptionHandler
     yield configuration
     return unless configuration.environments.include?(Rails.env.to_sym)
 
-    Rails.configuration.middleware.use RailsExceptionHandler
+    Rails.configuration.middleware.use(RailsExceptionHandler)
 
     Rails.configuration.action_dispatch.show_exceptions = true
     require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'
