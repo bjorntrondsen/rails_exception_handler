@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__)) + '/spec_helper.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/../spec_helper.rb'
 
-describe "rails-exception_handler" do
+describe RailsExceptionHandler do
   it "should catch controller errors" do
     get "/home/controller_error"
     ErrorMessage.count.should == 1
