@@ -14,9 +14,8 @@ RSpec.configure do |config|
   config.around do |example|
     ErrorMessage.delete_all
     clear_test_log
+    reset_configuration
     example.call
-    ErrorMessage.delete_all
-    clear_test_log
   end
   config.color_enabled = true
   config.full_backtrace = true
