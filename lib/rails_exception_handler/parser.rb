@@ -22,7 +22,7 @@ class RailsExceptionHandler::Parser
 
   def ignore?
     config = RailsExceptionHandler.configuration
-    if(routing_error? && config.catch_routing_errors?)
+    if(routing_error? && config.ignore_routing_errors?)
       return true
     end
     if(crawler? && config.ignore_crawlers?)

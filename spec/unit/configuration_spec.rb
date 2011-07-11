@@ -10,8 +10,8 @@ describe RailsExceptionHandler::Configuration do
       @configuration.environments.should == [:production]
     end
     
-    it "should set catch_routing_errors to true" do
-      @configuration.catch_routing_errors.should == true
+    it "should set ignore_routing_errors to false" do
+      @configuration.ignore_routing_errors.should == false
     end
 
     it "should set the 404 response" do
