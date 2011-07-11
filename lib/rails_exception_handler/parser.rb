@@ -21,12 +21,11 @@ class RailsExceptionHandler::Parser
   end
 
   def ignore?
-    #Ignore routing errors in requests without a referer as they are going to be bots in 99.99235% of the cases
-    if(routing_error? && @request.referer.blank?)
+    config = RailsExceptionHandler.configuration
+    if(routing_error? && config.catch_routing_errors?)
       return true
     end
-    #Ignore requests with user_agents matching this regxp as they can be assumed to have been made by bots
-    if(@request.user_agent =~ /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i)
+    if(crawler? && config.ignore_crawlers?)
       return true
     end
     return false
@@ -38,6 +37,10 @@ class RailsExceptionHandler::Parser
   end
 
   private
+  
+  def crawler?
+    @request.user_agent =~ /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i
+  end
 
   def user_info
     if(@controller.respond_to?(:current_user))
