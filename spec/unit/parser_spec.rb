@@ -23,37 +23,69 @@ describe RailsExceptionHandler::Parser do
   end
 
   describe ".ignore?" do
-    it "should return true on routing errors without referer" do
-      env = create_env
-      request = ActionDispatch::Request.new(env)
-      request.stub!(:referer => nil)
-      exception = create_exception
-      exception.stub!(:class => ActionController::RoutingError)
-      parser = create_parser(exception, request, nil)
-      parser.ignore?.should == true
+    context "routing errors" do
+      it "should return true on routing errors when ignore_routing_errors is set to true" do
+        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = true }
+        exception = create_exception
+        exception.stub!(:class => ActionController::RoutingError)
+        parser = create_parser(exception, nil, nil)
+        parser.ignore?.should == true
+      end
+
+      it "should return false on routing errors when ignore_routing_errors is set to false" do
+        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = false }
+        exception = create_exception
+        exception.stub!(:class => ActionController::RoutingError)
+        parser = create_parser(exception, nil, nil)
+        parser.ignore?.should == false
+      end
+
+      it "should return false on non-routing errors when ignore_routing_errors is set to true" do
+        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = true }
+        exception = create_exception
+        exception.stub!(:class => SyntaxError)
+        parser = create_parser(exception, nil, nil)
+        parser.ignore?.should == false
+      end
     end
 
-    it "should return false on routing errors with referer" do
-      exception = create_exception
-      exception.stub!(:class => ActionController::RoutingError)
-      parser = create_parser(exception, nil, nil)
-      parser.ignore?.should == false
-    end
+    context "crawlers" do
+      it "should return true on errors created by a crawler when ignore_crawlers is set to true" do
+        RailsExceptionHandler.configure { |config| config.ignore_crawlers = true }
+        request = ActionDispatch::Request.new(create_env)
+        request.stub!(:user_agent => 'foo Slurp bar')
+        parser = create_parser(nil, request, nil)
+        parser.ignore?.should == true
+      end
 
-    it "should return false on non-routing errors without referer" do
-      env = create_env
-      request = ActionDispatch::Request.new(env)
-      request.stub!(:referer => nil)
-      parser = create_parser(nil, request, nil)
-      parser.ignore?.should == false
-    end
+      it "should return false on errors created by a crawler when ignore_crawlers is set to false" do
+        RailsExceptionHandler.configure { |config| config.ignore_crawlers = false }
+        request = ActionDispatch::Request.new(create_env)
+        request.stub!(:user_agent => 'foo Slurp bar')
+        parser = create_parser(nil, request, nil)
+        parser.ignore?.should == false
+      end
 
+      it "should return false on errors not created by a crawler when ignore_crawlers is set to true" do
+        RailsExceptionHandler.configure { |config| config.ignore_crawlers = true }
+        parser = create_parser(nil, nil, nil)
+        parser.ignore?.should == false
+      end
+    end
+  end
+
+  describe ".crawler?" do
     it "should return true on requests who has a user_agent string that contains a bot pattern" do
       env = create_env
       request = ActionDispatch::Request.new(env)
       request.stub!(:user_agent => 'foo Slurp bar')
       parser = create_parser(nil, request, nil)
-      parser.ignore?.should == true
+      parser.send(:crawler?).should == true
+    end
+
+    it "should return false on requests that does not have a user agent that contains a bot pattern" do
+      parser = create_parser(nil, nil, nil)
+      parser.send(:crawler?).should == false
     end
   end
 
