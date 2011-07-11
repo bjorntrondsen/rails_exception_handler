@@ -10,28 +10,62 @@ Add this line to your Gemfile:
 config.gem 'rails_exception_handler', '~> 1.0'
 ```
 
-Create an initializer in **config/initializers** called **rails_exception_handler.rb** with this code:
+Create an initializer in **config/initializers** called **rails_exception_handler.rb** and uncomment the options where you want to something other than the default:
 
 ```ruby
 RailsExceptionHandler.configure do |config|
-  # The configuration options are explained below
+  # config.storage_strategies = [:active_record]                            # Defaults to []
+  # config.environments = [:development, :test, :production]                # Defaults to [:production]
+  # config.ignore_routing_errors = true                                     # Defaults to false
+  # config.user_agent_regxp = your_reg_xp                                   # Defaults to blank
+  # config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
+  # config.responses['500'] = "<h1>500</h1><p>Internal server error</p>"
+  # config.fallback_layout = 'home'                                         # Defaults to 'application'
 end
 ```
 
+## Configuration options
 
-## Configuration
-Here are the available config options. Storage strategy must be chosen, the rest are optional and can be left out.
+As far as the filters go, I recommend you start out by disabling all of them, and then add those you find necessary from personal experience.
+
+### storage_strategies
+An array of zero or more symbols that says which storage strategies you want to use. Each are explained in detail in separate sections below.
 
 ```ruby
-RailsExceptionHandler.configure do |config|
-  config.storage_strategy = :active_record                      # Either :active_record or :remote_url
-  config.environments = [:development, :test, :production]      # Defaults to [:production]
-  config.catch_routing_errors = false                           # Defaults to true
-  config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
-  config.responses['500'] = "<h1>500</h1><p>Internal server error</p>"
-  config.fallback_layout = 'home'                               # Defaults to 'application'
-end
+config.storage_strategies = [:active_record, :remote_url, :rails_log]
 ```
+
+Default value: []
+
+### environments
+An array of symbols that says which Rails environments you want the exception handler to run in.
+
+```ruby
+config.environments = [:production, :test, :development]
+```
+
+Default value: [:production]
+
+### ignore_routing_errors
+
+```ruby
+config.ignore_routing_errors = true
+```
+
+Default value: false
+
+When set to true it ignores these exceptions: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+
+### user_agent_regxp
+
+```ruby
+config.filters.user_agent_regxp = /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i
+
+```
+
+Default value: blank
+
+Filters the user agent string against a regxp. In the example above you can see the string I'm personally using, which is based on crawlers that I have actually seen generate errors in my apps within the last few years. There are huge lists out on the web with the user agent strings of thousands of known bots, but I have not found it necessary to make use of them.
 
 
 ## Storage strategy - active record
@@ -78,6 +112,8 @@ class CreateErrorMessages < ActiveRecord::Migration
 end
 ```
 
+## Storage strategy - rails_log
+An error will be logged in the standard rails log with a full stack trace. The log i located in RAILS_ROOT/log and is named after the Rails environment. <example missing>
 
 ## Storage strategy - remote url
 (not yet implemented)
