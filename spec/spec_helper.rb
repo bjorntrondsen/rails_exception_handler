@@ -12,8 +12,8 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include TestMacros
   config.around do |example|
-    clear_test_log
     ErrorMessage.delete_all
+    clear_test_log
     example.call
     ErrorMessage.delete_all
     clear_test_log
