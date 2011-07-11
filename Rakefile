@@ -6,7 +6,7 @@ task :default => :test
 
 desc 'Run tests'
 task :test do
-  system "bundle exec rspec spec/integration/rails_exception_handler_spec.rb spec/unit/handler_spec.rb spec/unit/parser_spec.rb"
+  system "bundle exec rspec spec/integration/rails_exception_handler_spec.rb spec/unit/handler_spec.rb spec/unit/parser_spec.rb spec/unit/configuration_spec.rb"
 end
 
 require 'jeweler'
