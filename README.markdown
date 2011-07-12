@@ -71,7 +71,7 @@ Filters the user agent string against a regxp. In the example above you can see 
 ## Storage strategy - active record
 This means that the error messages will be stored directly in a database somewhere. A new entry called **exception_database** is needed in **database.yml**:
 
-```yml
+```
 # for mysql the entry would look something like this:
 exception_database:
   adapter: mysql2
@@ -113,7 +113,22 @@ end
 ```
 
 ## Storage strategy - rails_log
-An error will be logged in the standard rails log with a full stack trace. The log i located in RAILS_ROOT/log and is named after the Rails environment. <example missing>
+An error will be logged in the standard rails log. The log i located in the RAILS_ROOT/log directory and is named after the Rails environment.
+Example:
+
+```
+TARGET:     http://localhost:3000/home/view_error
+REFERER:    /
+PARAMS:     {"controller"=>"home", "action"=>"view_error"}
+USER_AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30
+USER_INFO:  superman
+ActionView::Template::Error (ActionView::Template::Error):
+activesupport (3.0.7) lib/active_support/whiny_nil.rb:48:in `method_missing'
+actionpack (3.0.7) lib/action_view/template.rb:135:in `block in render'
+activesupport (3.0.7) lib/active_support/notifications.rb:54:in `instrument'
+(the rest of the stack trace has been omitted from the example)
+```
+
 
 ## Storage strategy - remote url
 (not yet implemented)
