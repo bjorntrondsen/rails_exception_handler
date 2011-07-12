@@ -9,6 +9,10 @@ describe RailsExceptionHandler::Configuration do
     it "should add :production to environments" do
       @configuration.environments.should == [:production]
     end
+
+    it "should set storage_strategies to []" do
+      @configuration.storage_strategies.should == []
+    end
     
     it "should set ignore_routing_errors to false" do
       @configuration.ignore_routing_errors.should == false
