@@ -14,8 +14,8 @@ Create an initializer in **config/initializers** called **rails_exception_handle
 
 ```ruby
 RailsExceptionHandler.configure do |config|
-  # config.storage_strategies = [:active_record]                            # Defaults to []
   # config.environments = [:development, :test, :production]                # Defaults to [:production]
+  # config.storage_strategies = [:active_record]                            # Defaults to []
   # config.ignore_routing_errors = true                                     # Defaults to false
   # config.user_agent_regxp = your_reg_xp                                   # Defaults to blank
   # config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
@@ -28,15 +28,6 @@ end
 
 As far as the filters go, I recommend you start out by disabling all of them, and then add those you find necessary from personal experience.
 
-### storage_strategies
-An array of zero or more symbols that says which storage strategies you want to use. Each are explained in detail in separate sections below.
-
-```ruby
-config.storage_strategies = [:active_record, :remote_url, :rails_log]
-```
-
-Default value: []
-
 ### environments
 An array of symbols that says which Rails environments you want the exception handler to run in.
 
@@ -45,6 +36,15 @@ config.environments = [:production, :test, :development]
 ```
 
 Default value: [:production]
+
+### storage_strategies
+An array of zero or more symbols that says which storage strategies you want to use. Each are explained in detail in separate sections below.
+
+```ruby
+config.storage_strategies = [:active_record, :remote_url, :rails_log]
+```
+
+Default value: []
 
 ### ignore_routing_errors
 
@@ -86,7 +86,7 @@ exception_database:
 
 You could of course store the error messages in the same database as the application uses, but one of the main purposes of this gem is to enable you to easily store error messages from many applications in the same database, so I recommend you set up a separate dedicated database for this.
 
-The exception database needs a table which by default is called **error_messages** (can be overridden in the config). Here's a migration file that shows which fields are needed:
+The exception database needs a table called **error_messages**. Here's a migration file that shows which fields are needed:
 
 ```ruby
 class CreateErrorMessages < ActiveRecord::Migration
@@ -132,3 +132,7 @@ activesupport (3.0.7) lib/active_support/notifications.rb:54:in `instrument'
 
 ## Storage strategy - remote url
 (not yet implemented)
+This option is for those who wants to store the exception in a database table, but does not have direct access to the database itself, making active_record store unsuitable. You need a web app on a server that has access to the database. This web must be able to receive a JSON string in a POST request and create the database record for you based on that. This is how you specify the url:
+```ruby
+config.storage_strategies = [:remote_url => {:target => 'http://myapp.example.com/error_messages'}]
+```
