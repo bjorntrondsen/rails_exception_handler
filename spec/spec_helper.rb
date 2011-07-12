@@ -7,6 +7,8 @@ require File.expand_path(File.dirname(__FILE__)) + '/test_macros.rb'
 require "rspec/rails"
 require "rack/test"
 
+ActiveRecord::Base.logger = nil
+ActionController::Base.logger = nil
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

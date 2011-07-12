@@ -25,16 +25,6 @@ describe RailsExceptionHandler::Handler do
     end
   end
 
-  describe ".log_error" do
-    it "should log an error in the correct format" do
-      ActiveRecord::Base.logger = nil
-      ActionController::Base.logger = nil
-      @handler.handle_exception
-      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
-      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
-    end
-  end
-
   describe ".store_error" do
     it "should store an error message in the database when storage_strategies includes :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record] }
@@ -56,6 +46,25 @@ describe RailsExceptionHandler::Handler do
     it "should not store an error message in the database when storage_strategies does not include :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
       ErrorMessage.count.should == 0
+    end
+
+    it "it should log an error to the rails log when storage_strategies includes :rails_log" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
+      read_test_log.should == ''
+      @handler.handle_exception
+      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
+      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      read_test_log.should match /PARAMS:\s+{\"foo\"=>\"bar\"}/
+      read_test_log.should match /USER_AGENT:\s+Mozilla\/4.0 \(compatible; MSIE 8\.0\)/
+      read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\?foo=bar/
+      read_test_log.should match /REFERER:\s+http:\/\/google\.com\//
+    end
+
+    it "should not log an error to the rails log when storage_strategies does not include :rails_log" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
+      read_test_log.should == ''
+      @handler.handle_exception
+      read_test_log.should == ''
     end
   end
 
