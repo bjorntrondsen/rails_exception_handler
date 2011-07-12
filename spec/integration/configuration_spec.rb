@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__)) + '/../spec_helper.rb'
 
 describe RailsExceptionHandler::Configuration do
-  describe ".storage_strategy" do
-    it "should store errors in the database when storage_strategy is set to :active_record" do
-      RailsExceptionHandler.configure { |config| config.storage_strategy = :active_record }
+  describe ".storage_strategies" do
+    it "should store errors in the database when storage_strategies contains :active_record" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record] }
       get('/incorrect_route')
       ErrorMessage.count.should == 1
     end

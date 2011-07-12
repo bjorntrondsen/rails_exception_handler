@@ -6,7 +6,38 @@ describe RailsExceptionHandler::Handler do
   end
 
   describe ".handle_exception" do
-    it "should store an error message in the database" do
+    it "should parse error" do
+      @handler.handle_exception
+      @handler.instance_variable_get(:@parsed_error).should_not == nil
+    end
+
+    it "should store error" do
+      @handler.should_receive(:store_error)
+      @handler.handle_exception
+    end
+
+    it "should return a rack tripple" do
+      response = @handler.handle_exception
+      response.length.should == 3
+      response[0].should == 200 # response code
+      response[1].class.should == Hash # headers
+      response[2].class.should == ActionDispatch::Response # body
+    end
+  end
+
+  describe ".log_error" do
+    it "should log an error in the correct format" do
+      ActiveRecord::Base.logger = nil
+      ActionController::Base.logger = nil
+      @handler.handle_exception
+      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
+      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+    end
+  end
+
+  describe ".store_error" do
+    it "should store an error message in the database when storage_strategies includes :active_record" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record] }
       @handler.handle_exception
       ErrorMessage.count.should == 1
       msg = ErrorMessage.first
@@ -22,19 +53,9 @@ describe RailsExceptionHandler::Handler do
       msg.created_at.should be <  Time.now
     end
 
-    it "should log an error to the log file" do
-      @handler.should_receive(:log_error)
-      @handler.handle_exception
-    end
-  end
-
-  describe ".log_error" do
-    it "should log an error in the correct format" do
-      ActiveRecord::Base.logger = nil
-      ActionController::Base.logger = nil 
-      @handler.handle_exception
-      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
-      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+    it "should not store an error message in the database when storage_strategies does not include :active_record" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
+      ErrorMessage.count.should == 0
     end
   end
 
