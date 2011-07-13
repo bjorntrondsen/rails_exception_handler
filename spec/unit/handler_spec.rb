@@ -66,6 +66,31 @@ describe RailsExceptionHandler::Handler do
       @handler.handle_exception
       read_test_log.should == ''
     end
+
+    it "should send the error_message as an HTTP POST request when :remote_url is included" do
+      Time.stub!(:now => Time.now) # Otherwise the timestamps will be different, and comparison fail
+      @handler.handle_exception
+      parser = @handler.instance_variable_get(:@parsed_error)
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}] }
+      uri = URI.parse('http://example.com/error_messages')
+      params = {:error_message => parser.relevant_info}
+      Net::HTTP.should_receive(:post_form).with(uri, params)
+      @handler.handle_exception
+    end
+
+    it "should not send the error_message as an HTTP POST request when :remote_url is not included" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
+      Net::HTTP.should_not_receive(:post_form)
+      @handler.handle_exception
+    end
+
+    it "should be able to use multiple storage strategies" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :rails_log] }
+      read_test_log.should == ''
+      @handler.handle_exception
+      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
+      ErrorMessage.count.should == 1
+    end
   end
 
   describe '.response' do
