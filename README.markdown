@@ -10,12 +10,12 @@ Add this line to your Gemfile:
 config.gem 'rails_exception_handler', '~> 1.0'
 ```
 
-Create an initializer in **config/initializers** called **rails_exception_handler.rb** and uncomment the options where you want to something other than the default:
+Create an initializer in **config/initializers** called **rails_exception_handler.rb** and uncomment the options where you want something other than the default:
 
 ```ruby
 RailsExceptionHandler.configure do |config|
   # config.environments = [:development, :test, :production]                # Defaults to [:production]
-  # config.storage_strategies = [:active_record]                            # Defaults to []
+  # config.storage_strategies = [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}] # Defaults to []
   # config.ignore_routing_errors = true                                     # Defaults to false
   # config.user_agent_regxp = your_reg_xp                                   # Defaults to blank
   # config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
@@ -41,10 +41,11 @@ Default value: [:production]
 An array of zero or more symbols that says which storage strategies you want to use. Each are explained in detail in separate sections below.
 
 ```ruby
-config.storage_strategies = [:active_record, :remote_url, :rails_log]
+config.storage_strategies = [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}]
 ```
 
 Default value: []
+More than one storage strategy can be chosen.
 
 ### ignore_routing_errors
 
@@ -69,6 +70,9 @@ Filters the user agent string against a regxp. In the example above you can see 
 
 
 ## Storage strategy - active record
+```ruby
+config.storage_strategies = [:active_record]
+```
 This means that the error messages will be stored directly in a database somewhere. A new entry called **exception_database** is needed in **database.yml**:
 
 ```
@@ -112,14 +116,17 @@ class CreateErrorMessages < ActiveRecord::Migration
 end
 ```
 
-## Storage strategy - rails_log
+## Storage strategy - rails log
+```ruby
+config.storage_strategies = [:rails_log]
+```
 An error will be logged in the standard rails log. The log i located in the RAILS_ROOT/log directory and is named after the Rails environment.
 Example:
 
 ```
-TARGET:     http://localhost:3000/home/view_error
+TARGET:     http://localhost:3000/home
 REFERER:    /
-PARAMS:     {"controller"=>"home", "action"=>"view_error"}
+PARAMS:     {"controller"=>"home", "action"=>"index"}
 USER_AGENT: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30
 USER_INFO:  superman
 ActionView::Template::Error (ActionView::Template::Error):
@@ -131,8 +138,7 @@ activesupport (3.0.7) lib/active_support/notifications.rb:54:in `instrument'
 
 
 ## Storage strategy - remote url
-(not yet implemented)
-This option is for those who wants to store the exception in a database table, but does not have direct access to the database itself, making active_record store unsuitable. You need a web app on a server that has access to the database. This web must be able to receive a JSON string in a POST request and create the database record for you based on that. This is how you specify the url:
 ```ruby
-config.storage_strategies = [:remote_url => {:target => 'http://myapp.example.com/error_messages'}]
+config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}]
 ```
+This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active_record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
