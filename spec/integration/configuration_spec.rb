@@ -8,7 +8,16 @@ describe RailsExceptionHandler::Configuration do
       ErrorMessage.count.should == 1
     end
 
-    it "should send a http request to the supplied url when storage strategy is set to :remote_url"
+    it "should store errors in the rails log when storage_strategies contains :rails_log" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
+      get('/home/model_error')
+      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
+      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      read_test_log.should match /PARAMS:\s+{\"controller\"=>\"home\", \"action\"=>\"model_error\"}/
+      read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\/model_error/
+    end
+
+    # No idea how to integration test remote_url without spawning a dedicated test server
   end
 
   describe ".ignore_routing_errors" do
