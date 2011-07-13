@@ -45,7 +45,10 @@ class RailsExceptionHandler::Handler
 
   def store_in_remote_url(args)
     uri = URI.parse(args[:target])
-    params = {:error_message => @parsed_error.relevant_info}
+    params = {}
+    @parsed_error.relevant_info.each do |key,value|
+      params["error_message[#{key}]"] = value
+    end
     Net::HTTP::post_form(uri, params)
   end
 
