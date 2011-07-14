@@ -36,7 +36,8 @@ describe RailsExceptionHandler::Parser do
         RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer] }
         exception = create_exception
         exception.stub!(:class => ActionController::RoutingError)
-        parser = create_parser(exception, nil, nil)
+        request = ActionDispatch::Request.new(create_env(:referer => '/'))
+        parser = create_parser(exception, request, nil)
         parser.ignore?.should == true
       end
 
@@ -57,45 +58,6 @@ describe RailsExceptionHandler::Parser do
         parser = create_parser(nil, nil, nil)
         parser.ignore?.should == false
       end
-    end
-
-    context "crawlers" do
-      it "should return true on errors created by a crawler when ignore_crawlers is set to true" do
-        RailsExceptionHandler.configure { |config| config.ignore_crawlers = true }
-        request = ActionDispatch::Request.new(create_env)
-        request.stub!(:user_agent => 'foo Slurp bar')
-        parser = create_parser(nil, request, nil)
-        parser.ignore?.should == true
-      end
-
-      it "should return false on errors created by a crawler when ignore_crawlers is set to false" do
-        RailsExceptionHandler.configure { |config| config.ignore_crawlers = false }
-        request = ActionDispatch::Request.new(create_env)
-        request.stub!(:user_agent => 'foo Slurp bar')
-        parser = create_parser(nil, request, nil)
-        parser.ignore?.should == false
-      end
-
-      it "should return false on errors not created by a crawler when ignore_crawlers is set to true" do
-        RailsExceptionHandler.configure { |config| config.ignore_crawlers = true }
-        parser = create_parser(nil, nil, nil)
-        parser.ignore?.should == false
-      end
-    end
-  end
-
-  describe ".crawler?" do
-    it "should return true on requests who has a user_agent string that contains a bot pattern" do
-      env = create_env
-      request = ActionDispatch::Request.new(env)
-      request.stub!(:user_agent => 'foo Slurp bar')
-      parser = create_parser(nil, request, nil)
-      parser.send(:crawler?).should == true
-    end
-
-    it "should return false on requests that does not have a user agent that contains a bot pattern" do
-      parser = create_parser(nil, nil, nil)
-      parser.send(:crawler?).should == false
     end
   end
 

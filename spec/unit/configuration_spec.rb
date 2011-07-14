@@ -23,7 +23,7 @@ describe RailsExceptionHandler::Configuration do
     end
 
     it "should set the 500 response" do
-      @configuration.responses['500'].should match(/An error has occurred/)
+      @configuration.responses['500'].should match(/Internal server error/)
     end
 
     it "should set the fallback layout to 'application'" do
