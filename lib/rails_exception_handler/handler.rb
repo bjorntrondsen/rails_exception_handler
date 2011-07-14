@@ -22,7 +22,7 @@ class RailsExceptionHandler::Handler
       elsif(strategy.class == Hash && strategy[:remote_url])
         store_in_remote_url(strategy[:remote_url])
       else
-        raise "RailsExceptionHandler: Unknown storage strategy"
+        raise "RailsExceptionHandler: Unknown storage strategy #{strategy.inspect}"
       end
     end
   end
