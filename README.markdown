@@ -16,11 +16,15 @@ Create an initializer in **config/initializers** called **rails_exception_handle
 RailsExceptionHandler.configure do |config|
   # config.environments = [:development, :test, :production]                # Defaults to [:production]
   # config.storage_strategies = [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}] # Defaults to []
-  # config.ignore_routing_errors = true                                     # Defaults to false
-  # config.user_agent_regxp = your_reg_xp                                   # Defaults to blank
+  # config.fallback_layout = 'home'                                         # Defaults to 'application'
   # config.responses['404'] = "<h1>404</h1><p>Page not found</p>"
   # config.responses['500'] = "<h1>500</h1><p>Internal server error</p>"
-  # config.fallback_layout = 'home'                                         # Defaults to 'application'
+  # config.filters = [                                                      # No filters are  enabled by default
+  #   :all_routing_errors,
+  #   :routing_errors_without_referer,
+  #   {:user_agent_regxp => /\b(ApptusBot|TurnitinBot|DotBot|SiteBot)\b/i},
+  #   {:target_url_regxp => /\b(myphpadmin)\b/i}
+  #]
 end
 ```
 
@@ -47,33 +51,53 @@ config.storage_strategies = [:active_record, :rails_log, :remote_url => {:target
 Default value: []
 More than one storage strategy can be chosen.
 
-### ignore_routing_errors
+
+### fallback_layout
 
 ```ruby
-config.ignore_routing_errors = true
+config.fallback_layout = 'home'
 ```
 
-Default value: false
+Default value: 'application'
 
-When set to true it ignores these exceptions: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+The exception handler will always use the layout file of the controller action that was accessed when the error occured. However, when routing errors occures there are no controller action to get this layout from, so it falls back to the default 'application' layout that most apps have. If your application does not have a layout file called 'application', you need to override this, otherwise an error is raised.
 
-### user_agent_regxp
+### filters
+
+All filters are disabled by default. I recommend you deploy your application this way, and then add filters as they become necessary.
+The only reason I've ever wanted filtering have been due to what seem like poorly programmed web crawlers and black bots probing for security holes.
+Every once in a while I'll get dozens of errors within a few minutes caused by a bot looking for things like Joomla/Wordpress libraries with known security holes, or a web crawler that follows the target of forms.
+
+
+**:all_routing_errors**
+Consider this a last resort. You will miss all "real" routing errors when this is turned on, like broken redirections.
+When turned on the following exceptions will no longer be stored: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+
+**:routing_errors_without_referer**
+This is very effective against bots. 99.9% of the time a routing error with no referer will be caused by a bot, and then once in a while it will be caused by a real user that happened to generate an error on the first page he opened.
+**:user_agent_regxp**
+The good guys always adds something to the user agent string that lets you identify them. You can use this to filter out the errors they genereate, and be pretty sure you are not going to get any false positives.
+The string I use looks something like this:
 
 ```ruby
-config.filters.user_agent_regxp = /\b(Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i
-
+:user_agent_regxp => /\b(ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i
 ```
 
-Default value: blank
+If you (like me) dont know regular expressions by heart, then http://www.rubular.com/ is great tool.
 
-Filters the user agent string against a regxp. In the example above you can see the string I'm personally using, which is based on crawlers that I have actually seen generate errors in my apps within the last few years. There are huge lists out on the web with the user agent strings of thousands of known bots, but I have not found it necessary to make use of them.
+**:target_url_regxp**
+Sometimes the bad guys adds a common user agent string and a referer to their requests, which makes it hard to filter them without filtering all routing errors. I guess they do this to make it look less suspicious.
+What you can often do is to filter on what they target, which is often some well known library like phpMyAdmin.
 
+```ruby
+:target_url_regxp => /\b(phpMyAdmin|joomla|wordpress)\b/i
+```
 
 ## Storage strategy - active record
 ```ruby
 config.storage_strategies = [:active_record]
 ```
-This means that the error messages will be stored directly in a database somewhere. A new entry called **exception_database** is needed in **database.yml**:
+This means that the error messages will be stored directly in a database somewhere, which is pretty much the whole reason why I created this gem in the first place. A new entry called **exception_database** is needed in **database.yml**:
 
 ```
 # for mysql the entry would look something like this:
