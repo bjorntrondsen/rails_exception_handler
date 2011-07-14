@@ -20,31 +20,67 @@ describe RailsExceptionHandler::Configuration do
     # No idea how to integration test remote_url without spawning a dedicated test server
   end
 
-  describe ".ignore_routing_errors" do
-    it "should ignore routing errors when ignore_routing_errors is set to true" do
-      RailsExceptionHandler.configure { |config| config.ignore_routing_errors = true }
-      get('/incorrect_route')
-      ErrorMessage.count.should == 0
+  describe '.filters' do
+    describe ":all_routing_errors" do
+      it "should ignore routing errors when the filters contains :all_routing_errors" do
+        RailsExceptionHandler.configure { |config| config.filters = [:all_routing_errors]}
+        get('/incorrect_route')
+        ErrorMessage.count.should == 0
+      end
+
+      it "should not ignore routing errors when the filters doesnt contain :all_routing_errors" do
+        RailsExceptionHandler.configure { |config| config.filters = []}
+        get('/incorrect_route')
+        ErrorMessage.count.should == 1
+      end
     end
 
-    it "should not ignore routing errors when ignore_routing_errors is set to false" do
-      RailsExceptionHandler.configure { |config| config.ignore_routing_errors = false }
-      get('/incorrect_route')
-      ErrorMessage.count.should == 1
-    end
-  end
+    describe ":routing_errors_without_referer" do
+      it "should not store a routing error that contains a referer" do
+        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        get "/incorrect_route"
+        ErrorMessage.count.should == 0
+      end
 
-  describe ".ignore_crawlers" do
-    it "should ignore a crawler request when ignore_crawlers is set to true" do
-      RailsExceptionHandler.configure { |config| config.ignore_crawlers = true }
-      get "/incorrect_route", {}, {'HTTP_USER_AGENT' => 'Slurp'}
-      ErrorMessage.count.should == 0
+      it "should store a routing error that has a referer" do
+        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        get "/incorrect_route", {}, {'HTTP_REFERER' => 'http://example.com'}
+        ErrorMessage.count.should == 1
+      end
+
+      it "should store a non routing error without referer" do
+        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        get "/home/view_error"
+        ErrorMessage.count.should == 1
+      end
     end
 
-    it "should not ignore a crawler when ignore_crawlers is set to false" do
-      RailsExceptionHandler.configure { |config| config.ignore_crawlers = false }
-      get "/incorrect_route", {}, {'HTTP_USER_AGENT' => 'Slurp'}
-      ErrorMessage.count.should == 1
+    describe ":user_agent_regxp" do
+      it "should not store the error message when the user agent matches this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:user_agent_regxp => /\b(NaughtyBot)\b/]}
+        get "/incorrect_route", {}, {'HTTP_USER_AGENT' => 'I am a NaughtyBot'}
+        ErrorMessage.count.should == 0
+      end
+
+      it "should store the error message when the user agent doesnt match this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:user_agent_regxp => /\b(NaughtyBot)\b/]}
+        get "/incorrect_route", {}, {'HTTP_USER_AGENT' => "Mozilla/5.0 (Windows NT 6.1; rv:5.0) Gecko/20100101 Firefox/5.0"}
+        ErrorMessage.count.should == 0
+      end
+    end
+
+    describe ":target_url_regxp" do
+      it "should not store the error message when the url matches this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:target_url_regxp => /\b(incorrect)\b/]}
+        get "/incorrect_route"
+        ErrorMessage.count.should == 0
+      end
+
+      it "should store the error message when the url doesnt matche this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:target_url_regxp => /\b(phpMyAdmin)\b/]}
+        get "/incorrect_route"
+        ErrorMessage.count.should == 1
+      end
     end
   end
 
