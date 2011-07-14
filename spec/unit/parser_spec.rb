@@ -24,27 +24,37 @@ describe RailsExceptionHandler::Parser do
 
   describe ".ignore?" do
     context "routing errors" do
-      it "should return true on routing errors when ignore_routing_errors is set to true" do
-        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = true }
+      it "should return true on routing errors when the filter contains :all_routing_errors" do
+        RailsExceptionHandler.configure { |config| config.filters = [:all_routing_errors] }
         exception = create_exception
         exception.stub!(:class => ActionController::RoutingError)
         parser = create_parser(exception, nil, nil)
         parser.ignore?.should == true
       end
 
-      it "should return false on routing errors when ignore_routing_errors is set to false" do
-        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = false }
+      it "should return true on routing errors without referer when the filter contains :routing_errors_without_referer" do
+        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer] }
         exception = create_exception
         exception.stub!(:class => ActionController::RoutingError)
         parser = create_parser(exception, nil, nil)
-        parser.ignore?.should == false
+        parser.ignore?.should == true
       end
 
-      it "should return false on non-routing errors when ignore_routing_errors is set to true" do
-        RailsExceptionHandler.configure { |config| config.ignore_routing_errors = true }
-        exception = create_exception
-        exception.stub!(:class => SyntaxError)
-        parser = create_parser(exception, nil, nil)
+      it "should return true when the user agent matches against the filters :user_agent_regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [{:user_agent_regxp => /\b(Mozilla)\b/}] }
+        parser = create_parser(nil, nil, nil)
+        parser.ignore?.should == true
+      end
+
+      it "should return true when the url matches against the filters :target_url_regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [{:target_url_regxp => /\b(home)\b/}] }
+        parser = create_parser(nil, nil, nil)
+        parser.ignore?.should == true
+      end
+
+      it "should return false when the request is not caught by a filter" do
+        RailsExceptionHandler.configure { |config| config.filters = [] }
+        parser = create_parser(nil, nil, nil)
         parser.ignore?.should == false
       end
     end
