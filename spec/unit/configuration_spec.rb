@@ -13,9 +13,9 @@ describe RailsExceptionHandler::Configuration do
     it "should set storage_strategies to []" do
       @configuration.storage_strategies.should == []
     end
-    
-    it "should set ignore_routing_errors to false" do
-      @configuration.ignore_routing_errors.should == false
+
+    it "should set filters to [] " do
+      @configuration.filters.should == []
     end
 
     it "should set the 404 response" do
@@ -28,10 +28,6 @@ describe RailsExceptionHandler::Configuration do
 
     it "should set the fallback layout to 'application'" do
       @configuration.fallback_layout.should == 'application'
-    end
-
-    it "should set ignore_crawlers to false" do
-      @configuration.ignore_crawlers.should == false
     end
   end
 end
