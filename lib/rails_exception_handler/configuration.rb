@@ -7,7 +7,7 @@ class RailsExceptionHandler::Configuration
     @ignore_routing_errors = false
     @ignore_crawlers = false
     @responses = { '404' => '<h1>Page not found</h1><p>The page you were looking for could not be found.</p>',
-                   '500' => '<h1>An error has occurred</h1><p>The error has been logged and will be reviewed by a system administrator.</p>' }
+                   '500' => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
     @fallback_layout = 'application'
   end
 
