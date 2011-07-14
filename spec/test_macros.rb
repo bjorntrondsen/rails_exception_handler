@@ -45,6 +45,7 @@ module TestMacros
     RailsExceptionHandler.configure do |config|
       config.storage_strategies = [:active_record]
       config.environments = [:test]
+      config.filters = []
       config.ignore_crawlers = false
       config.ignore_routing_errors = false
       config.fallback_layout = 'application'
