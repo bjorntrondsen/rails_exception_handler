@@ -4,21 +4,21 @@ describe RailsExceptionHandler do
   it "should catch controller errors" do
     get "/home/controller_error"
     ErrorMessage.count.should == 1
-    last_response.body.should match(/An error has occurred/)
+    last_response.body.should match(/Internal server error/)
     ErrorMessage.first.class_name.should == 'NoMethodError'
   end
 
   it "should catch model errors" do
     get "/home/model_error"
     ErrorMessage.count.should == 1
-    last_response.body.should match(/An error has occurred/)
+    last_response.body.should match(/Internal server error/)
     ErrorMessage.first.class_name.should == 'NoMethodError'
   end
 
   it "should catch view errors" do
     get "/home/view_error"
     ErrorMessage.count.should == 1
-    last_response.body.should match(/An error has occurred/)
+    last_response.body.should match(/Internal server error/)
     ErrorMessage.first.class_name.should == 'ActionView::Template::Error'
   end
 
@@ -32,7 +32,7 @@ describe RailsExceptionHandler do
   it "should catch syntax errors" do
     get "/home/syntax_error"
     ErrorMessage.count.should == 1
-    last_response.body.should match(/An error has occurred/)
+    last_response.body.should match(/Internal server error/)
     ErrorMessage.first.class_name.should == 'SyntaxError'
   end
 

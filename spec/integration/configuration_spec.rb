@@ -65,13 +65,13 @@ describe RailsExceptionHandler::Configuration do
       it "should store the error message when the user agent doesnt match this regxp" do
         RailsExceptionHandler.configure { |config| config.filters = [:user_agent_regxp => /\b(NaughtyBot)\b/]}
         get "/incorrect_route", {}, {'HTTP_USER_AGENT' => "Mozilla/5.0 (Windows NT 6.1; rv:5.0) Gecko/20100101 Firefox/5.0"}
-        ErrorMessage.count.should == 0
+        ErrorMessage.count.should == 1
       end
     end
 
     describe ":target_url_regxp" do
       it "should not store the error message when the url matches this regxp" do
-        RailsExceptionHandler.configure { |config| config.filters = [:target_url_regxp => /\b(incorrect)\b/]}
+        RailsExceptionHandler.configure { |config| config.filters = [:target_url_regxp => /incorrect/]}
         get "/incorrect_route"
         ErrorMessage.count.should == 0
       end
