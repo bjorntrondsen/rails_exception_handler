@@ -47,6 +47,7 @@ describe RailsExceptionHandler do
   end
 
   it "should store the correct information in the database" do
+    RailsExceptionHandler.configure { |config| config.store_user_info = {:method => :current_user, :field => :login} }
     get "/home/controller_error", {}, {'HTTP_REFERER' => 'http://google.com/', 'HTTP_USER_AGENT' => 'Mozilla/4.0 (compatible; MSIE 8.0)'}
     ErrorMessage.count.should == 1
     msg = ErrorMessage.first
@@ -59,7 +60,7 @@ describe RailsExceptionHandler do
     msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
     msg.target_url.should ==    'http://example.org/home/controller_error'
     msg.referer_url.should ==   'http://google.com/'
-    msg.user_info.should ==     'superman'
+    msg.user_info.should ==     'matz'
     msg.created_at.should be >  5.seconds.ago
     msg.created_at.should be <  Time.now
   end

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__)) + '/../spec_helper.rb'
 describe RailsExceptionHandler::Parser do
   before(:each) do
     env = create_env
-    controller = mock(ApplicationController, :current_user => mock(Object, :login => 'superman'))
+    controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
     request = ActionDispatch::Request.new(env)
     @parser = RailsExceptionHandler::Parser.new(create_exception, request, controller)
   end
@@ -17,7 +17,7 @@ describe RailsExceptionHandler::Parser do
     it("should return referer_url") { @parser.relevant_info[:referer_url].should == 'http://google.com/' }
     it("should return params") { @parser.relevant_info[:params].should match(/\"foo\"=>\"bar\"/) }
     it("should return user_agent") { @parser.relevant_info[:user_agent].should == "Mozilla/4.0 (compatible; MSIE 8.0)" }
-    it("should return user_info") { @parser.relevant_info[:user_info].should == 'superman' }
+    it("should return user_info") { @parser.relevant_info[:user_info].should == nil }
     it("should return created_at") { @parser.relevant_info[:created_at].should be > 5.seconds.ago }
     it("should return created_at") { @parser.relevant_info[:created_at].should be < Time.now }
   end
@@ -89,28 +89,24 @@ describe RailsExceptionHandler::Parser do
   end
 
   describe "user_info" do
-    it "should return nil when the controller has no current_user method" do
-      controller = mock(Object)
+    it "should store user info based on the method and field provided" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
+      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
-      parser.send(:user_info).should == nil
+      parser.relevant_info[:user_info].should == 'matz'
+    end
+    it "should store 'Anonymous' when store_user_info is enabled and no user is logged in" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
+      controller = mock(ApplicationController, :current_user => nil)
+      parser = create_parser(nil, nil, controller)
+      parser.relevant_info[:user_info].should == 'Anonymous'
     end
 
-    it "should return login field if it exists" do
-      controller = mock(Object, :current_user => mock(Object, :login => 'bob'))
+    it "should not store any info when configured store_user_info is false" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = false}
+      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
-      parser.send(:user_info).should == 'bob'
-    end
-
-    it "should return the username field if it exists" do
-      controller = mock(Object, :current_user => mock(Object, :username => 'tom'))
-      parser = create_parser(nil, nil, controller)
-      parser.send(:user_info).should == 'tom'
-    end
-    
-    it "should return the email filed if it exists" do
-      controller = mock(Object, :current_user => mock(Object, :email => 'me@example.com'))
-      parser = create_parser(nil, nil, controller)
-      parser.send(:user_info).should == 'me@example.com'
+      parser.relevant_info[:user_info].should == nil
     end
   end
 end
