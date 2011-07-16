@@ -7,8 +7,12 @@ class RailsExceptionHandler::Handler
     if(@env['action_controller.instance'])
       @controller = @env['action_controller.instance']
     else
+      # During routing errors a controller object must be created manually and the before filters run, 
+      # in case they are used to set up the authentication mechanism that provides the current_user object
       @controller = ApplicationController.new
       @controller.request = @request
+      filters = @controller._process_action_callbacks.collect {|cb| cb.filter if(cb.kind == :before)}
+      filters.each { |filter| @controller.send(filter) }
     end
   end
 
