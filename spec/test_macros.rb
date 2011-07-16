@@ -49,7 +49,7 @@ module TestMacros
       config.environments = [:test]
       config.store_user_info = false
       config.filters = []
-      config.fallback_layout = 'application'
+      config.fallback_layout = 'fallback'
     end
   end
 

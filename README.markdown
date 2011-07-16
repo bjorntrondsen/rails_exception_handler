@@ -31,8 +31,6 @@ end
 
 ## Configuration options
 
-As far as the filters go, I recommend you start out by disabling all of them, and then add those you find necessary from personal experience.
-
 ### environments
 An array of symbols that says which Rails environments you want the exception handler to run in.
 
