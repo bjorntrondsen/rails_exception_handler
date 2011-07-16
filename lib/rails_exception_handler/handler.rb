@@ -2,13 +2,18 @@ class RailsExceptionHandler::Handler
   def initialize(env, exception)
     @exception = exception
     @env = env
+    @request = ActionDispatch::Request.new(@env)
     @parsed_error = nil
-    @controller = @env['action_controller.instance'] || ApplicationController.new
+    if(@env['action_controller.instance'])
+      @controller = @env['action_controller.instance']
+    else
+      @controller = ApplicationController.new(@env)
+      @controller.request = @request
+    end
   end
 
   def handle_exception
-    request = ActionDispatch::Request.new(@env)
-    @parsed_error = RailsExceptionHandler::Parser.new(@exception, request, @controller)
+    @parsed_error = RailsExceptionHandler::Parser.new(@exception, @request, @controller)
     store_error unless(@parsed_error.ignore?)
     return response
   end
