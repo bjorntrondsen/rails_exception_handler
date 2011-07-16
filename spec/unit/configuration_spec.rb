@@ -14,6 +14,10 @@ describe RailsExceptionHandler::Configuration do
       @configuration.storage_strategies.should == []
     end
 
+    it "should set store_user_info to false" do
+      @configuration.store_user_info = false
+    end
+
     it "should set filters to [] " do
       @configuration.filters.should == []
     end

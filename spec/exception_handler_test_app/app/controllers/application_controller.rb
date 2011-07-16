@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def current_user
     mock = Object.new
     def mock.login
-      'superman'
+      'matz'
     end
     return mock
   end

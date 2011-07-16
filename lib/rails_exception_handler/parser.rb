@@ -47,13 +47,10 @@ class RailsExceptionHandler::Parser
   end
 
   def user_info
-    if(@controller.respond_to?(:current_user))
-      current_user = @controller.current_user
-      [:login, :username, :user_name, :email].each do |field|
-        return current_user.send(field) if(current_user.respond_to?(field))
-      end
-    end
-    return nil
+    config = RailsExceptionHandler.configuration.store_user_info
+    return nil unless(config)
+    user_object = @controller.send(config[:method])
+    user_object ? user_object.send(config[:field]) : 'Anonymous'
   end
 
   def filter_all_routing_errors

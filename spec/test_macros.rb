@@ -15,7 +15,7 @@ module TestMacros
 
   def create_parser(exception = nil, request = nil, controller = nil)
       env = create_env
-      controller ||= mock(ApplicationController, :current_user => mock(Object, :login => 'superman'))
+      controller ||= mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       request ||= ActionDispatch::Request.new(env)
       exception ||= create_exception
       parser = RailsExceptionHandler::Parser.new(exception, request, controller)
@@ -47,6 +47,7 @@ module TestMacros
     RailsExceptionHandler.configure do |config|
       config.storage_strategies = [:active_record]
       config.environments = [:test]
+      config.store_user_info = false
       config.filters = []
       config.fallback_layout = 'application'
     end
