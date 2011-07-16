@@ -56,6 +56,6 @@ module TestMacros
   private
 
   def log_path
-    File.expand_path(File.dirname(__FILE__)) + '/exception_handler_test_app/log/test.log'
+    File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/log/test.log"
   end
 end
