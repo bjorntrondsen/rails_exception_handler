@@ -1,6 +1,7 @@
 
+TEST_APP = 'testapp_30'
 ENV["RAILS_ENV"] = 'test'
-require File.expand_path(File.dirname(__FILE__)) + '/exception_handler_test_app/config/environment.rb'
+require File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/config/environment.rb"
 
 require File.expand_path(File.dirname(__FILE__)) + '/test_macros.rb'
 
