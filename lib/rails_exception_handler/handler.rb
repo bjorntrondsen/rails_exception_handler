@@ -7,7 +7,7 @@ class RailsExceptionHandler::Handler
     if(@env['action_controller.instance'])
       @controller = @env['action_controller.instance']
     else
-      @controller = ApplicationController.new(@env)
+      @controller = ApplicationController.new
       @controller.request = @request
     end
   end
