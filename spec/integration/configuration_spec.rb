@@ -104,7 +104,7 @@ describe RailsExceptionHandler::Configuration do
       RailsExceptionHandler.configure { |config| config.environments = [Rails.env.to_sym] }
       get('/incorrect_route')
       ErrorMessage.count.should == 1
-      last_response.body.should match(/this_is_the_application_view/)
+      last_response.body.should match(/this_is_the_fallback_layout/)
     end
 
     it "should log regular errors if the rails environment is included" do
@@ -112,7 +112,7 @@ describe RailsExceptionHandler::Configuration do
       RailsExceptionHandler.configure { |config| config.environments = [Rails.env.to_sym] }
       get('/home/model_error')
       ErrorMessage.count.should == 1
-      last_response.body.should match(/this_is_the_home_view/)
+      last_response.body.should match(/this_is_the_home_layout/)
     end
   end
 
@@ -120,7 +120,42 @@ describe RailsExceptionHandler::Configuration do
     it "should use the supplied layout on routing errors" do
       RailsExceptionHandler.configure { |config| config.fallback_layout = 'home' }
       get('/incorrect_route')
-      last_response.body.should match(/this_is_the_home_view/)
+      last_response.body.should match(/this_is_the_home_layout/)
+    end
+  end
+
+  describe ".store_user_info" do
+    it "should not store user info when disbled" do
+      RailsExceptionHandler.configure do |config|
+        config.environments = [Rails.env.to_sym]
+        config.storage_strategies = [:active_record]
+        config.store_user_info = nil
+      end
+      get('/incorrect_route')
+      ErrorMessage.count.should == 1
+      ErrorMessage.first.user_info.should == nil
+    end
+
+    it "should store user info on routing errors" do
+      RailsExceptionHandler.configure do |config|
+        config.environments = [Rails.env.to_sym]
+        config.storage_strategies = [:active_record]
+        config.store_user_info = {:method => :current_user, :field => :login}
+      end
+      get('/incorrect_route')
+      ErrorMessage.count.should == 1
+      ErrorMessage.first.user_info.should == 'matz'
+    end
+
+    it "should store user info on application errors" do
+      RailsExceptionHandler.configure do |config|
+        config.environments = [Rails.env.to_sym]
+        config.storage_strategies = [:active_record]
+        config.store_user_info = {:method => :current_user, :field => :login}
+      end
+      get('/home/view_error')
+      ErrorMessage.count.should == 1
+      ErrorMessage.first.user_info.should == 'matz'
     end
   end
 end

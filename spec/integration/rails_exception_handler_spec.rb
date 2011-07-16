@@ -38,12 +38,12 @@ describe RailsExceptionHandler do
 
   it "should append the failed controllers view layout when rendering the response" do
     get "/home/view_error"
-    last_response.body.should match(/this_is_the_home_view/)
+    last_response.body.should match(/this_is_the_home_layout/)
   end
 
   it "should fall back to using the application layout on routing errors" do
     get "/incorrect_route"
-    last_response.body.should match(/this_is_the_application_view/)
+    last_response.body.should match(/this_is_the_fallback_layout/)
   end
 
   it "should store the correct information in the database" do

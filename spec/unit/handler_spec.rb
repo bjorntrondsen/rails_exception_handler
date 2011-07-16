@@ -130,7 +130,7 @@ describe RailsExceptionHandler::Handler do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
-      env['exception_handler.layout'].should == 'application'
+      env['exception_handler.layout'].should == 'fallback'
     end
   end
 end
