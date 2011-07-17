@@ -53,11 +53,11 @@ class RailsExceptionHandler::Parser
     user_object ? user_object.send(config[:field]) : 'Anonymous'
   end
 
-  def filter_all_routing_errors
+  def filter_all_404s
     routing_error?
   end
 
-  def filter_routing_errors_without_referer
+  def filter_no_referer_404s
     routing_error? && blank_referer?
   end
 

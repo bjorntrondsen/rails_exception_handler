@@ -21,35 +21,35 @@ describe RailsExceptionHandler::Configuration do
   end
 
   describe '.filters' do
-    describe ":all_routing_errors" do
-      it "should ignore routing errors when the filters contains :all_routing_errors" do
-        RailsExceptionHandler.configure { |config| config.filters = [:all_routing_errors]}
+    describe ":all_404s" do
+      it "should ignore routing errors when the filters contains :all_404s" do
+        RailsExceptionHandler.configure { |config| config.filters = [:all_404s]}
         get('/incorrect_route')
         ErrorMessage.count.should == 0
       end
 
-      it "should not ignore routing errors when the filters doesnt contain :all_routing_errors" do
+      it "should not ignore routing errors when the filters doesnt contain :all_404s" do
         RailsExceptionHandler.configure { |config| config.filters = []}
         get('/incorrect_route')
         ErrorMessage.count.should == 1
       end
     end
 
-    describe ":routing_errors_without_referer" do
+    describe ":no_referer_404s" do
       it "should not store a routing error that contains a referer" do
-        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        RailsExceptionHandler.configure { |config| config.filters = [:no_referer_404s]}
         get "/incorrect_route"
         ErrorMessage.count.should == 0
       end
 
       it "should store a routing error that has a referer" do
-        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        RailsExceptionHandler.configure { |config| config.filters = [:no_referer_404s]}
         get "/incorrect_route", {}, {'HTTP_REFERER' => 'http://example.com'}
         ErrorMessage.count.should == 1
       end
 
       it "should store a non routing error without referer" do
-        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer]}
+        RailsExceptionHandler.configure { |config| config.filters = [:no_referer_404s]}
         get "/home/view_error"
         ErrorMessage.count.should == 1
       end

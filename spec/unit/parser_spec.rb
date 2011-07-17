@@ -24,16 +24,16 @@ describe RailsExceptionHandler::Parser do
 
   describe ".ignore?" do
     context "routing errors" do
-      it "should return true on routing errors when the filter contains :all_routing_errors" do
-        RailsExceptionHandler.configure { |config| config.filters = [:all_routing_errors] }
+      it "should return true on routing errors when the filter contains :all_404s" do
+        RailsExceptionHandler.configure { |config| config.filters = [:all_404s] }
         exception = create_exception
         exception.stub!(:class => ActionController::RoutingError)
         parser = create_parser(exception, nil, nil)
         parser.ignore?.should == true
       end
 
-      it "should return true on routing errors without referer when the filter contains :routing_errors_without_referer" do
-        RailsExceptionHandler.configure { |config| config.filters = [:routing_errors_without_referer] }
+      it "should return true on routing errors without referer when the filter contains :no_referer_404s" do
+        RailsExceptionHandler.configure { |config| config.filters = [:no_referer_404s] }
         exception = create_exception
         exception.stub!(:class => ActionController::RoutingError)
         request = ActionDispatch::Request.new(create_env(:referer => '/'))
