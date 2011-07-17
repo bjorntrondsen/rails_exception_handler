@@ -1,5 +1,5 @@
 before_script:
-  - "spec/exception_handler_test_app/script/setup"
+  - "spec/testapp_30/script/setup"
 
 notifications:
   disable: true
