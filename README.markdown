@@ -190,5 +190,5 @@ activesupport (3.0.7) lib/active_support/notifications.rb:54:in `instrument'
 ```ruby
 config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}]
 ```
-This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active_record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
+This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
 If you use a Rails app at the other end you should simply be able to do _ErrorMessage.create(params[:error_message])_ to save the report.
