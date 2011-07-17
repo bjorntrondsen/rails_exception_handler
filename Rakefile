@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'rubygems'
 require 'rake'
+require 'jeweler'
 
 task :default => :test
 
@@ -15,7 +16,6 @@ task :test do
   system "bundle exec rspec #{files.join(' ')}"
 end
 
-require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rails_exception_handler"
