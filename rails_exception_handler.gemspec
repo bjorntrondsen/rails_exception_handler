@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails_exception_handler}
-  s.version = "0.1.3"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = %q{2011-07-06}
+  s.date = %q{2011-07-17}
   s.description = %q{}
   s.email = %q{contact@sharagoz.com}
   s.extra_rdoc_files = [
@@ -31,41 +31,43 @@ Gem::Specification.new do |s|
     "lib/rails_exception_handler/handler.rb",
     "lib/rails_exception_handler/parser.rb",
     "rails_exception_handler.gemspec",
-    "spec/exception_handler_test_app/.gitignore",
-    "spec/exception_handler_test_app/Gemfile",
-    "spec/exception_handler_test_app/Gemfile.lock",
-    "spec/exception_handler_test_app/Rakefile",
-    "spec/exception_handler_test_app/app/controllers/application_controller.rb",
-    "spec/exception_handler_test_app/app/controllers/home_controller.rb",
-    "spec/exception_handler_test_app/app/helpers/application_helper.rb",
-    "spec/exception_handler_test_app/app/models/stored_exception.rb",
-    "spec/exception_handler_test_app/app/views/home/view_error.html.erb",
-    "spec/exception_handler_test_app/app/views/layouts/application.html.erb",
-    "spec/exception_handler_test_app/app/views/layouts/home.html.erb",
-    "spec/exception_handler_test_app/config.ru",
-    "spec/exception_handler_test_app/config/application.rb",
-    "spec/exception_handler_test_app/config/boot.rb",
-    "spec/exception_handler_test_app/config/environment.rb",
-    "spec/exception_handler_test_app/config/environments/development.rb",
-    "spec/exception_handler_test_app/config/environments/production.rb",
-    "spec/exception_handler_test_app/config/environments/test.rb",
-    "spec/exception_handler_test_app/config/examples/database.yml",
-    "spec/exception_handler_test_app/config/initializers/rails_exception_handler.rb",
-    "spec/exception_handler_test_app/config/locales/en.yml",
-    "spec/exception_handler_test_app/config/routes.rb",
-    "spec/exception_handler_test_app/db/migrate/20110630174538_create_error_messages.rb",
-    "spec/exception_handler_test_app/db/migrate/20110702131654_add_sessions_table.rb",
-    "spec/exception_handler_test_app/db/schema.rb",
-    "spec/exception_handler_test_app/db/seeds.rb",
-    "spec/exception_handler_test_app/lib/tasks/.gitkeep",
-    "spec/exception_handler_test_app/script/rails",
-    "spec/exception_handler_test_app/script/setup",
-    "spec/exception_handler_test_app/vendor/plugins/.gitkeep",
-    "spec/handler_spec.rb",
-    "spec/integration_spec.rb",
-    "spec/parser_spec.rb",
+    "spec/integration/configuration_spec.rb",
+    "spec/integration/rails_exception_handler_spec.rb",
     "spec/spec_helper.rb",
-    "spec/test_macros.rb"
+    "spec/test_macros.rb",
+    "spec/testapp_30/.gitignore",
+    "spec/testapp_30/Gemfile",
+    "spec/testapp_30/Gemfile.lock",
+    "spec/testapp_30/Rakefile",
+    "spec/testapp_30/app/controllers/application_controller.rb",
+    "spec/testapp_30/app/controllers/home_controller.rb",
+    "spec/testapp_30/app/helpers/application_helper.rb",
+    "spec/testapp_30/app/models/stored_exception.rb",
+    "spec/testapp_30/app/views/home/view_error.html.erb",
+    "spec/testapp_30/app/views/layouts/fallback.html.erb",
+    "spec/testapp_30/app/views/layouts/home.html.erb",
+    "spec/testapp_30/config.ru",
+    "spec/testapp_30/config/application.rb",
+    "spec/testapp_30/config/boot.rb",
+    "spec/testapp_30/config/database.yml",
+    "spec/testapp_30/config/environment.rb",
+    "spec/testapp_30/config/environments/development.rb",
+    "spec/testapp_30/config/environments/production.rb",
+    "spec/testapp_30/config/environments/test.rb",
+    "spec/testapp_30/config/examples/database.yml",
+    "spec/testapp_30/config/locales/en.yml",
+    "spec/testapp_30/config/routes.rb",
+    "spec/testapp_30/db/migrate/20110630174538_create_error_messages.rb",
+    "spec/testapp_30/db/migrate/20110702131654_add_sessions_table.rb",
+    "spec/testapp_30/db/schema.rb",
+    "spec/testapp_30/db/seeds.rb",
+    "spec/testapp_30/lib/tasks/.gitkeep",
+    "spec/testapp_30/script/rails",
+    "spec/testapp_30/script/setup",
+    "spec/testapp_30/vendor/plugins/.gitkeep",
+    "spec/unit/configuration_spec.rb",
+    "spec/unit/handler_spec.rb",
+    "spec/unit/parser_spec.rb"
   ]
   s.homepage = %q{http://github.com/Sharagoz/rails_exception_handler}
   s.licenses = ["MIT"]
