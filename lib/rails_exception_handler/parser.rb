@@ -26,7 +26,7 @@ class RailsExceptionHandler::Parser
       if(filter.class == Symbol)
         result = send("filter_#{filter}")
       elsif(filter.class == Hash)
-        result = send("filter_#{filter.flatten[0]}", filter.flatten[1])
+        result = send("filter_#{filter.keys[0]}", filter.values[0])
       else
         raise "RailsExceptionHandler: Unknown filter #{filter.inspect}"
       end
