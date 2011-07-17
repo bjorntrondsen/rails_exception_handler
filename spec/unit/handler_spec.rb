@@ -19,9 +19,18 @@ describe RailsExceptionHandler::Handler do
     it "should return a rack tripple" do
       response = @handler.handle_exception
       response.length.should == 3
-      response[0].should == 200 # response code
+      response[0].should == 500 # response code
       response[1].class.should == Hash # headers
       response[2].class.should == ActionDispatch::Response # body
+    end
+
+    it "should set the response code to 404 on routing errors" do
+      exception = create_exception
+      exception.stub!(:class => ActionController::RoutingError)
+      handler = RailsExceptionHandler::Handler.new(create_env, exception)
+      response = handler.handle_exception
+      response.length.should == 3
+      response[0].should == 404
     end
   end
 
@@ -98,7 +107,7 @@ describe RailsExceptionHandler::Handler do
 
   describe '.response' do
     it "should call index action on ErrorResponseController" do
-      ErrorResponseController.should_receive(:action).with(:index).and_return(mock(Object, :call => true))
+      ErrorResponseController.should_receive(:action).with(:index).and_return(mock(Object, :call => [500, {}, {}]))
       @handler.handle_exception
     end
 
