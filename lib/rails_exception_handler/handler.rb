@@ -64,6 +64,8 @@ class RailsExceptionHandler::Handler
   def response
     @env['exception_handler.layout'] = @controller.send(:_default_layout) || RailsExceptionHandler.configuration.fallback_layout
     @env['exception_handler.response_code'] = @parsed_error.routing_error? ? '404' : '500'
-    ErrorResponseController.action(:index).call(@env)
+    response = ErrorResponseController.action(:index).call(@env)
+    response[0] = @parsed_error.routing_error? ? 404 : 500
+    response
   end
 end
