@@ -13,7 +13,7 @@ describe RailsExceptionHandler::Configuration do
       get('/home/model_error')
       read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
       read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
-      read_test_log.should match /PARAMS:\s+{\"controller\"=>\"home\", \"action\"=>\"model_error\"}/
+      read_test_log.should match /PARAMS:\s+\{/
       read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\/model_error/
     end
 

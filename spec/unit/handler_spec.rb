@@ -54,7 +54,7 @@ describe RailsExceptionHandler::Handler do
       @handler.handle_exception
       read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
       read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
-      read_test_log.should match /PARAMS:\s+{\"foo\"=>\"bar\"}/
+      read_test_log.should match /PARAMS:\s+\{\"foo\"=>\"bar\"\}/
       read_test_log.should match /USER_AGENT:\s+Mozilla\/4.0 \(compatible; MSIE 8\.0\)/
       read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\?foo=bar/
       read_test_log.should match /REFERER:\s+http:\/\/google\.com\//
