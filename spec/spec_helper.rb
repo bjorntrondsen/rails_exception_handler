@@ -14,12 +14,11 @@ ActionController::Base.logger = nil
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include TestMacros
-  config.around do |example|
+  config.color_enabled = true
+  config.full_backtrace = true
+  config.before(:each) do
     ErrorMessage.delete_all
     clear_test_log
     reset_configuration
-    example.call
   end
-  config.color_enabled = true
-  config.full_backtrace = true
 end

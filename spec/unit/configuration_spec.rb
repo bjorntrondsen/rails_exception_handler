@@ -1,4 +1,4 @@
-
+require 'spec_helper'
 
 describe RailsExceptionHandler::Configuration do
   describe ".initialize" do
