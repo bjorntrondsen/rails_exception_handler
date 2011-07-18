@@ -30,13 +30,13 @@ RailsExceptionHandler.configure do |config|
   #   {:target_url_regxp => /\b(myphpadmin)\b/i}
   # ]
   # config.responses = {                                                    # There must be a default response. The rest is up to you.
-  #   :default => "<h1>500</h1><p>Internal server error</p>"
-  #   :custom => "<h1>404</h1><p>Page not found</p>",
+  #   :default => "<h1>500</h1><p>Internal server error</p>",
+  #   :custom => "<h1>404</h1><p>Page not found</p>"
   # }
   # config.response_mapping = {                                             # All errors are mapped to the :default response unless overridden here
   #  'ActiveRecord::RecordNotFound' => :not_found,
-  #  'ActionController:RoutingError' => :not_found,
-  #  'AbstractController::ActionNotFound' => :not_found,
+  #  'ActionController::RoutingError' => :not_found,
+  #  'AbstractController::ActionNotFound' => :not_found
   # }
 end
 ```
