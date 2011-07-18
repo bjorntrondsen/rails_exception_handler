@@ -11,8 +11,8 @@ class RailsExceptionHandler::Handler
       # in case they are used to set up the authentication mechanism that provides the current_user object
       @controller = ApplicationController.new
       @controller.request = @request
-      filters = @controller._process_action_callbacks.collect {|cb| cb.filter if(cb.kind == :before)}
-      filters.each { |filter| @controller.send(filter) }
+      filters = @controller._process_action_callbacks.collect {|cb| cb.filter if(cb.kind == :before && cb.filter.class == Symbol)}
+      filters.compact.each { |filter| @controller.send(filter) }
     end
   end
 
