@@ -34,9 +34,9 @@ RailsExceptionHandler.configure do |config|
   #   :custom => "<h1>404</h1><p>Page not found</p>"
   # }
   # config.response_mapping = {                                             # All errors are mapped to the :default response unless overridden here
-  #  'ActiveRecord::RecordNotFound' => :not_found,
-  #  'ActionController::RoutingError' => :not_found,
-  #  'AbstractController::ActionNotFound' => :not_found
+  #  'ActiveRecord::RecordNotFound' => :custom,
+  #  'ActionController::RoutingError' => :custom,
+  #  'AbstractController::ActionNotFound' => :custom
   # }
 end
 ```
