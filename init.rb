@@ -1,5 +1,5 @@
 begin
-  require File.join(File.dirname(__FILE__), 'lib', 'declarative_authorization')
+  require File.join(File.dirname(__FILE__), 'lib', 'rails_exception_handler')
 rescue LoadError
-  require 'declarative_authorization'
+  require 'rails_exception_handler'
 end
