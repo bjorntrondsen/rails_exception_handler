@@ -50,6 +50,8 @@ module TestMacros
       config.store_user_info = false
       config.filters = []
       config.fallback_layout = 'fallback'
+      config.response_mapping = {}
+      config.responses = { :default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
     end
   end
 

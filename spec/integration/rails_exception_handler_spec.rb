@@ -25,7 +25,7 @@ describe RailsExceptionHandler do
   it "should catch routing errors"  do
     get "/incorrect_route"
     ErrorMessage.count.should == 1
-    last_response.body.should match(/Page not found/)
+    last_response.body.should match(/Internal server error/)
     ErrorMessage.first.class_name.should == 'ActionController::RoutingError'
   end
 
