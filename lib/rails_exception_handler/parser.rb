@@ -49,7 +49,11 @@ class RailsExceptionHandler::Parser
   def user_info
     config = RailsExceptionHandler.configuration.store_user_info
     return nil unless(config)
-    user_object = @controller.send(config[:method])
+    begin
+      user_object = @controller.send(config[:method])
+    rescue
+      user_object = nil
+    end
     user_object ? user_object.send(config[:field]) : 'Anonymous'
   end
 
