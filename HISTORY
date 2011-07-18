@@ -1,6 +1,10 @@
 CHANGELOG
 
 
+v1.1.0 - 18. Jul 2011
+ - Better handling of ajax requests
+ - Exceptions can be mapped to specific responses
+
 v1.0.1 - 17. Jul 2011
 - Minor fix for 1.8.7 compatibility
 
