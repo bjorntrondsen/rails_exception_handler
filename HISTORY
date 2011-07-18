@@ -1,6 +1,9 @@
 CHANGELOG
 
 
+v1.1.1 - 18. Jul 2011
+ - Fixed issue related to the handling of routing errors
+
 v1.1.0 - 18. Jul 2011
  - Better handling of ajax requests
  - Exceptions can be mapped to specific responses
