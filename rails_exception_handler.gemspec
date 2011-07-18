@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "app/controllers/error_response_controller.rb",
     "app/models/error_message.rb",
+    "init.rb",
     "lib/patch/show_exceptions.rb",
     "lib/rails_exception_handler.rb",
     "lib/rails_exception_handler/configuration.rb",
