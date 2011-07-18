@@ -143,6 +143,33 @@ describe RailsExceptionHandler::Handler do
     end
   end
 
+  describe '.response_layout' do
+    it "should not set a layout for XHR requests" do
+      handler = RailsExceptionHandler::Handler.new(create_env, create_exception)
+      handler.handle_exception
+      request = handler.instance_variable_get(:@request)
+      request.stub!(:xhr? => true)
+      handler.instance_variable_set(:@request, request)
+      handler.send(:response_layout).should == false
+    end
+
+    it "should use the controllers default layout if it exists" do
+      env = create_env
+      controller = ApplicationController.new
+      controller.stub!(:_default_layout => 'home')
+      env['action_controller.instance'] = controller
+      handler = RailsExceptionHandler::Handler.new(env, create_exception)
+      handler.handle_exception
+      handler.send(:response_layout).should == 'home'
+    end
+
+    it "should use the fallback layout if the controller does not have a default layout" do
+      handler = RailsExceptionHandler::Handler.new(create_env, create_exception)
+      handler.handle_exception
+      handler.send(:response_layout).should == 'fallback'
+    end
+  end
+
   describe '.response_text' do
     it "should return the response mapped to the exception class if it exists" do
       RailsExceptionHandler.configure { |config|
