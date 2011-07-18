@@ -21,13 +21,6 @@ class RailsExceptionHandler
 
     Rails.configuration.action_dispatch.show_exceptions = true
     require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'
-
-    %w{ models controllers }.each do |dir|
-      path = File.join(File.dirname(__FILE__), '../app', dir)
-      $LOAD_PATH << path
-      ActiveSupport::Dependencies.autoload_paths << path
-      ActiveSupport::Dependencies.autoload_once_paths.delete(path)
-    end
   end
 end
 

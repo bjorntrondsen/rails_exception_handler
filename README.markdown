@@ -92,13 +92,15 @@ Create a set of responses and then map specific exceptions to these responses. T
 config.responses = {
   :default => "<h1>500</h1><p>Internal server error</p>",
   :not_found => "<h1>404</h1><p>Page not found</p>",
-  :wrong_token => "<h1>500</h1>There was a problem authenticating the submitted form. Reload the page and try again."
+  :wrong_token => "<h1>500</h1><p>There was a problem authenticating the submitted form. Reload the page and try again.</p>",
+  :teapot => "<h1>418</h1><p>I'm a teapot</p>"
 }
 config.response_mapping = {
  'ActiveRecord::RecordNotFound' => :not_found,
  'ActionController:RoutingError' => :not_found,
  'AbstractController::ActionNotFound' => :not_found,
- 'ActionController::InvalidAuthenticityToken' => :wrong_token
+ 'ActionController::InvalidAuthenticityToken' => :wrong_token,
+ 'Teapot::CoffeeGroundsNotSupported' => :teapot
 }
 ```
 
