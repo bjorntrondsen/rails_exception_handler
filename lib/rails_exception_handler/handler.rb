@@ -4,7 +4,18 @@ class RailsExceptionHandler::Handler
     @env = env
     @request = ActionDispatch::Request.new(@env)
     @parsed_error = nil
-    @controller = @env['action_controller.instance'] || ApplicationController.new
+    if(@env['action_controller.instance'])
+      @controller = @env['action_controller.instance']
+    else
+      # A routing error has occurred and no controller instance exists. Here I am firing off a 
+      # request to a dummy action that goes through the whole action dispatch stack, which will
+      # hopefully make sure that any authentication mechanism are properly initialized so that 
+      # we may get the current_user object later.
+      @controller = ErrorResponseController.new
+      @controller.request = @request
+      @controller.response = ActionDispatch::Response.new
+      @controller.process(:dummy_action)
+    end
   end
 
   def handle_exception
@@ -75,3 +86,4 @@ class RailsExceptionHandler::Handler
     return config.responses[key]
   end
 end
+

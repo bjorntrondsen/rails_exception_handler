@@ -1,6 +1,10 @@
 CHANGELOG
 
 
+HEAD
+ - It should now be able to store user_info on routing errors too
+ - The RailsExceptionHandler class have been turned into a rails engine so that the load path manipulation could be removed
+
 v1.1.1 - 18. Jul 2011
  - Fixed issue related to the handling of routing errors
 
