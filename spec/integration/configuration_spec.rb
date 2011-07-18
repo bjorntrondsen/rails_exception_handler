@@ -158,4 +158,27 @@ describe RailsExceptionHandler::Configuration do
       ErrorMessage.first.user_info.should == 'matz'
     end
   end
+
+  describe "reponses and response_mapping" do
+    it "should use the default response on non-mapped errors" do
+      RailsExceptionHandler.configure do |config|
+        config.environments = [Rails.env.to_sym]
+        config.storage_strategies = []
+        config.responses = {:default => 'Customized response'}
+      end
+      get('/home/view_error')
+      last_response.body.should match(/Customized response/)
+    end
+
+    it "should use mapped response where they exist" do
+      RailsExceptionHandler.configure do |config|
+        config.environments = [Rails.env.to_sym]
+        config.storage_strategies = []
+        config.responses[:not_found] = 'custom_routing_response_text'
+        config.response_mapping['ActionController::RoutingError'] = :not_found
+      end
+      get('/incorrect_route')
+      last_response.body.should match(/custom_routing_response_text/)
+    end
+  end
 end

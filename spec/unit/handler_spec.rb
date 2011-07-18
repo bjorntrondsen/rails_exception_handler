@@ -116,15 +116,15 @@ describe RailsExceptionHandler::Handler do
       env = create_env
       exception.stub!(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
-      handler.handle_exception
-      env['exception_handler.response_code'].should == '404'
+      response = handler.handle_exception
+      response[0].should == 404
     end
 
     it "should set response_code to '500' on all other errors" do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
-      handler.handle_exception
-      env['exception_handler.response_code'].should == '500'
+      response = handler.handle_exception
+      response[0].should == 500
     end
 
     it "should save the layout in env" do
@@ -140,6 +140,34 @@ describe RailsExceptionHandler::Handler do
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
       env['exception_handler.layout'].should == 'fallback'
+    end
+  end
+
+  describe '.response_text' do
+    it "should return the response mapped to the exception class if it exists" do
+      RailsExceptionHandler.configure { |config|
+        config.responses[:not_found] = 'Page not found'
+        config.response_mapping = {'ActiveRecord::RecordNotFound' => :not_found}
+      }
+      env = create_env
+      exception = create_exception
+      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      handler = RailsExceptionHandler::Handler.new(env, exception)
+      handler.handle_exception
+      handler.send(:response_text).should == 'Page not found'
+    end
+
+    it "should return the default response if a mapping does not exist" do
+      RailsExceptionHandler.configure { |config|
+        config.responses[:default] = 'Default response'
+        config.response_mapping = {}
+      }
+      env = create_env
+      exception = create_exception
+      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      handler = RailsExceptionHandler::Handler.new(env, exception)
+      handler.handle_exception
+      handler.send(:response_text).should == 'Default response'
     end
   end
 end

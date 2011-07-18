@@ -22,12 +22,12 @@ describe RailsExceptionHandler::Configuration do
       @configuration.filters.should == []
     end
 
-    it "should set the 404 response" do
-      @configuration.responses['404'].should match(/Page not found/)
+    it "should set the default response" do
+      @configuration.responses.should == {:default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
     end
 
-    it "should set the 500 response" do
-      @configuration.responses['500'].should match(/Internal server error/)
+    it "should set the reponse_mapping to {}" do
+      @configuration.response_mapping.should == {}
     end
 
     it "should set the fallback layout to 'application'" do
