@@ -1,19 +1,19 @@
 CHANGELOG
 
 
-HEAD
+v1.1.2 - July 19th 2011
  - It should now be able to store user_info on routing errors too
  - The RailsExceptionHandler class have been turned into a rails engine so that the load path manipulation could be removed
 
-v1.1.1 - 18. Jul 2011
+v1.1.1 - July 18th 2011
  - Fixed issue related to the handling of routing errors
 
-v1.1.0 - 18. Jul 2011
+v1.1.0 - July 18th 2011
  - Better handling of ajax requests
  - Exceptions can be mapped to specific responses
 
-v1.0.1 - 17. Jul 2011
+v1.0.1 - July 17th 2011
 - Minor fix for 1.8.7 compatibility
 
-v1.0.0 - 17. Jul 2011
+v1.0.0 - July 17th 2011
  - Initial release
