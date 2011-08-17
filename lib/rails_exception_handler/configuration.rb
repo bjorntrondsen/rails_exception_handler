@@ -10,4 +10,9 @@ class RailsExceptionHandler::Configuration
     @response_mapping = {}
     @responses = { :default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
   end
+
+  def active_record?
+    @storage_strategies.map { |s| s.has_key?(:remote_url) }.inject{ |i,o| i = i || o }
+  end
+
 end
