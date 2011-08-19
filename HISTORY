@@ -1,6 +1,10 @@
 CHANGELOG
 
 
+v1.1.3 - August 21st 2011
+ - Bug fixed where exception_database had to be configured even if active record storage was not chosen
+ - If public/500.html and/or public/400.html exists, these will be used as responses
+
 v1.1.2 - July 19th 2011
  - It should now be able to store user_info on routing errors too
  - The RailsExceptionHandler class have been turned into a rails engine so that the load path manipulation could be removed
