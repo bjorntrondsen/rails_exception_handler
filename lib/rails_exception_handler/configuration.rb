@@ -12,7 +12,7 @@ class RailsExceptionHandler::Configuration
   end
 
   def active_record?
-    @storage_strategies.map { |s| s.has_key?(:active_record) }.inject{ |i,o| i = i || o }
+    @storage_strategies.include?(:active_record)
   end
 
 end
