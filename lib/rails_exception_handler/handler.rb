@@ -67,7 +67,15 @@ class RailsExceptionHandler::Handler
     @env['exception_handler.layout'] = response_layout
     @env['exception_handler.response'] = response_text
     response = ErrorResponseController.action(:index).call(@env)
-    response[0] = @parsed_error.routing_error? ? 404 : 500
+    if @parsed_error.routing_error? 
+      response[0] = 404
+      file = "#{Rails.root}/public/404.html"
+      response[2].body = File.read(file) if File.exists?(file)
+    else
+      response[0] = 500
+      file = "#{Rails.root}/public/500.html"
+      response[2].body = File.read(file) if File.exists?(file)
+    end
     return response
   end
 
