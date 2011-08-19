@@ -8,7 +8,7 @@ class RailsExceptionHandler::Configuration
     @store_user_info = false
     @fallback_layout = 'application'
     @response_mapping = {}
-    @responses = { :default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
+    @responses = {}
   end
 
   def active_record?
