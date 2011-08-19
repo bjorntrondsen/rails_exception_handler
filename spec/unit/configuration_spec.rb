@@ -22,8 +22,8 @@ describe RailsExceptionHandler::Configuration do
       @configuration.filters.should == []
     end
 
-    it "should set the default response" do
-      @configuration.responses.should == {:default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
+    it "should initialize responses to an empty hash" do
+      @configuration.responses.should == {}
     end
 
     it "should set the reponse_mapping to {}" do
