@@ -1,7 +1,7 @@
 CHANGELOG
 
 
-v1.1.3 - August 21st 2011
+v1.2.0 - August 21st 2011
  - Bug fixed where exception_database had to be configured even if active record storage was not chosen
  - If public/500.html and/or public/400.html exists, these will be used as responses
 
