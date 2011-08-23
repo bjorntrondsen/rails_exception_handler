@@ -12,7 +12,7 @@ http://travis-ci.org/#!/Sharagoz/rails_exception_handler
 Add this line to your Gemfile:
 
 ```
-gem 'rails_exception_handler', '~> 1.0'
+gem 'rails_exception_handler', '~> 1.2'
 ```
 
 Create an initializer in **config/initializers** called **rails_exception_handler.rb** and uncomment the options where you want something other than the default:
