@@ -231,6 +231,7 @@ If you use a Rails app at the other end you should simply be able to do _ErrorMe
 David Rice
 
 Would you like to contribute? Here are some things on the todo list:
+
 * A mongoid storage strategy for those that wish to use MongoDB
 * An email storage strategy for those that wish to be notified of the exceptions through email
 * A front end module
