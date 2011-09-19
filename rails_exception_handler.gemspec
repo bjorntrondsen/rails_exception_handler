@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails_exception_handler}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Sharagoz"]
-  s.date = %q{2011-08-22}
+  s.authors = [%q{Sharagoz}]
+  s.date = %q{2011-09-19}
   s.description = %q{}
   s.email = %q{contact@sharagoz.com}
   s.extra_rdoc_files = [
@@ -71,9 +71,9 @@ Gem::Specification.new do |s|
     "spec/unit/parser_spec.rb"
   ]
   s.homepage = %q{http://github.com/Sharagoz/rails_exception_handler}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.8}
   s.summary = %q{Exception Handling for Rails 3}
 
   if s.respond_to? :specification_version then
