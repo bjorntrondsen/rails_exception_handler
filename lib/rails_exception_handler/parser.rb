@@ -36,8 +36,8 @@ class RailsExceptionHandler::Parser
   end
 
   def routing_error?
-    routing_errors = [ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound]
-    routing_errors.include?(@exception.class)
+    routing_errors = ['ActionController::RoutingError', 'AbstractController::ActionNotFound', 'ActiveRecord::RecordNotFound']
+    routing_errors.include?(@exception.class.to_s)
   end
 
   private
