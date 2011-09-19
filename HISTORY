@@ -1,7 +1,7 @@
 CHANGELOG
 
 
-HEAD
+v1.2.1 - September 19th 2011
  - Fixed a couple of issues that made the exception handler break if active record was not loaded
 
 v1.2.0 - August 21st 2011
