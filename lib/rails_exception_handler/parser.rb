@@ -40,6 +40,10 @@ class RailsExceptionHandler::Parser
     routing_errors.include?(@exception.class.to_s)
   end
 
+  def anon_user?
+    [nil,'Anonymous'].include?(user_info)
+  end
+
   private
 
   def blank_referer?
