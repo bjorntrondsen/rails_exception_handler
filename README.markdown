@@ -122,7 +122,7 @@ config.filters = [:all_404s]
 When turned on the following exceptions will no longer be stored: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
 Consider this a last resort. You will miss all "real" 404s when this is turned on, like broken redirections.
 
-**:all_404s**
+**:anon_404s**
 
 ```ruby
 config.filters = [:anon_404s]
