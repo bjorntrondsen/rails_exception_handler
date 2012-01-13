@@ -53,6 +53,7 @@ describe RailsExceptionHandler::Configuration do
         get "/home/view_error"
         ErrorMessage.count.should == 1
       end
+
     end
 
     describe ":user_agent_regxp" do
@@ -79,6 +80,41 @@ describe RailsExceptionHandler::Configuration do
       it "should store the error message when the url doesnt matche this regxp" do
         RailsExceptionHandler.configure { |config| config.filters = [:target_url_regxp => /\b(phpMyAdmin)\b/]}
         get "/incorrect_route"
+        ErrorMessage.count.should == 1
+      end
+    end
+
+    describe ":anon_404s" do
+      it "should log a 404 from a logged in user" do
+        RailsExceptionHandler.configure do |config|
+          config.environments = [Rails.env.to_sym]
+          config.storage_strategies = [:active_record]
+          config.store_user_info = {:method => :current_user, :field => :login}
+          config.filters = [:anon_404s]
+        end
+        get "/incorrect_route"
+        ErrorMessage.count.should == 1
+      end
+
+      it "should filter 404s from anonymous users" do
+        RailsExceptionHandler.configure do |config|
+          config.environments = [Rails.env.to_sym]
+          config.storage_strategies = [:active_record]
+          config.store_user_info = {:method => :nil_user, :field => :login}
+          config.filters = [:anon_404s]
+        end
+        get "/incorrect_route"
+        ErrorMessage.count.should == 0
+      end
+
+      it "should not filter 500s from anonymous users" do
+        RailsExceptionHandler.configure do |config|
+          config.environments = [Rails.env.to_sym]
+          config.storage_strategies = [:active_record]
+          config.store_user_info = {:method => :nil_user, :field => :login}
+          config.filters = [:anon_404s]
+        end
+        get "/home/model_error"
         ErrorMessage.count.should == 1
       end
     end

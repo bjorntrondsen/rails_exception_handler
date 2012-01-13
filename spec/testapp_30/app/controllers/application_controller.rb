@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
     return mock
   end
 
+  def nil_user
+    return nil
+  end
+
 end
