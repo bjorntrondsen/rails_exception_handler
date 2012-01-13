@@ -4,7 +4,7 @@ This is an exception handler for Rails 3 built as Rack middleware. It enables yo
 
 ## Compatiblity
 
-The gem is tested against Rails 3.0.9. It does not work with Rails 2.
+The gem should work with all versions of Rails 3. It does not work with Rails 2.
 See travis-ci for info on which rubies it is tested against:
 http://travis-ci.org/#!/Sharagoz/rails_exception_handler
 
@@ -26,6 +26,7 @@ RailsExceptionHandler.configure do |config|
   # config.filters = [                                                      # No filters are  enabled by default
   #   :all_404s,
   #   :no_referer_404s,
+  #   :anon_404s,
   #   {:user_agent_regxp => /\b(ApptusBot|TurnitinBot|DotBot|SiteBot)\b/i},
   #   {:target_url_regxp => /\b(myphpadmin)\b/i}
   # ]
@@ -120,6 +121,14 @@ config.filters = [:all_404s]
 
 When turned on the following exceptions will no longer be stored: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
 Consider this a last resort. You will miss all "real" 404s when this is turned on, like broken redirections.
+
+**:all_404s**
+
+```ruby
+config.filters = [:anon_404s]
+```
+
+When turned on the following exceptions will no longer be stored unless a user is logged in: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
 
 **:no_referer_404s**
 

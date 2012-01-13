@@ -65,6 +65,10 @@ class RailsExceptionHandler::Parser
     routing_error? && blank_referer?
   end
 
+  def filter_anon_404s
+    routing_error? && anon_user?
+  end
+
   def filter_user_agent_regxp(regxp)
     result = relevant_info[:user_agent].match(regxp)
     result != nil
