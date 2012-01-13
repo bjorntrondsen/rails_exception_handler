@@ -109,4 +109,28 @@ describe RailsExceptionHandler::Parser do
       parser.relevant_info[:user_info].should == nil
     end
   end
+
+  describe "anon_user?" do
+    it "should return true if user_info is nil" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = false}
+      controller = mock(ApplicationController)
+      parser = create_parser(nil, nil, controller)
+      parser.anon_user?.should be_true
+    end
+
+    it "should return true if user_info is 'Anonymous'" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
+      controller = mock(ApplicationController, :current_user => nil)
+      parser = create_parser(nil, nil, controller)
+      parser.relevant_info[:user_info].should == 'Anonymous'
+      parser.anon_user?.should be_true
+    end
+
+    it "should return false if user info is present" do
+      RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
+      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+      parser = create_parser(nil, nil, controller)
+      parser.anon_user?.should be_false
+    end
+  end
 end
