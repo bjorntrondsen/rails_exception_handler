@@ -83,7 +83,13 @@ class RailsExceptionHandler::Handler
     if(@request.xhr?)
       false
     else
-      @controller.send(:_default_layout) || RailsExceptionHandler.configuration.fallback_layout
+      default_layout = @controller.send(:_default_layout)
+      if(default_layout.class.to_s == "ActionView::Template")
+        layout = default_layout.virtual_path
+      else
+        layout = default_layout
+      end
+      layout || RailsExceptionHandler.configuration.fallback_layout
     end
   end
 
