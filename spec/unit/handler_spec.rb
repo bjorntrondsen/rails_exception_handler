@@ -43,7 +43,7 @@ describe RailsExceptionHandler::Handler do
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
       msg.message.should ==       "undefined method `foo' for nil:NilClass"
-      msg.trace.should match      /active_support\/whiny_nil/
+      msg.trace.should match      /spec\/test_macros\.rb:28/
       msg.params.should match     /\"foo\"=>\"bar\"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
       msg.target_url.should ==    'http://example.org/home?foo=bar'
@@ -62,7 +62,7 @@ describe RailsExceptionHandler::Handler do
       read_test_log.should == ''
       @handler.handle_exception
       read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
-      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      read_test_log.should match /spec\/test_macros\.rb:28/
       read_test_log.should match /PARAMS:\s+\{\"foo\"=>\"bar\"\}/
       read_test_log.should match /USER_AGENT:\s+Mozilla\/4.0 \(compatible; MSIE 8\.0\)/
       read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\?foo=bar/
@@ -130,14 +130,18 @@ describe RailsExceptionHandler::Handler do
     it "should save the layout in env" do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
-      handler.instance_variable_set("@controller",mock(Object, :_default_layout => 'home'))
       handler.handle_exception
-      env['exception_handler.layout'].should == 'home'
+      if Rails.version == '3.2.0'
+        env['exception_handler.layout'].should == 'layouts/application'
+      else
+        env['exception_handler.layout'].should == 'application'
+      end
     end
 
     it "should use the fallback layout when no layout is defined" do
-      env = create_env
+      env = create_env(:target => '/routing_error')
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
+      handler.instance_variable_set("@controller",mock(Object, :_default_layout => nil))
       handler.handle_exception
       env['exception_handler.layout'].should == 'fallback'
     end
@@ -154,17 +158,21 @@ describe RailsExceptionHandler::Handler do
     end
 
     it "should use the controllers default layout if it exists" do
-      env = create_env
-      controller = ApplicationController.new
-      controller.stub!(:_default_layout => 'home')
-      env['action_controller.instance'] = controller
-      handler = RailsExceptionHandler::Handler.new(env, create_exception)
+      handler = RailsExceptionHandler::Handler.new(create_env(:target => '/routing_error'), create_exception)
       handler.handle_exception
-      handler.send(:response_layout).should == 'home'
+      if Rails.version == '3.2.0'
+        handler.send(:response_layout).should == 'layouts/application'
+      else
+        handler.send(:response_layout).should == 'application'
+      end
     end
 
     it "should use the fallback layout if the controller does not have a default layout" do
-      handler = RailsExceptionHandler::Handler.new(create_env, create_exception)
+      env = create_env
+      controller = ApplicationController.new
+      controller.stub!(:_default_layout => 'fallback')
+      env['action_controller.instance'] = controller
+      handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
       handler.send(:response_layout).should == 'fallback'
     end

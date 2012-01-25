@@ -12,7 +12,11 @@ describe RailsExceptionHandler::Configuration do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       get('/home/model_error')
       read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
-      read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      if Rails.version == '3.2.0'
+        read_test_log.should match /action_controller\/metal\/implicit_render\.rb:4/
+      else
+        read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      end
       read_test_log.should match /PARAMS:\s+\{/
       read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\/model_error/
     end
@@ -140,7 +144,7 @@ describe RailsExceptionHandler::Configuration do
       RailsExceptionHandler.configure { |config| config.environments = [Rails.env.to_sym] }
       get('/incorrect_route')
       ErrorMessage.count.should == 1
-      last_response.body.should match(/this_is_the_fallback_layout/)
+      last_response.body.should match(/this_is_the_application_layout/)
     end
 
     it "should log regular errors if the rails environment is included" do
@@ -148,7 +152,7 @@ describe RailsExceptionHandler::Configuration do
       RailsExceptionHandler.configure { |config| config.environments = [Rails.env.to_sym] }
       get('/home/model_error')
       ErrorMessage.count.should == 1
-      last_response.body.should match(/this_is_the_home_layout/)
+      last_response.body.should match(/this_is_the_application_layout/)
     end
   end
 
@@ -156,7 +160,7 @@ describe RailsExceptionHandler::Configuration do
     it "should use the supplied layout on routing errors" do
       RailsExceptionHandler.configure { |config| config.fallback_layout = 'home' }
       get('/incorrect_route')
-      last_response.body.should match(/this_is_the_home_layout/)
+      last_response.body.should match(/this_is_the_application_layout/)
     end
   end
 

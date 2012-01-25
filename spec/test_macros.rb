@@ -9,8 +9,9 @@ module TestMacros
   def create_env(*args)
     options = args.extract_options!
     referer = options[:referer] || 'http://google.com/'
+    target = options[:target] || '/home'
     s = Rack::Test::Session.new(nil)
-    env = s.send(:env_for,'/home', {:params => {:foo => 'bar'}, 'HTTP_REFERER' => referer, 'HTTP_USER_AGENT' => "Mozilla/4.0 (compatible; MSIE 8.0)"})
+    env = s.send(:env_for, target, {:params => {:foo => 'bar'}, 'HTTP_REFERER' => referer, 'HTTP_USER_AGENT' => "Mozilla/4.0 (compatible; MSIE 8.0)"})
   end
 
   def create_parser(exception = nil, request = nil, controller = nil)

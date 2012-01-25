@@ -12,7 +12,7 @@ describe RailsExceptionHandler::Parser do
     it("should return app_name") { @parser.relevant_info[:app_name].should == 'ExceptionHandlerTestApp' }
     it("should return class_name") { @parser.relevant_info[:class_name].should == 'NoMethodError' }
     it("should return message") { @parser.relevant_info[:message].should == "undefined method `foo' for nil:NilClass" }
-    it("should return trace") { @parser.relevant_info[:trace].should match /active_support\/whiny_nil/ }
+    it("should return trace") { @parser.relevant_info[:trace].should match /spec\/test_macros\.rb:28/ }
     it("should return target_url") { @parser.relevant_info[:target_url].should == 'http://example.org/home?foo=bar' }
     it("should return referer_url") { @parser.relevant_info[:referer_url].should == 'http://google.com/' }
     it("should return params") { @parser.relevant_info[:params].should match(/\"foo\"=>\"bar\"/) }
