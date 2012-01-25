@@ -1,5 +1,5 @@
 
-TEST_APP = 'testapp_30'
+TEST_APP = 'testapp_32'
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/config/environment.rb"
 
