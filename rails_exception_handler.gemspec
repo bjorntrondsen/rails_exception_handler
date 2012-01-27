@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rails_exception_handler"
-  s.version = "1.3.0"
+  s.version = "1.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2012-01-13"
+  s.date = "2012-01-27"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -46,8 +46,9 @@ Gem::Specification.new do |s|
     "spec/testapp_30/app/helpers/application_helper.rb",
     "spec/testapp_30/app/models/stored_exception.rb",
     "spec/testapp_30/app/views/home/view_error.html.erb",
+    "spec/testapp_30/app/views/layouts/application.html.erb",
+    "spec/testapp_30/app/views/layouts/custom.html.erb",
     "spec/testapp_30/app/views/layouts/fallback.html.erb",
-    "spec/testapp_30/app/views/layouts/home.html.erb",
     "spec/testapp_30/config.ru",
     "spec/testapp_30/config/application.rb",
     "spec/testapp_30/config/boot.rb",
@@ -66,6 +67,41 @@ Gem::Specification.new do |s|
     "spec/testapp_30/script/rails",
     "spec/testapp_30/script/setup",
     "spec/testapp_30/vendor/plugins/.gitkeep",
+    "spec/testapp_32/.gitignore",
+    "spec/testapp_32/Gemfile",
+    "spec/testapp_32/Gemfile.lock",
+    "spec/testapp_32/README.rdoc",
+    "spec/testapp_32/Rakefile",
+    "spec/testapp_32/app/assets/images/rails.png",
+    "spec/testapp_32/app/assets/javascripts/application.js",
+    "spec/testapp_32/app/assets/stylesheets/application.css",
+    "spec/testapp_32/app/controllers/application_controller.rb",
+    "spec/testapp_32/app/controllers/home_controller.rb",
+    "spec/testapp_32/app/helpers/application_helper.rb",
+    "spec/testapp_32/app/mailers/.gitkeep",
+    "spec/testapp_32/app/models/.gitkeep",
+    "spec/testapp_32/app/models/stored_exception.rb",
+    "spec/testapp_32/app/views/home/view_error.html.erb",
+    "spec/testapp_32/app/views/layouts/application.html.erb",
+    "spec/testapp_32/app/views/layouts/custom.html.erb",
+    "spec/testapp_32/app/views/layouts/fallback.html.erb",
+    "spec/testapp_32/config.ru",
+    "spec/testapp_32/config/application.rb",
+    "spec/testapp_32/config/boot.rb",
+    "spec/testapp_32/config/environment.rb",
+    "spec/testapp_32/config/environments/development.rb",
+    "spec/testapp_32/config/environments/production.rb",
+    "spec/testapp_32/config/environments/test.rb",
+    "spec/testapp_32/config/locales/en.yml",
+    "spec/testapp_32/config/routes.rb",
+    "spec/testapp_32/db/seeds.rb",
+    "spec/testapp_32/lib/assets/.gitkeep",
+    "spec/testapp_32/lib/tasks/.gitkeep",
+    "spec/testapp_32/log/.gitkeep",
+    "spec/testapp_32/script/rails",
+    "spec/testapp_32/vendor/assets/javascripts/.gitkeep",
+    "spec/testapp_32/vendor/assets/stylesheets/.gitkeep",
+    "spec/testapp_32/vendor/plugins/.gitkeep",
     "spec/unit/configuration_spec.rb",
     "spec/unit/handler_spec.rb",
     "spec/unit/parser_spec.rb"
@@ -73,30 +109,30 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.15"
   s.summary = "Exception Handling for Rails 3"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, ["= 3.0.9"])
-      s.add_development_dependency(%q<rspec-rails>, [">= 0"])
+      s.add_development_dependency(%q<rails>, ["= 3.0.11"])
       s.add_development_dependency(%q<rack-test>, ["= 0.5.7"])
       s.add_development_dependency(%q<mysql2>, ["= 0.2.6"])
+      s.add_development_dependency(%q<rspec-rails>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.0.9"])
-      s.add_dependency(%q<rspec-rails>, [">= 0"])
+      s.add_dependency(%q<rails>, ["= 3.0.11"])
       s.add_dependency(%q<rack-test>, ["= 0.5.7"])
       s.add_dependency(%q<mysql2>, ["= 0.2.6"])
+      s.add_dependency(%q<rspec-rails>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.0.9"])
-    s.add_dependency(%q<rspec-rails>, [">= 0"])
+    s.add_dependency(%q<rails>, ["= 3.0.11"])
     s.add_dependency(%q<rack-test>, ["= 0.5.7"])
     s.add_dependency(%q<mysql2>, ["= 0.2.6"])
+    s.add_dependency(%q<rspec-rails>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
   end
 end
