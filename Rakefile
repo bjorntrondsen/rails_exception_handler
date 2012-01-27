@@ -27,6 +27,7 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Sharagoz"]
   gem.extra_rdoc_files = ['README.markdown']
   gem.require_paths = ["lib"]
+  gem.files.exclude 'spec'
 
   # dependencies defined in Gemfile
 end
