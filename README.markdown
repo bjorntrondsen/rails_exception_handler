@@ -110,8 +110,7 @@ config.response_mapping = {
 ### filters
 
 All filters are disabled by default. I recommend you deploy your application this way, and then add filters as they become necessary.
-The only reason I've ever wanted filtering have been due to what seem like poorly programmed web crawlers and black bots probing for security holes.
-Every once in a while I'll get dozens of errors within a few minutes caused by a bot looking for things like Joomla/Wordpress libraries with known security holes, or a web crawler that follows the target of forms.
+The only reason I've ever wanted filtering have been due to what seem like poorly programmed web crawlers and black bots probing for security holes. If legitimate web crawlers are a problem for you, look into tweaking your robots.txt file before enabling exception filters.
 
 **:all_404s**
 
@@ -141,22 +140,20 @@ This is very effective against bots. 99.9% of the time a routing error with no r
 
 **:user_agent_regxp**
 
-The legit bots usually adds something to the user agent string that lets you identify them. You can use this to filter out the errors they genereate, and be pretty sure you are not going to get any false positives.
-The regular expression I use looks something like this:
+Legit software will usually add something to the user agent string to let you know who they are. You can use this to filter out the errors they generate, and be pretty sure you are not going to get any false positives.
 
 ```ruby
-config.filters = [:user_agent_regxp => /\b(ZyBorg|Yandex|Jyxobot|Huaweisymantecspider|ApptusBot|TurnitinBot|DotBot)\b/i]
+config.filters = [:user_agent_regxp => /\b(ZyBorg|Yandex|Jyxobot)\b/i]
 ```
 
 If you (like me) dont know regular expressions by heart, then http://www.rubular.com/ is great tool to use when creating a regxp.
 
 **:target_url_regxp**
 
-Sometimes the bad bots add a common user agent string and a referer to their requests, which makes it hard to filter them without filtering all routing errors. I guess they do this to make it look less suspicious.
-What you can often do is to filter on what they target, which is usually security holes in some well known library like phpMyAdmin.
+Sometimes black bots add a common user agent string and a referer to their requests to cloak themselfs, which makes it hard to filter them without filtering all routing errors. What you can often do is to filter on what they target, which is usually security holes in some well known library/plugin (usually in php). The example below will filter out all URLs containing ".php". This is the filter I most commonly use myself. Without it, it is only a matter of time before I'll one day get 200 exceptions in 10mins caused by a bot looking for security holes in myPhpAdmin or some other PHP plugin.
 
 ```ruby
-config.filters = [:target_url_regxp => /\b(phpMyAdmin|joomla|wordpress)\b/i]
+config.filters = [:target_url_regxp => /\.php/i]
 ```
 
 ## Storage strategy - active record
