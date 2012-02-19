@@ -2,6 +2,9 @@
 
 This is an exception handler for Rails 3 built as Rack middleware. It enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this gem into all your rails apps and gather the exception reports in one place. This gem just contains the back end. You will have to create your own front end to view and manage the error reports.
 
+Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
+Do you need to catch ruby errors outside of Rack? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Manual-exception-handling-outside-of-rack)
+
 ## Compatiblity
 
 The gem should work with all versions of Rails 3. It does not work with Rails 2.
