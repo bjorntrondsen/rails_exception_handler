@@ -1,11 +1,11 @@
 # Rails Exception Handler [![Build Status](http://travis-ci.org/Sharagoz/rails_execption_handler.png)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
 
-This is an exception handler for Rails 3 built as Rack middleware. It enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this gem into all your rails apps and gather the exception reports in one place. If you make yourself a simple web front on top of that you have a user friendly way of keeping track of exceptions raised by your rails apps.
+This is an exception handler for Rails 3 built as Rack middleware. It enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this gem into all your rails apps and gather the exception reports in one place. This gem just contains the back end. You will have to create your own front end to view and manage the error reports.
 
 ## Compatiblity
 
 The gem should work with all versions of Rails 3. It does not work with Rails 2.
-See travis-ci for info on which rubies it is tested against:
+See Travis-CI for info on which rubies it is tested against:
 http://travis-ci.org/#!/Sharagoz/rails_exception_handler
 
 ## Installation
@@ -240,7 +240,6 @@ Would you like to contribute? Here are some things on the todo list:
 
 * A mongoid storage strategy for those that wish to use MongoDB
 * An email storage strategy for those that wish to be notified of the exceptions through email
-* A front end module
 
 ## Licence
 
