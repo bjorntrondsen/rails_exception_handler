@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rails_exception_handler"
-  s.version = "1.3.2"
+  s.version = "1.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2012-01-27"
+  s.date = "2012-03-10"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -33,47 +33,50 @@ Gem::Specification.new do |s|
     "lib/rails_exception_handler/handler.rb",
     "lib/rails_exception_handler/parser.rb",
     "rails_exception_handler.gemspec",
-    "spec/testapp_30/.gitignore",
-    "spec/testapp_30/lib/tasks/.gitkeep",
-    "spec/testapp_30/vendor/plugins/.gitkeep",
-    "spec/testapp_32/.gitignore",
-    "spec/testapp_32/app/mailers/.gitkeep",
-    "spec/testapp_32/app/models/.gitkeep",
-    "spec/testapp_32/lib/assets/.gitkeep",
-    "spec/testapp_32/lib/tasks/.gitkeep",
-    "spec/testapp_32/log/.gitkeep",
-    "spec/testapp_32/vendor/assets/javascripts/.gitkeep",
-    "spec/testapp_32/vendor/assets/stylesheets/.gitkeep",
-    "spec/testapp_32/vendor/plugins/.gitkeep"
+    "spec/dummy_30/.gitignore",
+    "spec/dummy_30/lib/tasks/.gitkeep",
+    "spec/dummy_30/vendor/plugins/.gitkeep",
+    "spec/dummy_32/.gitignore",
+    "spec/dummy_32/app/mailers/.gitkeep",
+    "spec/dummy_32/app/models/.gitkeep",
+    "spec/dummy_32/lib/assets/.gitkeep",
+    "spec/dummy_32/lib/tasks/.gitkeep",
+    "spec/dummy_32/log/.gitkeep",
+    "spec/dummy_32/vendor/assets/javascripts/.gitkeep",
+    "spec/dummy_32/vendor/assets/stylesheets/.gitkeep",
+    "spec/dummy_32/vendor/plugins/.gitkeep"
   ]
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.17"
   s.summary = "Exception Handling for Rails 3"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, ["= 3.0.11"])
+      s.add_development_dependency(%q<rails>, ["= 3.0.12"])
       s.add_development_dependency(%q<rack-test>, ["= 0.5.7"])
       s.add_development_dependency(%q<mysql2>, ["= 0.2.6"])
       s.add_development_dependency(%q<rspec-rails>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<rails_exception_handler>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.0.11"])
+      s.add_dependency(%q<rails>, ["= 3.0.12"])
       s.add_dependency(%q<rack-test>, ["= 0.5.7"])
       s.add_dependency(%q<mysql2>, ["= 0.2.6"])
       s.add_dependency(%q<rspec-rails>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<rails_exception_handler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.0.11"])
+    s.add_dependency(%q<rails>, ["= 3.0.12"])
     s.add_dependency(%q<rack-test>, ["= 0.5.7"])
     s.add_dependency(%q<mysql2>, ["= 0.2.6"])
     s.add_dependency(%q<rspec-rails>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<rails_exception_handler>, [">= 0"])
   end
 end
 
