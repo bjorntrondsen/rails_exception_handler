@@ -1,5 +1,5 @@
 before_script:
-  - "spec/testapp_30/script/setup"
+  - "spec/dummy_30/script/setup"
 
 notifications:
   disable: true
