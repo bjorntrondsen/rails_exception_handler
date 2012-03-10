@@ -42,3 +42,8 @@ module ExceptionHandlerTestApp
     config.session_store :active_record_store
   end
 end
+
+RailsExceptionHandler.configure do |config|
+  config.environments = [:test]
+  config.storage_strategies = [:active_record]
+end
