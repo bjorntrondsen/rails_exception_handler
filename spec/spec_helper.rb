@@ -3,10 +3,10 @@ ENV["RAILS_ENV"] = 'test'
 
 require 'rails'
 if(Rails::VERSION::MINOR > 1)
-  puts "Testing a against rails 3.2 dummy app"
+  puts "Testing against a rails 3.2 dummy app"
   TEST_APP = 'dummy_32'
 else
-  puts "Testing a against rails 3.0 dummy app"
+  puts "Testing against a rails 3.0 dummy app"
   TEST_APP = 'dummy_30'
 end
 require File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/config/environment.rb"
