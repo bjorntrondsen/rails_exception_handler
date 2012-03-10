@@ -42,6 +42,9 @@ RailsExceptionHandler.configure do |config|
   #  'ActionController::RoutingError' => :custom,
   #  'AbstractController::ActionNotFound' => :custom
   # }
+  # config.after_initialize do
+  #   # this block will be called after the initialization is done
+  # end
 end
 ```
 
@@ -109,6 +112,10 @@ config.response_mapping = {
  'Teapot::CoffeeGroundsNotSupported' => :teapot
 }
 ```
+
+### after_initialize
+
+This callback exists in case you need to do something right after the initializer has been run, for instance [interact with an authorization mechanism](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
 ### filters
 
