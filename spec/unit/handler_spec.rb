@@ -131,7 +131,7 @@ describe RailsExceptionHandler::Handler do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
-      if Rails.version == '3.2.0'
+      if TEST_APP == 'dummy_32'
         env['exception_handler.layout'].should == 'layouts/application'
       else
         env['exception_handler.layout'].should == 'application'
@@ -160,7 +160,7 @@ describe RailsExceptionHandler::Handler do
     it "should use the controllers default layout if it exists" do
       handler = RailsExceptionHandler::Handler.new(create_env(:target => '/routing_error'), create_exception)
       handler.handle_exception
-      if Rails.version == '3.2.0'
+      if TEST_APP == 'dummy_32'
         handler.send(:response_layout).should == 'layouts/application'
       else
         handler.send(:response_layout).should == 'application'
