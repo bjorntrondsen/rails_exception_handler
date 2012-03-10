@@ -23,6 +23,7 @@ class RailsExceptionHandler
     Rails.configuration.action_dispatch.show_exceptions = true
     Rails.configuration.consider_all_requests_local = false
     require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'
+    configuration.run_callback
   end
 end
 

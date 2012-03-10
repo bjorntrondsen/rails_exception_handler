@@ -18,4 +18,13 @@ class RailsExceptionHandler::Configuration
   def activate?
     environments.include?(Rails.env.to_sym)
   end
+
+  def after_initialize(&block)
+    @callback = block
+  end
+
+  def run_callback
+    @callback.call if(@callback)
+  end
+
 end
