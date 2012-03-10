@@ -15,4 +15,7 @@ class RailsExceptionHandler::Configuration
     @storage_strategies.include?(:active_record)
   end
 
+  def activate?
+    environments.include?(Rails.env.to_sym)
+  end
 end
