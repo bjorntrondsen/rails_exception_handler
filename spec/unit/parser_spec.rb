@@ -5,21 +5,21 @@ describe RailsExceptionHandler::Parser do
     env = create_env
     controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
     request = ActionDispatch::Request.new(env)
-    @parser = RailsExceptionHandler::Parser.new(create_exception, request, controller)
+    @parser = RailsExceptionHandler::Parser.new(env, request, create_exception, controller)
   end
 
-  describe ".relevant_info" do
-    it("should return app_name") { @parser.relevant_info[:app_name].should == 'ExceptionHandlerTestApp' }
-    it("should return class_name") { @parser.relevant_info[:class_name].should == 'NoMethodError' }
-    it("should return message") { @parser.relevant_info[:message].should == "undefined method `foo' for nil:NilClass" }
-    it("should return trace") { @parser.relevant_info[:trace].should match /spec\/test_macros\.rb:28/ }
-    it("should return target_url") { @parser.relevant_info[:target_url].should == 'http://example.org/home?foo=bar' }
-    it("should return referer_url") { @parser.relevant_info[:referer_url].should == 'http://google.com/' }
-    it("should return params") { @parser.relevant_info[:params].should match(/\"foo\"=>\"bar\"/) }
-    it("should return user_agent") { @parser.relevant_info[:user_agent].should == "Mozilla/4.0 (compatible; MSIE 8.0)" }
-    it("should return user_info") { @parser.relevant_info[:user_info].should == nil }
-    it("should return created_at") { @parser.relevant_info[:created_at].should be > 5.seconds.ago }
-    it("should return created_at") { @parser.relevant_info[:created_at].should be < Time.now }
+  describe ".external_info" do
+    it("should return app_name") { @parser.external_info[:app_name].should == 'ExceptionHandlerTestApp' }
+    it("should return class_name") { @parser.external_info[:class_name].should == 'NoMethodError' }
+    it("should return message") { @parser.external_info[:message].should == "undefined method `foo' for nil:NilClass" }
+    it("should return trace") { @parser.external_info[:trace].should match /spec\/test_macros\.rb:28/ }
+    it("should return target_url") { @parser.external_info[:target_url].should == 'http://example.org/home?foo=bar' }
+    it("should return referer_url") { @parser.external_info[:referer_url].should == 'http://google.com/' }
+    it("should return params") { @parser.external_info[:params].should match(/\"foo\"=>\"bar\"/) }
+    it("should return user_agent") { @parser.external_info[:user_agent].should == "Mozilla/4.0 (compatible; MSIE 8.0)" }
+    it("should return user_info") { @parser.external_info[:user_info].should == nil }
+    it("should return created_at") { @parser.external_info[:created_at].should be > 5.seconds.ago }
+    it("should return created_at") { @parser.external_info[:created_at].should be < Time.now }
   end
 
   describe ".ignore?" do
@@ -93,20 +93,20 @@ describe RailsExceptionHandler::Parser do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
       controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
-      parser.relevant_info[:user_info].should == 'matz'
+      parser.external_info[:user_info].should == 'matz'
     end
     it "should store 'Anonymous' when store_user_info is enabled and no user is logged in" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
       controller = mock(ApplicationController, :current_user => nil)
       parser = create_parser(nil, nil, controller)
-      parser.relevant_info[:user_info].should == 'Anonymous'
+      parser.external_info[:user_info].should == 'Anonymous'
     end
 
     it "should not store any info when configured store_user_info is false" do
       RailsExceptionHandler.configure {|config| config.store_user_info = false}
       controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
-      parser.relevant_info[:user_info].should == nil
+      parser.external_info[:user_info].should == nil
     end
   end
 
@@ -122,7 +122,7 @@ describe RailsExceptionHandler::Parser do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
       controller = mock(ApplicationController, :current_user => nil)
       parser = create_parser(nil, nil, controller)
-      parser.relevant_info[:user_info].should == 'Anonymous'
+      parser.external_info[:user_info].should == 'Anonymous'
       parser.anon_user?.should be_true
     end
 

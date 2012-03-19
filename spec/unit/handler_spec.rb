@@ -83,7 +83,7 @@ describe RailsExceptionHandler::Handler do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}] }
       uri = URI.parse('http://example.com/error_messages')
       params = {}
-      parser.relevant_info.each do |key,value|
+      parser.external_info.each do |key,value|
         params["error_message[#{key}]"] = value
       end
       Net::HTTP.should_receive(:post_form).with(uri, params)

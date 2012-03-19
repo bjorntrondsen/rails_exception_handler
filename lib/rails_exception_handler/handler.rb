@@ -19,7 +19,7 @@ class RailsExceptionHandler::Handler
   end
 
   def handle_exception
-    @parsed_error = RailsExceptionHandler::Parser.new(@exception, @request, @controller)
+    @parsed_error = RailsExceptionHandler::Parser.new(@env, @request, @exception, @controller)
     store_error unless(@parsed_error.ignore?)
     return response
   end
@@ -39,11 +39,11 @@ class RailsExceptionHandler::Handler
   end
 
   def store_in_active_record
-    ErrorMessage.create(@parsed_error.relevant_info)
+    ErrorMessage.create(@parsed_error.external_info)
   end
 
   def store_in_rails_log
-    info = @parsed_error.relevant_info
+    info = @parsed_error.external_info
     message  = "TARGET:     #{info[:target_url]}\n"
     message += "REFERER:    #{info[:referer_url]}\n"
     message += "PARAMS:     #{info[:params]}\n"
@@ -57,7 +57,7 @@ class RailsExceptionHandler::Handler
   def store_in_remote_url(args)
     uri = URI.parse(args[:target])
     params = {}
-    @parsed_error.relevant_info.each do |key,value|
+    @parsed_error.external_info.each do |key,value|
       params["error_message[#{key}]"] = value
     end
     Net::HTTP::post_form(uri, params)
@@ -95,7 +95,7 @@ class RailsExceptionHandler::Handler
 
   def response_text
     config = RailsExceptionHandler.configuration
-    klass = @parsed_error.relevant_info[:class_name]
+    klass = @parsed_error.internal_info[:error_class]
     key = config.response_mapping[klass] || :default
     return config.responses[key]
   end

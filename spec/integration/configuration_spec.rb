@@ -21,7 +21,7 @@ describe RailsExceptionHandler::Configuration do
       read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\/model_error/
     end
 
-    # No idea how to integration test remote_url without spawning a dedicated test server
+    # No idea how to integration test remote_url without spawning a dedicated test server (use VCR?)
   end
 
   describe '.filters' do
