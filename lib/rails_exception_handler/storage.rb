@@ -1,9 +1,9 @@
 class RailsExceptionHandler::Storage
-  def self.store_in_active_record(info)
+  def self.active_record(info)
     ErrorMessage.create(info)
   end
 
-  def self.store_in_rails_log(info)
+  def self.rails_log(info)
     message = ""
     info.each do |key,val|
       message += "#{key.upcase}: #{val.to_s}\n"
@@ -11,7 +11,7 @@ class RailsExceptionHandler::Storage
     Rails.logger.fatal(message)
   end
 
-  def self.store_in_remote_url(target, info)
+  def self.remote_url(target, info)
     uri = URI.parse(target)
     params = {:error_message => info}
     Net::HTTP::post_form(uri, params)
