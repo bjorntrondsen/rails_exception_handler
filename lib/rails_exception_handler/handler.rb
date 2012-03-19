@@ -29,38 +29,13 @@ class RailsExceptionHandler::Handler
   def store_error
     RailsExceptionHandler.configuration.storage_strategies.each do |strategy|
       if(strategy.class == Symbol)
-        send("store_in_#{strategy}")
+        RailsExceptionHandler::Storage.send("store_in_#{strategy}",@parsed_error.external_info)
       elsif(strategy.class == Hash && strategy[:remote_url])
-        store_in_remote_url(strategy[:remote_url])
+        RailsExceptionHandler::Storage.store_in_remote_url(strategy[:remote_url][:target],@parsed_error.external_info)
       else
         raise "RailsExceptionHandler: Unknown storage strategy #{strategy.inspect}"
       end
     end
-  end
-
-  def store_in_active_record
-    ErrorMessage.create(@parsed_error.external_info)
-  end
-
-  def store_in_rails_log
-    info = @parsed_error.external_info
-    message  = "TARGET:     #{info[:target_url]}\n"
-    message += "REFERER:    #{info[:referer_url]}\n"
-    message += "PARAMS:     #{info[:params]}\n"
-    message += "USER_AGENT: #{info[:user_agent]}\n"
-    message += "USER_INFO:  #{info[:user_info]}\n"
-    message += "#{info[:class_name]} (#{info[:message]}):\n"
-    message += Rails.backtrace_cleaner.clean(info[:trace].split("\n"), :noise).join("\n")
-    Rails.logger.fatal(message)
-  end
-
-  def store_in_remote_url(args)
-    uri = URI.parse(args[:target])
-    params = {}
-    @parsed_error.external_info.each do |key,value|
-      params["error_message[#{key}]"] = value
-    end
-    Net::HTTP::post_form(uri, params)
   end
 
   def response
