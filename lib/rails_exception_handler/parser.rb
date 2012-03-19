@@ -17,16 +17,12 @@ class RailsExceptionHandler::Parser
     @internal_info[:referer_url] =    @request.referer
     @internal_info[:user_agent] =     @request.user_agent
 
-    @external_info[:app_name] =     Rails.application.class.parent_name
-    @external_info[:user_info] =    user_info
-    @external_info[:created_at] =   Time.now
-    @external_info[:class_name] =   @exception.class.to_s
-    @external_info[:message] =      @exception.to_s
-    @external_info[:trace] =        @exception.backtrace.join("\n")
-    @external_info[:target_url] =   @request.url
-    @external_info[:referer_url] =  @request.referer
-    @external_info[:params] =       @request.params.inspect
-    @external_info[:user_agent] =   @request.user_agent
+    config = RailsExceptionHandler.configuration
+    config.request_info_block.call(@external_info, @request) if(config.request_info_block)
+    config.exception_info_block.call(@external_info, @exception) if(config.exception_info_block)
+    config.env_info_block.call(@external_info, @env) if(config.env_info_block)
+    config.global_info_block.call(@external_info) if(config.global_info_block)
+    @external_info[:user_info] = user_info
   end
 
   def ignore?

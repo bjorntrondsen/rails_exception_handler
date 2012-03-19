@@ -53,6 +53,21 @@ module TestMacros
       config.fallback_layout = 'fallback'
       config.response_mapping = {}
       config.responses = { :default => '<h1>Internal server error</h1><p>The application has encountered an unexpected issue.</p>' }
+      config.store_request_info do |storage,request|
+        storage[:target_url] =  request.url
+        storage[:referer_url] = request.referer
+        storage[:params] =      request.params.inspect
+        storage[:user_agent] =  request.user_agent
+      end
+      config.store_exception_info do |storage,exception|
+        storage[:class_name] =   exception.class.to_s
+        storage[:message] =      exception.to_s
+        storage[:trace] =        exception.backtrace.join("\n")
+      end
+      config.store_global_info do |storage|
+        storage[:app_name] =     Rails.application.class.parent_name
+        storage[:created_at] =   Time.now
+      end
     end
   end
 

@@ -1,5 +1,5 @@
 class RailsExceptionHandler::Configuration
-  attr_accessor :storage_strategies, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info
+  attr_accessor :storage_strategies, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info, :env_info_block, :global_info_block, :exception_info_block, :request_info_block
 
   def initialize
     @environments = [:production]
@@ -25,6 +25,22 @@ class RailsExceptionHandler::Configuration
 
   def run_callback
     @callback.call if(@callback)
+  end
+
+  def store_environment_info(&block)
+    @env_info_block = block
+  end
+
+  def store_global_info(&block)
+    @global_info_block = block
+  end
+
+  def store_exception_info(&block)
+    @exception_info_block = block
+  end
+
+  def store_request_info(&block)
+    @request_info_block = block
   end
 
 end
