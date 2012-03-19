@@ -1,23 +1,32 @@
 class RailsExceptionHandler::Parser
-  def initialize(exception, request, controller)
-    @exception = exception
+  attr_accessor :external_info, :internal_info
+
+  def initialize(env, request, exception, controller)
+    @env = env
     @request  = request
+    @exception = exception
     @controller = controller
+    @external_info = {}
+    @internal_info = {}
+    parse
   end
 
-  def relevant_info
-    info = {}
-    info[:app_name] =     Rails.application.class.parent_name
-    info[:class_name] =   @exception.class.to_s
-    info[:message] =      @exception.to_s
-    info[:trace] =        @exception.backtrace.join("\n")
-    info[:target_url] =   @request.url
-    info[:referer_url] =  @request.referer
-    info[:params] =       @request.params.inspect
-    info[:user_agent] =   @request.user_agent
-    info[:user_info] =    user_info
-    info[:created_at] =   Time.now
-    return info
+  def parse
+    @internal_info[:error_class] =    @exception.class.to_s
+    @internal_info[:target_url] =     @request.url
+    @internal_info[:referer_url] =    @request.referer
+    @internal_info[:user_agent] =     @request.user_agent
+
+    @external_info[:app_name] =     Rails.application.class.parent_name
+    @external_info[:user_info] =    user_info
+    @external_info[:created_at] =   Time.now
+    @external_info[:class_name] =   @exception.class.to_s
+    @external_info[:message] =      @exception.to_s
+    @external_info[:trace] =        @exception.backtrace.join("\n")
+    @external_info[:target_url] =   @request.url
+    @external_info[:referer_url] =  @request.referer
+    @external_info[:params] =       @request.params.inspect
+    @external_info[:user_agent] =   @request.user_agent
   end
 
   def ignore?
@@ -47,7 +56,7 @@ class RailsExceptionHandler::Parser
   private
 
   def blank_referer?
-    relevant_info[:referer_url] == "/" || relevant_info[:referer_url].blank?
+    @internal_info[:referer_url] == "/" || @internal_info[:referer_url].blank?
   end
 
   def user_info
@@ -70,12 +79,12 @@ class RailsExceptionHandler::Parser
   end
 
   def filter_user_agent_regxp(regxp)
-    result = relevant_info[:user_agent].match(regxp)
+    result = @internal_info[:user_agent].match(regxp)
     result != nil
   end
 
   def filter_target_url_regxp(regxp)
-    result = relevant_info[:target_url].match(regxp)
+    result = @internal_info[:target_url].match(regxp)
     result != nil
   end
 end

@@ -19,7 +19,7 @@ module TestMacros
       controller ||= mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
       request ||= ActionDispatch::Request.new(env)
       exception ||= create_exception
-      parser = RailsExceptionHandler::Parser.new(exception, request, controller)
+      parser = RailsExceptionHandler::Parser.new(env, request, exception, controller)
   end
 
   def create_exception
