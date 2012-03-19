@@ -11,14 +11,14 @@ describe RailsExceptionHandler::Configuration do
     it "should store errors in the rails log when storage_strategies contains :rails_log" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       get('/home/model_error')
-      read_test_log.should match /NoMethodError \(undefined method `foo' for nil:NilClass\)/
+      read_test_log.should match /undefined method `foo' for nil:NilClass/
       if TEST_APP == 'dummy_32'
         read_test_log.should match /action_controller\/metal\/implicit_render\.rb:4/
       else
         read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
       end
       read_test_log.should match /PARAMS:\s+\{/
-      read_test_log.should match /TARGET:\s+http:\/\/example\.org\/home\/model_error/
+      read_test_log.should match /TARGET_URL: http:\/\/example\.org\/home\/model_error/
     end
 
     # No idea how to integration test remote_url without spawning a dedicated test server (use VCR?)
