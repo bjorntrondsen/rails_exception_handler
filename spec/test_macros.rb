@@ -64,6 +64,10 @@ module TestMacros
         storage[:message] =      exception.to_s
         storage[:trace] =        exception.backtrace.join("\n")
       end
+      config.store_environment_info do |storage,env|
+        storage[:server_name] = env['SERVER_NAME']
+        storage[:remote_addr] = env['REMOTE_ADDR']
+      end
       config.store_global_info do |storage|
         storage[:app_name] =     Rails.application.class.parent_name
         storage[:created_at] =   Time.now
