@@ -10,6 +10,8 @@ class CreateErrorMessages < ActiveRecord::Migration
       t.text :user_agent
       t.string :user_info
       t.string :app_name
+      t.string :remote_ip
+      t.string :server_name
       t.datetime :created_at
 
       t.timestamps

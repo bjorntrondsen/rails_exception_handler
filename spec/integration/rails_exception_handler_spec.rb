@@ -36,7 +36,7 @@ describe RailsExceptionHandler do
     ErrorMessage.first.class_name.should == 'SyntaxError'
   end
 
-  it "should store the correct information in the database" do
+  it "should store the specified information in the database" do
     RailsExceptionHandler.configure { |config| config.store_user_info = {:method => :current_user, :field => :login} }
     get "/home/controller_error", {}, {'HTTP_REFERER' => 'http://google.com/', 'HTTP_USER_AGENT' => 'Mozilla/4.0 (compatible; MSIE 8.0)'}
     ErrorMessage.count.should == 1
@@ -51,6 +51,8 @@ describe RailsExceptionHandler do
     msg.target_url.should ==    'http://example.org/home/controller_error'
     msg.referer_url.should ==   'http://google.com/'
     msg.user_info.should ==     'matz'
+    msg.server_name.should ==   'example.org'
+    msg.remote_addr.should ==   '127.0.0.1'
     msg.created_at.should be >  5.seconds.ago
     msg.created_at.should be <  Time.now
   end
