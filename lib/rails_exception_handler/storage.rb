@@ -4,13 +4,10 @@ class RailsExceptionHandler::Storage
   end
 
   def self.store_in_rails_log(info)
-    message  = "TARGET:     #{info[:target_url]}\n"
-    message += "REFERER:    #{info[:referer_url]}\n"
-    message += "PARAMS:     #{info[:params]}\n"
-    message += "USER_AGENT: #{info[:user_agent]}\n"
-    message += "USER_INFO:  #{info[:user_info]}\n"
-    message += "#{info[:class_name]} (#{info[:message]}):\n"
-    message += Rails.backtrace_cleaner.clean(info[:trace].split("\n"), :noise).join("\n")
+    message = ""
+    info.each do |key,val|
+      message += "#{key.upcase}: #{val.to_s}\n"
+    end
     Rails.logger.fatal(message)
   end
 
