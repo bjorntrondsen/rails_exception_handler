@@ -30,5 +30,6 @@ end
 require 'rails_exception_handler/configuration.rb'
 require 'rails_exception_handler/handler.rb'
 require 'rails_exception_handler/parser.rb'
+require 'rails_exception_handler/storage.rb'
 require 'rails_exception_handler/engine.rb'
 require 'net/http'
