@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2012-03-10"
+  s.date = "2012-03-19"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/rails_exception_handler/engine.rb",
     "lib/rails_exception_handler/handler.rb",
     "lib/rails_exception_handler/parser.rb",
+    "lib/rails_exception_handler/storage.rb",
     "rails_exception_handler.gemspec",
     "spec/dummy_30/.gitignore",
     "spec/dummy_30/lib/tasks/.gitkeep",
@@ -56,24 +57,27 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, ["= 3.0.12"])
-      s.add_development_dependency(%q<rack-test>, ["= 0.5.7"])
-      s.add_development_dependency(%q<mysql2>, ["= 0.2.6"])
+      s.add_development_dependency(%q<rails>, ["= 3.2.2"])
+      s.add_development_dependency(%q<rack-test>, ["= 0.6.1"])
+      s.add_development_dependency(%q<mysql2>, ["= 0.3.11"])
+      s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<rspec-rails>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rails_exception_handler>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.0.12"])
-      s.add_dependency(%q<rack-test>, ["= 0.5.7"])
-      s.add_dependency(%q<mysql2>, ["= 0.2.6"])
+      s.add_dependency(%q<rails>, ["= 3.2.2"])
+      s.add_dependency(%q<rack-test>, ["= 0.6.1"])
+      s.add_dependency(%q<mysql2>, ["= 0.3.11"])
+      s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<rspec-rails>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rails_exception_handler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.0.12"])
-    s.add_dependency(%q<rack-test>, ["= 0.5.7"])
-    s.add_dependency(%q<mysql2>, ["= 0.2.6"])
+    s.add_dependency(%q<rails>, ["= 3.2.2"])
+    s.add_dependency(%q<rack-test>, ["= 0.6.1"])
+    s.add_dependency(%q<mysql2>, ["= 0.3.11"])
+    s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<rspec-rails>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rails_exception_handler>, [">= 0"])
