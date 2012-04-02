@@ -65,7 +65,7 @@ describe RailsExceptionHandler::Storage do
       parser = @handler.instance_variable_get(:@parsed_error)
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}] }
       uri = URI.parse('http://example.com/error_messages')
-      params = { :error_message => parser.external_info }
+      params = RailsExceptionHandler::Storage.send(:flatten_hash, { :error_message => parser.external_info })
       Net::HTTP.should_receive(:post_form).with(uri, params)
       @handler.handle_exception
     end
