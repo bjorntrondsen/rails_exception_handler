@@ -11,7 +11,7 @@ RailsExceptionHandler.configure do |config|
   #   :no_referer_404s,
   #   :anon_404s,
   #   {:user_agent_regxp => /\b(ApptusBot|TurnitinBot|DotBot|SiteBot)\b/i},
-  #   {:target_url_regxp => /.php/i}
+  #   {:target_url_regxp => /\.php/i}
   # ]
   # !!! IMPORTANT !!!
   # You must remove public/500.html and public/404.html for these to have any effect
