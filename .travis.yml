@@ -1,8 +1,10 @@
 before_script:
-  - "spec/dummy_30/script/setup"
+  - "spec/dummy_32/script/setup"
 
 notifications:
   disable: true
+
+language: ruby
 
 rvm:
   - 1.9.3
