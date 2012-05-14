@@ -6,7 +6,7 @@ class RailsExceptionHandler::Storage
   def self.rails_log(info)
     message = ""
     info.each do |key,val|
-      message += "#{key.upcase}: #{val.to_s}\n"
+      message += "#{key.to_s.upcase}: #{val.to_s}\n"
     end
     Rails.logger.fatal(message)
   end
