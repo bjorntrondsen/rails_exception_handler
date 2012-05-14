@@ -4,7 +4,7 @@ require 'fileutils'
 
 Dir.chdir(File.expand_path(File.dirname(__FILE__)) + "/../")
 
-source = "config/examples/database.yml"
+source = "config/examples/travis_db.yml"
 target = "config/database.yml"
 
 if File.exist?(target)
