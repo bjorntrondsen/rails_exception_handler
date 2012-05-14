@@ -11,6 +11,7 @@ group :test, :development do
     #gem "rack-test", '0.6.1'
     #gem 'mysql2', '0.3.11'
 
+  gem 'pry'
   gem "rspec-rails"
   gem "jeweler"
   gem "rails_exception_handler", :path => '.'
