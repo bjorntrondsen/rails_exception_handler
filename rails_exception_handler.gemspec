@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2012-03-19"
+  s.date = "2012-05-14"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -26,6 +26,8 @@ Gem::Specification.new do |s|
     "VERSION",
     "app/controllers/error_response_controller.rb",
     "app/models/error_message.rb",
+    "lib/generators/rails_exception_handler/initializer_generator.rb",
+    "lib/generators/rails_exception_handler/templates/rails_exception_handler.rb",
     "lib/patch/show_exceptions.rb",
     "lib/rails_exception_handler.rb",
     "lib/rails_exception_handler/configuration.rb",
@@ -50,7 +52,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.17"
+  s.rubygems_version = "1.8.21"
   s.summary = "Exception Handling for Rails 3"
 
   if s.respond_to? :specification_version then
