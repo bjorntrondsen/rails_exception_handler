@@ -1,8 +1,11 @@
 # Rails Exception Handler [![Build Status](http://travis-ci.org/Sharagoz/rails_execption_handler.png)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
 
-This is an exception handler for Rails 3 built as Rack middleware. It enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this gem into all your rails apps and gather the exception reports in one place. This gem just contains the back end. You will have to create your own front end to view and manage the error reports.
+Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
+
+This is a flexible exception handler for Rails 3 built as Rack middleware. It enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this gem into all your rails apps and gather the exception reports in one place. This gem just contains the back end, you will have to create your own front end to view and manage the error reports.
 
 Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
+
 Do you need to catch ruby errors outside of Rack? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Manual-exception-handling-outside-of-rack)
 
 ## Compatiblity
@@ -12,43 +15,16 @@ See Travis-CI for info on which rubies it is tested against:
 http://travis-ci.org/#!/Sharagoz/rails_exception_handler
 
 ## Installation
-Add this line to your Gemfile:
+Add the line below to your gemfile and run bundler
 
 ```
-gem 'rails_exception_handler'
+gem 'rails_exception_handler', "~> 2"
 ```
 
-Create an initializer in **config/initializers** called **rails_exception_handler.rb** and uncomment the options where you want something other than the default:
+Now run "rails g rails_exception_handler:install" to create an initializer in config/initializers/rails_exception_handler.rb
 
-```ruby
-RailsExceptionHandler.configure do |config|
-  # config.environments = [:development, :test, :production]                # Defaults to [:production]
-  # config.storage_strategies = [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}] # Defaults to []
-  # config.fallback_layout = 'home'                                         # Defaults to 'application'
-  # config.store_user_info = {:method => :current_user, :field => :login}   # Defaults to false
-  # config.filters = [                                                      # No filters are  enabled by default
-  #   :all_404s,
-  #   :no_referer_404s,
-  #   :anon_404s,
-  #   {:user_agent_regxp => /\b(ApptusBot|TurnitinBot|DotBot|SiteBot)\b/i},
-  #   {:target_url_regxp => /\b(myphpadmin)\b/i}
-  # ]
-  # config.responses = {                                                    # There must be a default response if public/500.html and public/400.html does not exist.
-  #   :default => "<h1>500</h1><p>Internal server error</p>",
-  #   :custom => "<h1>404</h1><p>Page not found</p>"
-  # }
-  # config.response_mapping = {                                             # All errors are mapped to the :default response unless overridden here
-  #  'ActiveRecord::RecordNotFound' => :custom,
-  #  'ActionController::RoutingError' => :custom,
-  #  'AbstractController::ActionNotFound' => :custom
-  # }
-  # config.after_initialize do
-  #   # this block will be called after the initialization is done
-  # end
-end
-```
 
-## Configuration options explained
+## Configuration options
 
 ### environments
 An array of symbols that says which Rails environments you want the exception handler to run in.
@@ -146,7 +122,7 @@ config.filters = [:no_referer_404s]
 ```
 
 ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound will be ignored if it was caused by a request without a referer.
-This is very effective against bots. 99.9% of the time a routing error with no referer will be caused by a bot, and then once in a while it will be caused by a real user that happened to generate an error on the first page he opened. You will get a lot less false positives with this filter than :all_404s.
+This is very effective against bots. 99.9% of the time a routing error with no referer will be caused by a bot, and then once in a while it will be caused by a real user that happened to generate an error on the first page he opened (like a broken bookmark). You will get a lot less false positives with this filter than :all_404s.
 
 **:user_agent_regxp**
 
@@ -164,6 +140,25 @@ Sometimes black bots add a common user agent string and a referer to their reque
 
 ```ruby
 config.filters = [:target_url_regxp => /\.php/i]
+```
+
+## Gathering exception information
+
+The following for methods exists for extracting the information you need. You are given direct access to the relevant objects, which means full flexibility, but also more work on your part.
+The initializers contains a basic suggestion, you can check out [the wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Extracting-exception-info)
+for more options, or inspect the objects yourself with a tool like Pry to find what you need.
+
+The "storage" hash below is the object that is sent to the storage strategy. Make sure the keys in the hash matches up with the name of the database fields.
+
+```ruby
+config.store_request_info do |storage,request|
+end
+config.store_exception_info do |storage,exeception|
+end
+config.store_environment_info do |storage,env|
+end
+config.store_global_info do |storage|
+end
 ```
 
 ## Storage strategy - active record
@@ -187,7 +182,7 @@ exception_database:
 
 You could of course store the error messages in the same database as the application uses, but one of the main purposes of this library is to enable you to easily store error reports from many applications in the same database, so I recommend you set up a separate dedicated database for this.
 
-The exception database needs a table called **error_messages**. Here's a migration script that you can use to create the table with the necessary fields:
+The exception database needs a table called **error_messages**. Here's a migration script that you can use to create the table with the necessary fields required for the default configuration:
 
 ```ruby
 class CreateErrorMessages < ActiveRecord::Migration
@@ -202,6 +197,7 @@ class CreateErrorMessages < ActiveRecord::Migration
       t.text :user_agent
       t.string :user_info
       t.string :app_name
+      t.string :doc_root
 
       t.timestamps
     end
