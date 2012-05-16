@@ -1,5 +1,9 @@
 CHANGELOG
 
+v2.0.0 - May 15th 2012
+ - New API for specifying what information to store about the request, exception and environment
+ - Added a generator that creates an initializer
+
 v1.4.0 - March 10th 2012
  - Rails 3.2.2 fixes
  - Added after_initialize callback
