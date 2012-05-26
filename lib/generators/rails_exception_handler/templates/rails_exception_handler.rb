@@ -32,7 +32,7 @@ RailsExceptionHandler.configure do |config|
     storage[:user_agent] =    request.user_agent
   end
 
-  config.store_exception_info do |storage,exeception|
+  config.store_exception_info do |storage,exception|
     storage[:class_name] =   exception.class.to_s
     storage[:message] =      exception.to_s
     storage[:trace] =        exception.backtrace.join("\n")
