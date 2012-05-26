@@ -61,7 +61,7 @@ This is a callback that exists in case you need to do something right after the 
 
 Note: public/500.html and public/400.html will be used if these exists. Remove these files before applying the configuration below.
 
-Create a set of responses and then map specific exceptions to these responses. There needs to be a response called :default which is used for the exceptions that are not explicity mapped to a response.
+Create a set of responses and then map specific exceptions to these responses. There needs to be a response called :default which is used for the exceptions that are not explicitly mapped to a response.
 
 ```ruby
 config.responses = {
@@ -247,7 +247,7 @@ config.filters = [:target_url_regxp => /\.php/i]
 
 # Contributors
 
-David Rice
+David Rice and James Harrison
 
 Would you like to contribute? Here are some things on the todo list:
 
