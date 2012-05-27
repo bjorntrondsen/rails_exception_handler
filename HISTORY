@@ -1,9 +1,9 @@
 CHANGELOG
 
-v2.0.1 - May 2u7th 2012
+v2.0.1 - May 27th 2012
  - Fix ruby187 issue and a typo in the generator
 
-v2.0.0 - May 15th 2012
+v2.0.0 - May 14th 2012
  - New API for specifying what information to store about the request, exception and environment
  - Added a generator that creates an initializer
 
