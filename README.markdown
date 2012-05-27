@@ -1,4 +1,4 @@
-# Rails Exception Handler [![Build Status](http://travis-ci.org/Sharagoz/rails_execption_handler.png)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
+# Rails Exception Handler [![Build Status](http://travis-ci.org/Sharagoz/rails_exception_handler.png)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
 
 Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
 
@@ -92,7 +92,7 @@ The "storage" hash below is the object that is sent to the storage strategy. Mak
 ```ruby
 config.store_request_info do |storage,request|
 end
-config.store_exception_info do |storage,exeception|
+config.store_exception_info do |storage,exception|
 end
 config.store_environment_info do |storage,env|
 end
