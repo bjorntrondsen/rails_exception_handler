@@ -98,10 +98,13 @@ The "storage" hash below is the object that is sent to the storage strategy. Mak
 ```ruby
 config.store_request_info do |storage,request|
 end
+
 config.store_exception_info do |storage,exception|
 end
+
 config.store_environment_info do |storage,env|
 end
+
 config.store_global_info do |storage|
 end
 ```
@@ -223,6 +226,7 @@ config.filters = [:anon_404s]
 ```
 
 When turned on the following exceptions will no longer be stored unless a user is logged in: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+
 Note: This filter depends on config.store_user_info to figure out how to get access to the current_user object. This will be cleaned up in a future release.
 
 ### :no_referer_404s
