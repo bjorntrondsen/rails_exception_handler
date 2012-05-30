@@ -4,7 +4,7 @@ Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception
 
 This is a flexible exception handler for Rails 3 built as Rack middleware. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to rails though, it's not that hard to set up.
 
-The exception handler enables you to save the key information from the error message in a database somewhere and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports.
+The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports.
 
 Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
@@ -83,11 +83,11 @@ config.response_mapping = {
 
 Gathering and storing exception information is optional, but still the main purpose of this exception handler.
 
-The following for methods exists for extracting the information you need. You are given direct access to the relevant objects, which means full flexibility, but also more work on your part.
+The following four methods exists for extracting the information you need. You are given direct access to the relevant objects, which means full flexibility, but also more work on your part.
 The initializers contains a basic suggestion, you can check out [the wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Extracting-exception-info)
 for more options, or inspect the objects yourself with a tool like Pry to find what you need.
 
-The "storage" hash below is the object that is sent to the storage strategy. Make sure the keys in the hash matches up with the name of the database fields.
+The "storage" hash below is the object that is sent to the storage strategy. Make sure the keys in the hash matches up with the names of the database fields.
 
 ```ruby
 config.store_request_info do |storage,request|
