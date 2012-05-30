@@ -2,7 +2,7 @@
 
 Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
 
-This is a flexible exception handler for Rails 3 built as Rack middleware. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to rails though, it's not that hard to set up.
+This is a flexible exception handler for Rails 3 built as Rack middleware. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to Rails though, it's not that hard to set up.
 
 The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports.
 
@@ -56,6 +56,12 @@ The exception handler will always use the layout file of the controller action t
 ### after_initialize
 
 This is a callback that exists in case you need to do something right after the initializer has been run, for instance [interact with an authorization mechanism](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
+
+```ruby
+config.after_initialize do
+  # additional setup
+end
+```
 
 ### responses and response_mapping
 
@@ -217,6 +223,7 @@ config.filters = [:anon_404s]
 ```
 
 When turned on the following exceptions will no longer be stored unless a user is logged in: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+Note: This filter depends on config.store_user_info to figure out how to get access to the current_user object. This will be cleaned up in a future release.
 
 ### :no_referer_404s
 
