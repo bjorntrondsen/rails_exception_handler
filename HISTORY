@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.0.2 - June 11th 2012
+ - Add attribute whitelisting mechanism for the active_record storage
+
 v2.0.1 - May 27th 2012
  - Fix ruby187 issue and a typo in the generator
 
