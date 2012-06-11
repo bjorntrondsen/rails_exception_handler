@@ -22,7 +22,7 @@ class RailsExceptionHandler::Parser
     config.exception_info_block.call(@external_info, @exception) if(config.exception_info_block)
     config.env_info_block.call(@external_info, @env) if(config.env_info_block)
     config.global_info_block.call(@external_info) if(config.global_info_block)
-    @external_info[:user_info] = user_info
+    @external_info[:user_info] = user_info if(user_info)
   end
 
   def ignore?
