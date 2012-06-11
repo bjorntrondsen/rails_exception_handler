@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 group :test, :development do
 
-  #gem "rails", '3.0.12'
+  #gem "rails", '3.0.13'
     #gem "rack-test", '0.5.7'
     #gem "mysql2", '0.2.6'
 
