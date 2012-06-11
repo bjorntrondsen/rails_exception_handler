@@ -96,6 +96,7 @@ describe RailsExceptionHandler::Configuration do
           config.store_user_info = {:method => :current_user, :field => :login}
           config.filters = [:anon_404s]
         end
+        RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
         get "/incorrect_route"
         ErrorMessage.count.should == 1
       end
@@ -107,6 +108,7 @@ describe RailsExceptionHandler::Configuration do
           config.store_user_info = {:method => :nil_user, :field => :login}
           config.filters = [:anon_404s]
         end
+        RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
         get "/incorrect_route"
         ErrorMessage.count.should == 0
       end
@@ -118,6 +120,7 @@ describe RailsExceptionHandler::Configuration do
           config.store_user_info = {:method => :nil_user, :field => :login}
           config.filters = [:anon_404s]
         end
+        RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
         get "/home/model_error"
         ErrorMessage.count.should == 1
       end
@@ -172,6 +175,7 @@ describe RailsExceptionHandler::Configuration do
         config.storage_strategies = [:active_record]
         config.store_user_info = nil
       end
+      RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
       get('/incorrect_route')
       ErrorMessage.count.should == 1
       ErrorMessage.first.user_info.should == nil
@@ -183,6 +187,8 @@ describe RailsExceptionHandler::Configuration do
         config.storage_strategies = [:active_record]
         config.store_user_info = {:method => :current_user, :field => :login}
       end
+      RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
+      RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
       get('/incorrect_route')
       ErrorMessage.count.should == 1
       ErrorMessage.first.user_info.should == 'matz'
@@ -194,6 +200,7 @@ describe RailsExceptionHandler::Configuration do
         config.storage_strategies = [:active_record]
         config.store_user_info = {:method => :current_user, :field => :login}
       end
+      RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
       get('/home/view_error')
       ErrorMessage.count.should == 1
       ErrorMessage.first.user_info.should == 'matz'
