@@ -1,5 +1,6 @@
 class RailsExceptionHandler::Storage
   def self.active_record(info)
+    RailsExceptionHandler.configuration.whitelist(info.keys)
     ErrorMessage.create(info)
   end
 
