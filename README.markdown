@@ -90,7 +90,7 @@ config.response_mapping = {
 Gathering and storing exception information is optional, but still the main purpose of this exception handler.
 
 The following four methods exists for extracting the information you need. You are given direct access to the relevant objects, which means full flexibility, but also more work on your part.
-The initializers contains a basic suggestion, you can check out [the wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Extracting-exception-info)
+The initializer contains a basic suggestion, you can check out [the wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Extracting-exception-info)
 for more options, or inspect the objects yourself with a tool like Pry to find what you need.
 
 The "storage" hash below is the object that is sent to the storage strategy. Make sure the keys in the hash matches up with the names of the database fields.
