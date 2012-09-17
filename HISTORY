@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.1.0 - September 17th 2012
+ - New filtering option: referer_url
+
 v2.0.2 - June 11th 2012
  - Add attribute whitelisting mechanism for the active_record storage
 

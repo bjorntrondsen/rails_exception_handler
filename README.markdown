@@ -256,6 +256,14 @@ Sometimes black bots add a common user agent string and a referer to their reque
 config.filters = [:target_url_regxp => /\.php/i]
 ```
 
+### :referer_url_regxp
+
+Works the same way as :target_url_regxp. Enables you to get rid of error messages coming from spesific sources, like external links to assets that no longer exists.
+
+```ruby
+config.filters = [:referer_url_regxp => /\problematicreferer/i]
+```
+
 # Contributors
 
 David Rice and James Harrison

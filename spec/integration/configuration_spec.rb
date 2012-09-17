@@ -88,6 +88,20 @@ describe RailsExceptionHandler::Configuration do
       end
     end
 
+    describe ':referer_url_regxp' do
+      it "should not store the error message when the user agent matches this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:referer_url_regxp => /\b(problematicreferer)\b/]}
+        get "/incorrect_route", {}, {'HTTP_REFERER' => 'http://problematicreferer.com'}
+        ErrorMessage.count.should == 0
+      end
+
+      it "should store the error message when the user agent doesnt match this regxp" do
+        RailsExceptionHandler.configure { |config| config.filters = [:referer_url_regxp => /\b(problematicreferer)\b/]}
+        get "/incorrect_route", {}, {'HTTP_REFERER' => "http://google.com"}
+        ErrorMessage.count.should == 1
+      end
+    end
+
     describe ":anon_404s" do
       it "should log a 404 from a logged in user" do
         RailsExceptionHandler.configure do |config|

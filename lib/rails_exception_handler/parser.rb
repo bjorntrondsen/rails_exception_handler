@@ -83,4 +83,9 @@ class RailsExceptionHandler::Parser
     result = @internal_info[:target_url].match(regxp)
     result != nil
   end
+
+  def filter_referer_url_regxp(regxp)
+    result = @internal_info[:referer_url].match(regxp)
+    result != nil
+  end
 end
