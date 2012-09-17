@@ -6,7 +6,7 @@ group :test, :development do
     #gem "rack-test", '0.5.7'
     #gem "mysql2", '0.2.6'
 
-  gem "rails", '3.2.6'
+  gem "rails", '3.2.8'
     gem "rack-test", '0.6.1'
     gem 'mysql2', '0.3.11'
 
