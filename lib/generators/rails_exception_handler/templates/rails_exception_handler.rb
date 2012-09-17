@@ -11,8 +11,10 @@ RailsExceptionHandler.configure do |config|
   #   :no_referer_404s,
   #   :anon_404s,
   #   {:user_agent_regxp => /\b(ApptusBot|TurnitinBot|DotBot|SiteBot)\b/i},
-  #   {:target_url_regxp => /\.php/i}
+  #   {:target_url_regxp => /\.php/i},
+  #   {:referer_url_regxp => /problematicreferer/i}
   # ]
+  #
   # !!! IMPORTANT !!!
   # You must remove public/500.html and public/404.html for these to have any effect
   config.responses = {
@@ -24,6 +26,7 @@ RailsExceptionHandler.configure do |config|
     'ActionController::RoutingError' => :not_found,
     'AbstractController::ActionNotFound' => :not_found
   }
+
   config.storage_strategies = [:active_record] # Available options: [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}]
   config.store_request_info do |storage,request|
     storage[:target_url] =    request.url
