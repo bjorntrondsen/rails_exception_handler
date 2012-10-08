@@ -27,7 +27,7 @@ gem 'rails_exception_handler', "~> 2"
 Generate an initializer:
 
 ```
-"rails g rails_exception_handler:install
+rails g rails_exception_handler:install
 ```
 
 Open config/initializers/rails_exception_handler.rb, have a quick look and read on.
