@@ -2,7 +2,7 @@
 
 Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
 
-This is a flexible exception handler for Rails 3 built as Rack middleware. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to Rails though, it's not that hard to set up.
+This is a flexible exception handler for Rails 3 intended for those who wish to create their own error tracking service. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to Rails though, it's not that hard to set up.
 
 The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports.
 
