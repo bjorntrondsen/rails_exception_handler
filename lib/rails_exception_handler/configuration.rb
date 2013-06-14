@@ -9,7 +9,6 @@ class RailsExceptionHandler::Configuration
     @fallback_layout = 'application'
     @response_mapping = {}
     @responses = {}
-    @whitelisted = false
   end
 
   def active_record?
@@ -42,17 +41,5 @@ class RailsExceptionHandler::Configuration
 
   def store_request_info(&block)
     @request_info_block = block
-  end
-
-  def whitelist(fields)
-    return if(whitelisted?)
-    ErrorMessage.send(:attr_accessible, *fields)
-    @whitelisted = true
-  end
-
-  private
-
-  def whitelisted?
-    @whitelisted
   end
 end

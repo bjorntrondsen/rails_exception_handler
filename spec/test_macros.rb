@@ -44,7 +44,6 @@ module TestMacros
   end
 
   def reset_configuration
-    Rails.configuration.middleware.delete(RailsExceptionHandler)
     RailsExceptionHandler.configure do |config|
       config.storage_strategies = [:active_record]
       config.environments = [:test]

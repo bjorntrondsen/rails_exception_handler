@@ -2,12 +2,17 @@
 ENV["RAILS_ENV"] = 'test'
 
 require 'rails'
-if(Rails::VERSION::MINOR > 1)
+if(Rails::VERSION::MAJOR == 4)
+  puts "Testing against a rails 4.0 dummy app"
+  TEST_APP = 'dummy_40'
+elsif(Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 1)
   puts "Testing against a rails 3.2 dummy app"
   TEST_APP = 'dummy_32'
-else
+elsif(Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0)
   puts "Testing against a rails 3.0 dummy app"
   TEST_APP = 'dummy_30'
+else
+  raise "Dont know which version of Rails to test again for #{Rails.version}"
 end
 require File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/config/environment.rb"
 

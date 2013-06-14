@@ -41,7 +41,16 @@ Gem::Specification.new do |s|
     "spec/dummy_32/.gitignore",
     "spec/dummy_32/app/mailers/.gitkeep",
     "spec/dummy_32/app/models/.gitkeep",
-    "spec/dummy_32/log/.gitkeep"
+    "spec/dummy_32/log/.gitkeep",
+    "spec/dummy_40/.gitignore",
+    "spec/dummy_40/app/assets/images/.keep",
+    "spec/dummy_40/app/controllers/concerns/.keep",
+    "spec/dummy_40/app/mailers/.keep",
+    "spec/dummy_40/app/models/.keep",
+    "spec/dummy_40/app/models/concerns/.keep",
+    "spec/dummy_40/lib/assets/.keep",
+    "spec/dummy_40/lib/tasks/.keep",
+    "spec/dummy_40/log/.keep"
   ]
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   s.licenses = ["MIT"]
@@ -53,16 +62,16 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, ["= 3.2.13"])
-      s.add_development_dependency(%q<rack-test>, ["= 0.6.1"])
+      s.add_development_dependency(%q<rails>, ["= 4.0.0.rc2"])
+      s.add_development_dependency(%q<rack-test>, ["= 0.6.2"])
       s.add_development_dependency(%q<sqlite3>, [">= 0"])
       s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<rspec-rails>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rails_exception_handler>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.2.13"])
-      s.add_dependency(%q<rack-test>, ["= 0.6.1"])
+      s.add_dependency(%q<rails>, ["= 4.0.0.rc2"])
+      s.add_dependency(%q<rack-test>, ["= 0.6.2"])
       s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<rspec-rails>, [">= 0"])
@@ -70,8 +79,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rails_exception_handler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.2.13"])
-    s.add_dependency(%q<rack-test>, ["= 0.6.1"])
+    s.add_dependency(%q<rails>, ["= 4.0.0.rc2"])
+    s.add_dependency(%q<rack-test>, ["= 0.6.2"])
     s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<rspec-rails>, [">= 0"])

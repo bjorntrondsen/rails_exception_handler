@@ -1,7 +1,10 @@
 class RailsExceptionHandler::Storage
   def self.active_record(info)
-    RailsExceptionHandler.configuration.whitelist(info.keys)
-    ErrorMessage.create(info)
+    if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
+      ErrorMessage.create(info, :without_protection => true)
+    else
+      ErrorMessage.create(info)
+    end
   end
 
   def self.rails_log(info)
