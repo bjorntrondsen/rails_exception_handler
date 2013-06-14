@@ -18,7 +18,9 @@ class RailsExceptionHandler
     yield configuration
     return unless configuration.activate?
 
-    Rails.configuration.middleware.use(RailsExceptionHandler)
+    unless Rails.configuration.middleware.class == ActionDispatch::MiddlewareStack && Rails.configuration.middleware.include?(RailsExceptionHandler)
+      Rails.configuration.middleware.use(RailsExceptionHandler)
+    end
 
     Rails.configuration.action_dispatch.show_exceptions = true
     Rails.configuration.consider_all_requests_local = false

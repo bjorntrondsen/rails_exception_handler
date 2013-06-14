@@ -38,7 +38,6 @@ describe RailsExceptionHandler do
 
   it "should store the specified information in the database" do
     RailsExceptionHandler.configure { |config| config.store_user_info = {:method => :current_user, :field => :login} }
-    RailsExceptionHandler.configuration.instance_variable_set(:@whitelisted, false)
     get "/home/controller_error", {}, {'HTTP_REFERER' => 'http://google.com/', 'HTTP_USER_AGENT' => 'Mozilla/4.0 (compatible; MSIE 8.0)'}
     ErrorMessage.count.should == 1
     msg = ErrorMessage.first
