@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2012-09-17"
+  s.date = "2013-06-14"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -38,47 +38,41 @@ Gem::Specification.new do |s|
     "rails_exception_handler.gemspec",
     "spec/dummy_30/.gitignore",
     "spec/dummy_30/lib/tasks/.gitkeep",
-    "spec/dummy_30/vendor/plugins/.gitkeep",
     "spec/dummy_32/.gitignore",
     "spec/dummy_32/app/mailers/.gitkeep",
     "spec/dummy_32/app/models/.gitkeep",
-    "spec/dummy_32/lib/assets/.gitkeep",
-    "spec/dummy_32/lib/tasks/.gitkeep",
-    "spec/dummy_32/log/.gitkeep",
-    "spec/dummy_32/vendor/assets/javascripts/.gitkeep",
-    "spec/dummy_32/vendor/assets/stylesheets/.gitkeep",
-    "spec/dummy_32/vendor/plugins/.gitkeep"
+    "spec/dummy_32/log/.gitkeep"
   ]
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.21"
+  s.rubygems_version = "1.8.25"
   s.summary = "Exception Handling for Rails 3"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, ["= 3.2.8"])
+      s.add_development_dependency(%q<rails>, ["= 3.2.13"])
       s.add_development_dependency(%q<rack-test>, ["= 0.6.1"])
-      s.add_development_dependency(%q<mysql2>, ["= 0.3.11"])
+      s.add_development_dependency(%q<sqlite3>, [">= 0"])
       s.add_development_dependency(%q<pry>, [">= 0"])
       s.add_development_dependency(%q<rspec-rails>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rails_exception_handler>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.2.8"])
+      s.add_dependency(%q<rails>, ["= 3.2.13"])
       s.add_dependency(%q<rack-test>, ["= 0.6.1"])
-      s.add_dependency(%q<mysql2>, ["= 0.3.11"])
+      s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<pry>, [">= 0"])
       s.add_dependency(%q<rspec-rails>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rails_exception_handler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.2.8"])
+    s.add_dependency(%q<rails>, ["= 3.2.13"])
     s.add_dependency(%q<rack-test>, ["= 0.6.1"])
-    s.add_dependency(%q<mysql2>, ["= 0.3.11"])
+    s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<rspec-rails>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
