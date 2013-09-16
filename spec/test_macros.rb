@@ -16,7 +16,7 @@ module TestMacros
 
   def create_parser(exception = nil, request = nil, controller = nil)
       env = create_env
-      controller ||= mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+      controller ||= double(ApplicationController, :current_user => double(Object, :login => 'matz'))
       request ||= ActionDispatch::Request.new(env)
       exception ||= create_exception
       parser = RailsExceptionHandler::Parser.new(env, request, exception, controller)

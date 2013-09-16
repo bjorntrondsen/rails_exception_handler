@@ -3,7 +3,7 @@ require 'spec_helper'
 describe RailsExceptionHandler::Parser do
   before(:each) do
     env = create_env
-    controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+    controller = double(ApplicationController, :current_user => double(Object, :login => 'matz'))
     request = ActionDispatch::Request.new(env)
     @parser = RailsExceptionHandler::Parser.new(env, request, create_exception, controller)
   end
@@ -27,7 +27,7 @@ describe RailsExceptionHandler::Parser do
       it "should return true on routing errors when the filter contains :all_404s" do
         RailsExceptionHandler.configure { |config| config.filters = [:all_404s] }
         exception = create_exception
-        exception.stub!(:class => ActionController::RoutingError)
+        exception.stub(:class => ActionController::RoutingError)
         parser = create_parser(exception, nil, nil)
         parser.ignore?.should == true
       end
@@ -35,7 +35,7 @@ describe RailsExceptionHandler::Parser do
       it "should return true on routing errors without referer when the filter contains :no_referer_404s" do
         RailsExceptionHandler.configure { |config| config.filters = [:no_referer_404s] }
         exception = create_exception
-        exception.stub!(:class => ActionController::RoutingError)
+        exception.stub(:class => ActionController::RoutingError)
         request = ActionDispatch::Request.new(create_env(:referer => '/'))
         parser = create_parser(exception, request, nil)
         parser.ignore?.should == true
@@ -64,21 +64,21 @@ describe RailsExceptionHandler::Parser do
   describe "routing_error?" do
     it "should return true on ActionController::RoutingError" do
       exception = create_exception
-      exception.stub!(:class => ActionController::RoutingError)
+      exception.stub(:class => ActionController::RoutingError)
       parser = create_parser(exception, nil, nil)
       parser.routing_error?.should == true
     end
 
     it "should return true on AbstractController::ActionNotFound" do
       exception = create_exception
-      exception.stub!(:class => AbstractController::ActionNotFound)
+      exception.stub(:class => AbstractController::ActionNotFound)
       parser = create_parser(exception, nil, nil)
       parser.routing_error?.should == true
     end
 
     it "should return true on ActiveRecord::RecordNotFound" do
       exception = create_exception
-      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      exception.stub(:class => ActiveRecord::RecordNotFound)
       parser = create_parser(exception, nil, nil)
       parser.routing_error?.should == true
     end
@@ -91,20 +91,20 @@ describe RailsExceptionHandler::Parser do
   describe "user_info" do
     it "should store user info based on the method and field provided" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
-      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+      controller = double(ApplicationController, :current_user => double(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
       parser.external_info[:user_info].should == 'matz'
     end
     it "should store 'Anonymous' when store_user_info is enabled and no user is logged in" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
-      controller = mock(ApplicationController, :current_user => nil)
+      controller = double(ApplicationController, :current_user => nil)
       parser = create_parser(nil, nil, controller)
       parser.external_info[:user_info].should == 'Anonymous'
     end
 
     it "should not store any info when configured store_user_info is false" do
       RailsExceptionHandler.configure {|config| config.store_user_info = false}
-      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+      controller = double(ApplicationController, :current_user => double(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
       parser.external_info[:user_info].should == nil
     end
@@ -113,14 +113,14 @@ describe RailsExceptionHandler::Parser do
   describe "anon_user?" do
     it "should return true if user_info is nil" do
       RailsExceptionHandler.configure {|config| config.store_user_info = false}
-      controller = mock(ApplicationController)
+      controller = double(ApplicationController)
       parser = create_parser(nil, nil, controller)
       parser.anon_user?.should be_true
     end
 
     it "should return true if user_info is 'Anonymous'" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
-      controller = mock(ApplicationController, :current_user => nil)
+      controller = double(ApplicationController, :current_user => nil)
       parser = create_parser(nil, nil, controller)
       parser.external_info[:user_info].should == 'Anonymous'
       parser.anon_user?.should be_true
@@ -128,7 +128,7 @@ describe RailsExceptionHandler::Parser do
 
     it "should return false if user info is present" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
-      controller = mock(ApplicationController, :current_user => mock(Object, :login => 'matz'))
+      controller = double(ApplicationController, :current_user => double(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
       parser.anon_user?.should be_false
     end
