@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_exception_handler (2.1.0)
+    rails_exception_handler (2.2.0)
 
 GEM
   remote: http://rubygems.org/
@@ -116,5 +116,6 @@ DEPENDENCIES
   rack-test (= 0.6.2)
   rails (= 4.0.0.rc2)
   rails_exception_handler!
+  rake
   rspec-rails
   sqlite3
