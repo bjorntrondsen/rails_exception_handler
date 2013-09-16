@@ -13,3 +13,8 @@ rvm:
   - 2.0.0
   - ree
   - ruby-head
+
+gemfile:
+  - gemfiles/rails30.gemfile
+  - gemfiles/rails32.gemfile
+  - gemfiles/rails40.gemfile
