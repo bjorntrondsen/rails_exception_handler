@@ -9,5 +9,5 @@ group :test, :development do
   gem 'pry'
   gem "rspec-rails"
   gem "jeweler"
-  gem "rails_exception_handler", :path => '.'
+  gem "rails_exception_handler"
 end
