@@ -1,4 +1,5 @@
-source "http://rubygems.org"
+# encoding: utf-8
+source :rubygems
 
 group :test, :development do
   gem "rails", '3.2.13'
