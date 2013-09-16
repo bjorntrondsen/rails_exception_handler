@@ -1,4 +1,4 @@
-# Rails Exception Handler [![Build Status](http://travis-ci.org/Sharagoz/rails_exception_handler.png)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
+# Rails Exception Handler [![Build Status](https://travis-ci.org/Sharagoz/rails_exception_handler.png?branch=master)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
 
 Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
 
