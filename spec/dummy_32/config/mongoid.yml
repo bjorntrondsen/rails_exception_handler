@@ -1,0 +1,6 @@
+test:
+  sessions:
+    default:
+      database: this_database_doesnt_matter
+      hosts:
+        - localhost:27017

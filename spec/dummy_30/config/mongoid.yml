@@ -1,0 +1,3 @@
+test:
+  host: localhost
+  database: this_database_doesnt_matter
