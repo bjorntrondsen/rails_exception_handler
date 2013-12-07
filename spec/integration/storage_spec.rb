@@ -6,11 +6,12 @@ describe RailsExceptionHandler::Storage do
   end
 
   it "should be able to use multiple storage strategies" do
-    RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :rails_log] }
+    RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :mongoid, :rails_log] }
     read_test_log.should == ''
     @handler.handle_exception
     read_test_log.should match /undefined method `foo' for nil:NilClass/
     RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
+    RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 1 if defined?(Mongoid)
   end
 
   describe "active_record storage" do
@@ -34,6 +35,32 @@ describe RailsExceptionHandler::Storage do
     it "should not store an error message in the database when storage_strategies does not include :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
       RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 0
+    end
+  end
+
+  describe "mongoid storage" do
+    it "should store an error message in the database when storage_strategies includes :mongoid" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:mongoid] }
+      @handler.handle_exception
+      if defined?(Mongoid)
+        RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 1
+        msg = RailsExceptionHandler::Mongoid::ErrorMessage.first
+        msg.app_name.should ==      'ExceptionHandlerTestApp'
+        msg.class_name.should ==    'NoMethodError'
+        msg.message.should ==       "undefined method `foo' for nil:NilClass"
+        msg.trace.should match      /spec\/test_macros\.rb:28/
+        msg.params.should match     /\"foo\"=>\"bar\"/
+        msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
+        msg.target_url.should ==    'http://example.org/home?foo=bar'
+        msg.referer_url.should ==   'http://google.com/'
+        msg.created_at.should be >  5.seconds.ago
+        msg.created_at.should be <  Time.now
+      end
+    end
+
+    it "should not store an error message in the database when storage_strategies does not include :mongoid" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
+      RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 0 if defined?(Mongoid)
     end
   end
 
