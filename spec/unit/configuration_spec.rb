@@ -33,6 +33,10 @@ describe RailsExceptionHandler::Configuration do
     it "should set the fallback layout to 'application'" do
       @configuration.fallback_layout.should == 'application'
     end
+
+    it "should set the mongoid_store_in to nil" do
+      @configuration.mongoid_store_in.should be_nil
+    end
   end
 
 end

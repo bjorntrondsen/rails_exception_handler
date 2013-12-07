@@ -30,7 +30,7 @@ RSpec.configure do |config|
   config.color_enabled = true
   config.full_backtrace = true
   config.before(:each) do
-    ErrorMessage.delete_all
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.delete_all
     clear_test_log
     reset_configuration
   end

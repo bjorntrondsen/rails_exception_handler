@@ -3,44 +3,44 @@ require 'spec_helper'
 describe RailsExceptionHandler do
   it "should catch controller errors" do
     get "/home/controller_error"
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     last_response.body.should match(/Internal server error/)
-    ErrorMessage.first.class_name.should == 'NoMethodError'
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.first.class_name.should == 'NoMethodError'
   end
 
   it "should catch model errors" do
     get "/home/model_error"
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     last_response.body.should match(/Internal server error/)
-    ErrorMessage.first.class_name.should == 'NoMethodError'
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.first.class_name.should == 'NoMethodError'
   end
 
   it "should catch view errors" do
     get "/home/view_error"
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     last_response.body.should match(/Internal server error/)
-    ErrorMessage.first.class_name.should == 'ActionView::Template::Error'
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.first.class_name.should == 'ActionView::Template::Error'
   end
 
   it "should catch routing errors"  do
     get "/incorrect_route"
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     last_response.body.should match(/Internal server error/)
-    ErrorMessage.first.class_name.should == 'ActionController::RoutingError'
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.first.class_name.should == 'ActionController::RoutingError'
   end
 
   it "should catch syntax errors" do
     get "/home/syntax_error"
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     last_response.body.should match(/Internal server error/)
-    ErrorMessage.first.class_name.should == 'SyntaxError'
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.first.class_name.should == 'SyntaxError'
   end
 
   it "should store the specified information in the database" do
     RailsExceptionHandler.configure { |config| config.store_user_info = {:method => :current_user, :field => :login} }
     get "/home/controller_error", {}, {'HTTP_REFERER' => 'http://google.com/', 'HTTP_USER_AGENT' => 'Mozilla/4.0 (compatible; MSIE 8.0)'}
-    ErrorMessage.count.should == 1
-    msg = ErrorMessage.first
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
+    msg = RailsExceptionHandler::ActiveRecord::ErrorMessage.first
     msg.app_name.should ==      'ExceptionHandlerTestApp'
     msg.class_name.should ==    'NoMethodError'
     msg.message.should ==       "undefined method `foo' for nil:NilClass"
