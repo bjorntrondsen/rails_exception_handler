@@ -10,15 +10,15 @@ describe RailsExceptionHandler::Storage do
     read_test_log.should == ''
     @handler.handle_exception
     read_test_log.should match /undefined method `foo' for nil:NilClass/
-    ErrorMessage.count.should == 1
+    RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
   end
 
   describe "active_record storage" do
     it "should store an error message in the database when storage_strategies includes :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record] }
       @handler.handle_exception
-      ErrorMessage.count.should == 1
-      msg = ErrorMessage.first
+      RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
+      msg = RailsExceptionHandler::ActiveRecord::ErrorMessage.first
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
       msg.message.should ==       "undefined method `foo' for nil:NilClass"
@@ -33,7 +33,7 @@ describe RailsExceptionHandler::Storage do
 
     it "should not store an error message in the database when storage_strategies does not include :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
-      ErrorMessage.count.should == 0
+      RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 0
     end
   end
 

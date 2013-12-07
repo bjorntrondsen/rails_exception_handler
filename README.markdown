@@ -174,6 +174,24 @@ class CreateErrorMessages < ActiveRecord::Migration
 end
 ```
 
+### Through mongoid
+
+```ruby
+config.storage_strategies = [:mongoid]
+```
+This means that the error reports will be stored through mongoid directly to MongoDB. No changes to your mongoid.yml are necessary.
+
+Instead, in your configuration initializer, set the location where errors should be saved. Below is an example of the default when this option is left blank:
+
+```ruby
+config.mongoid_store_in database: :exception_database, collection: :error_message
+```
+
+Be sure to set username and password credentials if necessary! No migration script is necessary to run.
+
+This can be used simultaneously with the active_record strategy, or any other strategy for that matter, if desired.
+
+
 ### Saving to the rails log
 
 ```ruby
@@ -203,7 +221,7 @@ config.storage_strategies = [:remote_url => {:target => 'http://example.com/erro
 ```
 
 This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
-If you use a Rails app at the other end you should simply be able to do _ErrorMessage.create(params[:error_message])_ to save the report.
+If you use a Rails app at the other end you should simply be able to do _RailsExceptionHandler::ActiveRecord::ErrorMessage.create(params[:error_message])_ to save the report.
 
 # Exception filters
 

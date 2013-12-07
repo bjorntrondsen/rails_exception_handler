@@ -1,9 +1,17 @@
 class RailsExceptionHandler::Storage
   def self.active_record(info)
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
-      ErrorMessage.create(info, :without_protection => true)
+      RailsExceptionHandler::ActiveRecord::ErrorMessage.try(:create, info, :without_protection => true)
     else
-      ErrorMessage.create(info)
+      RailsExceptionHandler::ActiveRecord::ErrorMessage.try(:create, info)
+    end
+  end
+
+  def self.mongoid(info)
+    if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
+      RailsExceptionHandler::Mongoid::ErrorMessage.try(:create, info, :without_protection => true)
+    else
+      RailsExceptionHandler::Mongoid::ErrorMessage.try(:create, info)
     end
   end
 
