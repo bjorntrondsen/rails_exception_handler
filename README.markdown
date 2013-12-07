@@ -288,7 +288,6 @@ David Rice and James Harrison
 
 Would you like to contribute? Here are some things on the todo list:
 
-* A mongoid storage strategy for those that wish to use MongoDB
 * An email storage strategy for those that wish to be notified of the exceptions through email
 
 # Licence
