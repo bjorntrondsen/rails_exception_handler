@@ -221,7 +221,7 @@ config.storage_strategies = [:remote_url => {:target => 'http://example.com/erro
 ```
 
 This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
-If you use a Rails app at the other end you should simply be able to do _RailsExceptionHandler::ActiveRecord::ErrorMessage.create(params[:error_message])_ or _RailsExceptionHandler::Mongoid::ErrorMessage.create(params[:error_message])_ to save the report depending upon your database choice.
+If you use a Rails app at the other end you should simply be able to do `RailsExceptionHandler::ActiveRecord::ErrorMessage.create(params[:error_message])` or `RailsExceptionHandler::Mongoid::ErrorMessage.create(params[:error_message])` to save the report depending upon your database choice.
 
 # Exception filters
 
