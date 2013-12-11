@@ -1,5 +1,5 @@
 class RailsExceptionHandler::Configuration
-  attr_accessor :storage_strategies, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info, :env_info_block, :global_info_block, :exception_info_block, :request_info_block
+  attr_accessor :storage_strategies, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info, :env_info_block, :global_info_block, :exception_info_block, :request_info_block, :mongoid_store_in
 
   def initialize
     @environments = [:production]
@@ -13,6 +13,10 @@ class RailsExceptionHandler::Configuration
 
   def active_record?
     @storage_strategies.include?(:active_record)
+  end
+
+  def mongoid?
+    @storage_strategies.include?(:mongoid)
   end
 
   def activate?
