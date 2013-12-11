@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.2.0 - September 10th 2013
+ - Rails 4 compatibility
+
 v2.1.0 - September 17th 2012
  - New filtering option: referer_url
 
