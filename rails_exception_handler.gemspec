@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rails_exception_handler"
-  s.version = "2.2.0"
+  s.version = "2.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
-  s.date = "2013-09-16"
+  s.date = "2013-12-11"
   s.description = ""
   s.email = "contact@sharagoz.com"
   s.extra_rdoc_files = [
@@ -27,6 +27,10 @@ Gem::Specification.new do |s|
     "app/controllers/error_response_controller.rb",
     "app/models/rails_exception_handler/active_record/error_message.rb",
     "app/models/rails_exception_handler/mongoid/error_message.rb",
+    "gemfiles/rails30.gemfile",
+    "gemfiles/rails32.187-ree.gemfile",
+    "gemfiles/rails32.gemfile",
+    "gemfiles/rails40.gemfile",
     "lib/generators/rails_exception_handler/install_generator.rb",
     "lib/generators/rails_exception_handler/templates/rails_exception_handler.rb",
     "lib/patch/show_exceptions.rb",
