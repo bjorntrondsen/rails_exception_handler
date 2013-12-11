@@ -284,7 +284,7 @@ config.filters = [:referer_url_regxp => /\problematicreferer/i]
 
 # Contributors
 
-David Rice and James Harrison
+mgwidmann, David Rice and James Harrison
 
 Would you like to contribute? Here are some things on the todo list:
 
