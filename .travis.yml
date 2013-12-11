@@ -25,6 +25,11 @@ matrix:
       gemfile: gemfiles/rails32.187-ree.gemfile
     - rvm: ree
       gemfile: gemfiles/rails32.187-ree.gemfile
+  exclude:
+    - rvm: 1.8.7
+      gemfile: gemfiles/rails32.gemfile
+    - rvm: ree
+      gemfile: gemfiles/rails32.gemfile
   allow_failures:
     - rvm: 1.8.7
       gemfile: gemfiles/rails40.gemfile
