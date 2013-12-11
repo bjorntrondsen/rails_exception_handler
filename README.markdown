@@ -184,7 +184,7 @@ This means that the error reports will be stored through mongoid directly to Mon
 Instead, in your configuration initializer, set the location where errors should be saved. Below is an example of the default when this option is left blank:
 
 ```ruby
-config.mongoid_store_in database: :exception_database, collection: :error_message
+config.mongoid_store_in :database => :exception_database, :collection => :error_message
 ```
 
 Be sure to set username and password credentials if necessary! No migration script is necessary to run.
