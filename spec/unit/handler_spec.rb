@@ -26,7 +26,7 @@ describe RailsExceptionHandler::Handler do
 
     it "should set the response code to 404 on routing errors" do
       exception = create_exception
-      exception.stub!(:class => ActionController::RoutingError)
+      exception.stub(:class => ActionController::RoutingError)
       handler = RailsExceptionHandler::Handler.new(create_env, exception)
       response = handler.handle_exception
       response.length.should == 3
@@ -36,14 +36,14 @@ describe RailsExceptionHandler::Handler do
 
   describe '.response' do
     it "should call index action on ErrorResponseController" do
-      ErrorResponseController.should_receive(:action).with(:index).and_return(mock(Object, :call => [500, {}, {}]))
+      ErrorResponseController.should_receive(:action).with(:index).and_return(double(Object, :call => [500, {}, {}]))
       @handler.handle_exception
     end
 
     it "should set response_code to '404' on routing errors" do
       exception = create_exception
       env = create_env
-      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      exception.stub(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
       response = handler.handle_exception
       response[0].should == 404
@@ -70,7 +70,7 @@ describe RailsExceptionHandler::Handler do
     it "should use the fallback layout when no layout is defined" do
       env = create_env(:target => '/routing_error')
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
-      handler.instance_variable_set("@controller",mock(Object, :_default_layout => nil))
+      handler.instance_variable_set("@controller",double(Object, :_default_layout => nil))
       handler.handle_exception
       env['exception_handler.layout'].should == 'fallback'
     end
@@ -81,7 +81,7 @@ describe RailsExceptionHandler::Handler do
       handler = RailsExceptionHandler::Handler.new(create_env, create_exception)
       handler.handle_exception
       request = handler.instance_variable_get(:@request)
-      request.stub!(:xhr? => true)
+      request.stub(:xhr? => true)
       handler.instance_variable_set(:@request, request)
       handler.send(:response_layout).should == false
     end
@@ -99,7 +99,7 @@ describe RailsExceptionHandler::Handler do
     it "should use the fallback layout if the controller does not have a default layout" do
       env = create_env
       controller = ApplicationController.new
-      controller.stub!(:_default_layout => 'fallback')
+      controller.stub(:_default_layout => 'fallback')
       env['action_controller.instance'] = controller
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       handler.handle_exception
@@ -115,7 +115,7 @@ describe RailsExceptionHandler::Handler do
       }
       env = create_env
       exception = create_exception
-      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      exception.stub(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
       handler.handle_exception
       handler.send(:response_text).should == 'Page not found'
@@ -128,7 +128,7 @@ describe RailsExceptionHandler::Handler do
       }
       env = create_env
       exception = create_exception
-      exception.stub!(:class => ActiveRecord::RecordNotFound)
+      exception.stub(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
       handler.handle_exception
       handler.send(:response_text).should == 'Default response'
