@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.3.0 - December 11th 2013
+ - Mongoid storage strategy (courtesy of mgwidmann)
+
 v2.2.0 - September 10th 2013
  - Rails 4 compatibility
 
