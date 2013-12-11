@@ -45,7 +45,7 @@ module TestMacros
 
   def reset_configuration
     RailsExceptionHandler.configure do |config|
-      config.storage_strategies = [:active_record]
+      config.storage_strategies = [:active_record, :mongoid]
       config.environments = [:test]
       config.store_user_info = false
       config.filters = []

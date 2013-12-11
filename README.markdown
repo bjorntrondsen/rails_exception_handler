@@ -4,7 +4,7 @@ Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception
 
 This is a flexible exception handler for Rails intended for those who wish to create their own error tracking service. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to Rails though, it's not that hard to set up.
 
-The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports.
+The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports. A Rails Engine admin interface, [rails_exception_handler_admin](https://github.com/mgwidmann/rails_exception_handler_admin), is a simple drop in interface or to use as an example for building your own.
 
 Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
@@ -174,6 +174,24 @@ class CreateErrorMessages < ActiveRecord::Migration
 end
 ```
 
+### Through mongoid
+
+```ruby
+config.storage_strategies = [:mongoid]
+```
+This means that the error reports will be stored through mongoid directly to MongoDB. No changes to your mongoid.yml are necessary.
+
+Instead, in your configuration initializer, set the location where errors should be saved. Below is an example of the default when this option is left blank:
+
+```ruby
+config.mongoid_store_in :database => :exception_database, :collection => :error_message
+```
+
+Be sure to set username and password credentials if necessary! No migration script is necessary to run.
+
+This can be used simultaneously with the active_record strategy, or any other strategy for that matter, if desired.
+
+
 ### Saving to the rails log
 
 ```ruby
@@ -203,7 +221,7 @@ config.storage_strategies = [:remote_url => {:target => 'http://example.com/erro
 ```
 
 This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
-If you use a Rails app at the other end you should simply be able to do _ErrorMessage.create(params[:error_message])_ to save the report.
+If you use a Rails app at the other end you should simply be able to do `RailsExceptionHandler::ActiveRecord::ErrorMessage.create(params[:error_message])` or `RailsExceptionHandler::Mongoid::ErrorMessage.create(params[:error_message])` to save the report depending upon your database choice.
 
 # Exception filters
 
@@ -270,7 +288,6 @@ David Rice and James Harrison
 
 Would you like to contribute? Here are some things on the todo list:
 
-* A mongoid storage strategy for those that wish to use MongoDB
 * An email storage strategy for those that wish to be notified of the exceptions through email
 
 # Licence
