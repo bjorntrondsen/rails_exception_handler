@@ -6,8 +6,6 @@ group :test, :development do
   gem "rack-test", '0.6.2'
   gem 'rake' # Needed by tavis
   gem 'sqlite3'
-  gem 'mongoid', '~> 2.2.6'
-  gem 'bson_ext'
   gem 'pry'
   gem "rspec-rails"
   gem "jeweler"
