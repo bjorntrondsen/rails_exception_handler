@@ -25,3 +25,6 @@ matrix:
       gemfile: gemfiles/rails40.gemfile
     - rvm: ree
       gemfile: gemfiles/rails40.gemfile
+
+services:
+  - mongodb
