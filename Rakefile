@@ -13,7 +13,7 @@ task :test do
            "spec/integration/rails_exception_handler_spec.rb", 
            "spec/integration/configuration_spec.rb"
           ]
-  system "bundle exec rspec #{files.join(' ')}"
+  system "bundle exec rspec spec"
 end
 
 Jeweler::Tasks.new do |gem|

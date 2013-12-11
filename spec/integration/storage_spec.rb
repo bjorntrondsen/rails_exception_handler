@@ -87,7 +87,7 @@ describe RailsExceptionHandler::Storage do
 
   describe 'remote_url storage' do
     it "should send the error_message as an HTTP POST request when :remote_url is included" do
-      Time.stub!(:now => Time.now) # Otherwise the timestamps will be different, and comparison fail
+      Time.stub(:now => Time.now) # Otherwise the timestamps will be different, and comparison fail
       @handler.handle_exception
       parser = @handler.instance_variable_get(:@parsed_error)
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}] }
