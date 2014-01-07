@@ -8,8 +8,8 @@ group :test, :development do
   #  gem 'bson_ext'
 
   #gem "rails", '3.2.13'
-  #  gem "rack-test", '0.6.2'
-  #  gem 'mongoid'
+   #gem "rack-test", '0.6.2'
+   #gem 'mongoid'
 
   gem "rails", '4.0.0'
     gem "rack-test", '0.6.2'
