@@ -14,8 +14,8 @@ class RailsExceptionHandler::Parser
   def parse
     @internal_info[:error_class] =    @exception.class.to_s
     @internal_info[:target_url] =     @request.url
-    @internal_info[:referer_url] =    @request.referer || ""
-    @internal_info[:user_agent] =     @request.user_agent || ""
+    @internal_info[:referer_url] =    @request.referer
+    @internal_info[:user_agent] =     @request.user_agent
 
     config = RailsExceptionHandler.configuration
     config.request_info_block.call(@external_info, @request) if(config.request_info_block)
@@ -75,17 +75,17 @@ class RailsExceptionHandler::Parser
   end
 
   def filter_user_agent_regxp(regxp)
-    result = @internal_info[:user_agent].match(regxp)
+    result = (@internal_info[:user_agent] || "").match(regxp)
     result != nil
   end
 
   def filter_target_url_regxp(regxp)
-    result = @internal_info[:target_url].match(regxp)
+    result = (@internal_info[:target_url] || "").match(regxp)
     result != nil
   end
 
   def filter_referer_url_regxp(regxp)
-    result = @internal_info[:referer_url].match(regxp)
+    result = (@internal_info[:referer_url] || "").match(regxp)
     result != nil
   end
 end
