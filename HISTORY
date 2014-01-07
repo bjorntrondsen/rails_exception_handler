@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.3.2 - January 7th 2014
+- Add helper method for catching exceptions outside of Rack
+
 v2.3.1 - January 7th 2014
 - Fix issue where it attempted to connect to DBs for disabled storage strategies
 
