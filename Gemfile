@@ -11,7 +11,7 @@ group :test, :development do
    #gem "rack-test", '0.6.2'
    #gem 'mongoid'
 
-  gem "rails", '4.0.0'
+  gem "rails", '4.0.2'
     gem "rack-test", '0.6.2'
 
   gem 'rake' # Needed by tavis
