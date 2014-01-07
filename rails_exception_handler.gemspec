@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "rails_exception_handler"
-  s.version = "2.3.1"
+  s.version = "2.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sharagoz"]
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/generators/rails_exception_handler/templates/rails_exception_handler.rb",
     "lib/patch/show_exceptions.rb",
     "lib/rails_exception_handler.rb",
+    "lib/rails_exception_handler/catcher.rb",
     "lib/rails_exception_handler/configuration.rb",
     "lib/rails_exception_handler/engine.rb",
     "lib/rails_exception_handler/handler.rb",
