@@ -31,7 +31,7 @@ RSpec.configure do |config|
   config.full_backtrace = true
   config.before(:each) do
     RailsExceptionHandler::ActiveRecord::ErrorMessage.delete_all
-    RailsExceptionHandler::Mongoid::ErrorMessage.delete_all if defined?(Mongoid)
+    RailsExceptionHandler::Mongoid::ErrorMessage.delete_all if(defined?(Mongoid) && RailsExceptionHandler.configuration.activate? && RailsExceptionHandler.configuration.mongoid?)
     clear_test_log
     reset_configuration
   end
