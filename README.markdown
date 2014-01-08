@@ -8,12 +8,7 @@ The exception handler enables you to save the key information from the error mes
 
 Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
-Do you need to catch ruby errors outside of Rack?
-```ruby
-RailsExceptionHandler.catch do
-  Order.clear_abandoned
-end
-```
+Do you need to catch ruby errors outside of Rack? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Manual-exception-handling-outside-of-rack)
 
 ## Compatiblity
 
@@ -231,4 +226,70 @@ If you use a Rails app at the other end you should simply be able to do `RailsEx
 # Exception filters
 
 Sometimes it is necessary to filter errors. All filters are disabled by default and I recommend you deploy your application this way initially, and then add filters as they become necessary.
-The only reason I've ever wanted filtering have been due to what seem like poorly programmed web crawlers and black bots probing for security holes. If legitimate web craw
+The only reason I've ever wanted filtering have been due to what seem like poorly programmed web crawlers and black bots probing for security holes. If legitimate web crawlers are a problem for you, look into tweaking your robots.txt file before enabling exception filters.
+
+### :all_404s
+
+```ruby
+config.filters = [:all_404s]
+```
+
+When turned on the following exceptions will no longer be stored: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+Consider this a last resort. You will miss all "real" 404s when this is turned on, like broken redirections.
+
+### :anon_404s
+
+```ruby
+config.filters = [:anon_404s]
+```
+
+When turned on the following exceptions will no longer be stored unless a user is logged in: ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound
+
+Note: This filter depends on config.store_user_info to figure out how to get access to the current_user object. This will be cleaned up in a future release.
+
+### :no_referer_404s
+
+```ruby
+config.filters = [:no_referer_404s]
+```
+
+ActionController::RoutingError, AbstractController::ActionNotFound, ActiveRecord::RecordNotFound will be ignored if it was caused by a request without a referer.
+This is very effective against bots. 99.9% of the time a routing error with no referer will be caused by a bot, and then once in a while it will be caused by a real user that happened to generate an error on the first page he opened (like a broken bookmark). You will get a lot less false positives with this filter than :all_404s.
+
+### :user_agent_regxp
+
+Legit software will usually add something to the user agent string to let you know who they are. You can use this to filter out the errors they generate, and be pretty sure you are not going to get any false positives.
+
+```ruby
+config.filters = [:user_agent_regxp => /\b(ZyBorg|Yandex|Jyxobot)\b/i]
+```
+
+If you (like me) dont know regular expressions by heart, then http://www.rubular.com/ is great tool to use when creating a regxp.
+
+### :target_url_regxp
+
+Sometimes black bots add a common user agent string and a referer to their requests to cloak themselfs, which makes it hard to filter them without filtering all routing errors. What you can often do is to filter on what they target, which is usually security holes in some widely used library/plugin. The example below will filter out all URLs containing ".php". This is the filter I most commonly use myself. Without it, it is only a matter of time before I'll one day get 200 exceptions in 10mins caused by a bot looking for security holes in myPhpAdmin or some other PHP library.
+
+```ruby
+config.filters = [:target_url_regxp => /\.php/i]
+```
+
+### :referer_url_regxp
+
+Works the same way as :target_url_regxp. Enables you to get rid of error messages coming from spesific sources, like external links to assets that no longer exists.
+
+```ruby
+config.filters = [:referer_url_regxp => /\problematicreferer/i]
+```
+
+# Contributors
+
+mgwidmann, David Rice and James Harrison
+
+Would you like to contribute? Here are some things on the todo list:
+
+* An email storage strategy for those that wish to be notified of the exceptions through email
+
+# Licence
+
+Copyright © 2012 Bjørn Trondsen, released under the MIT license
