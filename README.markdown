@@ -11,7 +11,7 @@ Does your app have an authorization mechanism? [See wiki](https://github.com/Sha
 Do you need to catch ruby errors outside of Rack?
 ```ruby
 RailsExceptionHandler.catch do
-  Order.clear_abandoned
+  # ...
 end
 ```
 
