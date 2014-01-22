@@ -8,7 +8,7 @@ The exception handler enables you to save the key information from the error mes
 
 Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
-Do you need to catch ruby errors outside of Rack?
+Do you need to catch ruby errors [outside of Rack](https://github.com/Sharagoz/rails_exception_handler/wiki/Manual-exception-handling-outside-of-rack)?
 ```ruby
 RailsExceptionHandler.catch do
   # ...
