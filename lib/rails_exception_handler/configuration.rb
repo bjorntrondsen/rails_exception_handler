@@ -1,9 +1,11 @@
 class RailsExceptionHandler::Configuration
-  attr_accessor :storage_strategies, :active_record_database, :active_record_table, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info, :env_info_block, :global_info_block, :exception_info_block, :request_info_block, :mongoid_store_in
+  attr_accessor :storage_strategies, :environments, :filters, :responses, :response_mapping, :fallback_layout, :store_user_info, :env_info_block, :global_info_block, :exception_info_block, :request_info_block, :mongoid_store_in, :active_record_store_in
 
   def initialize
-    @active_record_database = :active_record_database
-    @active_record_table = :active_record_table
+    @active_record_store_in = {
+      database: 'exception_database',
+      record_table: 'error_messages'
+    }
     @environments = [:production]
     @storage_strategies = []
     @filters = []
@@ -11,14 +13,6 @@ class RailsExceptionHandler::Configuration
     @fallback_layout = 'application'
     @response_mapping = {}
     @responses = {}
-  end
-
-  def active_record_database
-    @active_record_database.to_s || 'exception_database'
-  end
-
-  def active_record_table
-    @active_record_table.to_s || 'error_messages'
   end
 
   def active_record?

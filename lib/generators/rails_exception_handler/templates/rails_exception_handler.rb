@@ -31,13 +31,11 @@ RailsExceptionHandler.configure do |config|
 
   config.storage_strategies = [:active_record] # Available options: [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}]
 
-  # if you want to save it to the same database, as your project, you can specify it like this:
-  #   config.active_record_database = Rails.env
-  # or if you want different database but environment specific:
-  #   config.active_record_database = "#{Rails.env}_exception_database"
-  # default database name is 'exception_database'
-  config.active_record_database = 'exception_database'
-  config.active_record_table = 'error_messages' # table name
+  # Change database/table for the active_record storage strategy
+  # config.active_record_store_in = {
+  #  :database => 'exception_database',
+  #  :record_table => 'error_messages'
+  # }
 
 
   config.store_request_info do |storage,request|

@@ -134,6 +134,11 @@ No storage strategies are enabled by default. You can enable more than one stora
 
 ```ruby
 config.storage_strategies = [:active_record]
+# Change database/table for the active_record storage strategy
+# config.active_record_store_in = {
+#  :database => 'exception_database',
+#  :record_table => 'error_messages'
+# }
 ```
 This means that the error reports will be stored through active record directly to a database. A new entry called **exception_database** is needed in **database.yml**:
 For mysql the entry would look something like this:
