@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.3.3 - April 24th 2014
+- Make database name/table configurable for the Active Record storage strategy
+
 v2.3.2 - January 7th 2014
 - Add helper method for catching exceptions outside of Rack
 
