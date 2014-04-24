@@ -294,7 +294,7 @@ config.filters = [:referer_url_regxp => /\problematicreferer/i]
 
 # Contributors
 
-mgwidmann, David Rice and James Harrison
+https://github.com/Sharagoz/rails_exception_handler/graphs/contributors
 
 Would you like to contribute? Here are some things on the todo list:
 
@@ -302,4 +302,4 @@ Would you like to contribute? Here are some things on the todo list:
 
 # Licence
 
-Copyright © 2012 Bjørn Trondsen, released under the MIT license
+Copyright © 2014 Bjørn Trondsen, released under the MIT license
