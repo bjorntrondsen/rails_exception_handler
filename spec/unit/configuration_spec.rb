@@ -37,6 +37,13 @@ describe RailsExceptionHandler::Configuration do
     it "should set the mongoid_store_in to nil" do
       @configuration.mongoid_store_in.should be_nil
     end
+
+    it "should set the default active record configuration" do
+      @configuration.active_record_store_in.should eq({
+        database: 'exception_database',
+        record_table: 'error_messages'
+      })
+    end
   end
 
 end
