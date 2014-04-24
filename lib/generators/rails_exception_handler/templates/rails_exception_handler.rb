@@ -21,13 +21,25 @@ RailsExceptionHandler.configure do |config|
     :default => "<h1>500</h1><p>Internal server error</p>",
     :not_found => "<h1>404</h1><p>Page not found</p>"
   }
-  config.response_mapping = {                                             # All errors are mapped to the :default response unless overridden here
+
+  # All errors are mapped to the :default response unless overridden here
+  config.response_mapping = {
     'ActiveRecord::RecordNotFound' => :not_found,
     'ActionController::RoutingError' => :not_found,
     'AbstractController::ActionNotFound' => :not_found
   }
 
   config.storage_strategies = [:active_record] # Available options: [:active_record, :rails_log, :remote_url => {:target => 'http://example.com'}]
+
+  # if you want to save it to the same database, as your project, you can specify it like this:
+  #   config.active_record_database = Rails.env
+  # or if you want different database but environment specific:
+  #   config.active_record_database = "#{Rails.env}_exception_database"
+  # default database name is 'exception_database'
+  config.active_record_database = 'exception_database'
+  config.active_record_table = 'error_messages' # table name
+
+
   config.store_request_info do |storage,request|
     storage[:target_url] =    request.url
     storage[:referer_url] =   request.referer
