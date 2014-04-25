@@ -39,25 +39,25 @@ RailsExceptionHandler.configure do |config|
 
 
   config.store_request_info do |storage,request|
-    storage[:target_url] =    request.url
-    storage[:referer_url] =   request.referer
-    storage[:params] =        request.params.inspect
-    storage[:user_agent] =    request.user_agent
+    storage[:target_url]  = request.url
+    storage[:referer_url] = request.referer
+    storage[:params]      = request.params.inspect
+    storage[:user_agent]  = request.user_agent
   end
 
   config.store_exception_info do |storage,exception|
-    storage[:class_name] =   exception.class.to_s
-    storage[:message] =      exception.to_s
-    storage[:trace] =        exception.backtrace.join("\n")
+    storage[:class_name] = exception.class.to_s
+    storage[:message]    = exception.to_s
+    storage[:trace]      = exception.backtrace.join("\n")
   end
 
   config.store_environment_info do |storage,env|
-    storage[:doc_root] =      env['DOCUMENT_ROOT']
+    storage[:doc_root] = env['DOCUMENT_ROOT']
   end
 
   config.store_global_info do |storage|
-    storage[:app_name] =     Rails.application.class.parent_name
-    storage[:created_at] =   Time.now
+    storage[:app_name]   = Rails.application.class.parent_name
+    storage[:created_at] = Time.now
   end
   # config.store_user_info = {:method => :current_user, :field => :login} # Helper method for easier access to current_user
 end
