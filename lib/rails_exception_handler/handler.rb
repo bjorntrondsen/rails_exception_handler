@@ -42,14 +42,27 @@ class RailsExceptionHandler::Handler
     @env['exception_handler.layout'] = response_layout
     @env['exception_handler.response'] = response_text
     response = ErrorResponseController.action(:index).call(@env)
+
     if @parsed_error.routing_error? 
       response[0] = 404
       file = "#{Rails.root}/public/404.html"
-      response[2].body = File.read(file) if File.exists?(file)
+      response = override_body_with_file_if_exists(response, file)
     else
       response[0] = 500
       file = "#{Rails.root}/public/500.html"
-      response[2].body = File.read(file) if File.exists?(file)
+      response = override_body_with_file_if_exists(response, file)
+    end
+    return response
+  end
+
+  def override_body_with_file_if_exists(response, file)
+    return response unless File.exists?(file)
+
+    # Rails 4.2.0
+    if response.kind_of?(Array) && response[2] && response[2].kind_of?(ActionDispatch::Response::RackBody)
+      response[2] = [File.read(file)]
+    else
+      response[2].body = File.read(file)
     end
     return response
   end
