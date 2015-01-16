@@ -2,7 +2,10 @@
 ENV["RAILS_ENV"] = 'test'
 
 require 'rails'
-if(Rails::VERSION::MAJOR == 4)
+if(Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2)
+  puts "Testing against a rails 4.2 dummy app"
+  TEST_APP = 'dummy_42'
+elsif(Rails::VERSION::MAJOR == 4)
   puts "Testing against a rails 4.0 dummy app"
   TEST_APP = 'dummy_40'
 elsif(Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 1)
