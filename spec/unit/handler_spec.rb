@@ -86,7 +86,11 @@ describe RailsExceptionHandler::Handler do
       exception.stub(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
       response = handler.handle_exception
-      response[2].body.should == "content of 404.html"
+      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+        response[2].should == ["content of 404.html"]
+      else
+        response[2].body.should == "content of 404.html"
+      end
     end
 
     it "should use public/500.html on non-routing errors if the file exists" do
@@ -94,7 +98,11 @@ describe RailsExceptionHandler::Handler do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       response = handler.handle_exception
-      response[2].body.should == "content of 500.html"
+      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+        response[2].should == ["content of 500.html"]
+      else
+        response[2].body.should == "content of 500.html"
+      end
     end
   end
 
