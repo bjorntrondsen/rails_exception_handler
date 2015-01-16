@@ -38,4 +38,7 @@ RSpec.configure do |config|
     clear_test_log
     reset_configuration
   end
+  config.before(:each) do
+    delete_static_error_pages
+  end
 end

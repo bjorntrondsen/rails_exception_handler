@@ -43,6 +43,20 @@ module TestMacros
     return data
   end
 
+  def create_static_error_pages
+    path = Rails.root + 'public/404.html'
+    File.open(path, 'w') { |file| file.write("content of 404.html") }
+    path = Rails.root + 'public/500.html'
+    File.open(path, 'w') { |file| file.write("content of 500.html") }
+  end
+
+  def delete_static_error_pages
+    path = Rails.root + 'public/404.html'
+    File.delete(path) if File.exists?(path)
+    path = Rails.root + 'public/500.html'
+    File.delete(path) if File.exists?(path)
+  end
+
   def reset_configuration
     RailsExceptionHandler.configure do |config|
       config.storage_strategies = [:active_record, :mongoid]

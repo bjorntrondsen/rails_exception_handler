@@ -78,6 +78,24 @@ describe RailsExceptionHandler::Handler do
       handler.handle_exception
       env['exception_handler.layout'].should == 'fallback'
     end
+
+    it "should use public/404.html on routing errors if the file exists" do
+      create_static_error_pages
+      exception = create_exception
+      env = create_env
+      exception.stub(:class => ActiveRecord::RecordNotFound)
+      handler = RailsExceptionHandler::Handler.new(env, exception)
+      response = handler.handle_exception
+      response[2].body.should == "content of 404.html"
+    end
+
+    it "should use public/500.html on non-routing errors if the file exists" do
+      create_static_error_pages
+      env = create_env
+      handler = RailsExceptionHandler::Handler.new(env, create_exception)
+      response = handler.handle_exception
+      response[2].body.should == "content of 500.html"
+    end
   end
 
   describe '.response_layout' do
