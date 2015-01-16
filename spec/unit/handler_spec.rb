@@ -21,7 +21,11 @@ describe RailsExceptionHandler::Handler do
       response.length.should == 3
       response[0].should == 500 # response code
       response[1].class.should == Hash # headers
-      response[2].class.should == ActionDispatch::Response # body
+      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+        response[2].class.should == ActionDispatch::Response::RackBody # body
+      else
+        response[2].class.should == ActionDispatch::Response # body
+      end
     end
 
     it "should set the response code to 404 on routing errors" do
