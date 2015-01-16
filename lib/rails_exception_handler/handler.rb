@@ -58,11 +58,10 @@ class RailsExceptionHandler::Handler
   def override_body_with_file_if_exists(response, file)
     return response unless File.exists?(file)
 
-    # Rails 4.2.0
-    if response.kind_of?(Array) && response[2] && response[2].kind_of?(ActionDispatch::Response::RackBody)
-      response[2] = [File.read(file)]
-    else
+    if defined? response[2].body=()
       response[2].body = File.read(file)
+    else # Rails >= 4.2.0
+      response[2] = [File.read(file)]
     end
     return response
   end
