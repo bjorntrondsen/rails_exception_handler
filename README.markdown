@@ -292,6 +292,63 @@ Works the same way as :target_url_regxp. Enables you to get rid of error message
 config.filters = [:referer_url_regxp => /\problematicreferer/i]
 ```
 
+# Templating
+
+### I18n
+
+This is an example of the english locale file that can be stored in ```config/locale```.
+
+```yaml
+en:
+  error_response:
+    mapping:
+      default:
+        title: 'Internal server error'
+        desc: 'The server cannot process the request.'
+      not_found:
+        title: 'Page not found'
+        desc: 'The page you were looking for does not exists.'
+    exception:
+      action_controller:
+        routing_error:
+          title: 'Routing error'
+          desc: 'No route matches with the given Url.'
+```
+
+### View
+
+This is an example of the view file that can be stored in ```app/views/error_response/index.html.slim```.
+Set mapping views configuration to true (```config.mapping_views = true```) to use mapping specific view files instead of the one single view file ```index.html.slim```.
+
+```slim
+.error
+  .message
+    h1
+      = t("error_response.mapping.#{@response_mapping}.title")
+
+    h4
+      = t("error_response.mapping.#{@response_mapping}.desc")
+
+    h2
+      = t("error_response.exception.#{@exception_namespace}.title")
+
+    h4
+      = t("error_response.exception.#{@exception_namespace}.desc")
+
+    p
+      strong
+        | Exception class:
+      =< @exception_class
+      br
+      strong
+        | Status code:
+      =< @status_code
+      br
+      strong
+        | Rescue response:
+      =< @rescue_response
+```
+
 # Contributors
 
 https://github.com/Sharagoz/rails_exception_handler/graphs/contributors

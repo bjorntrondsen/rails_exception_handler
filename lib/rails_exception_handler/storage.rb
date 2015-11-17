@@ -1,7 +1,7 @@
 class RailsExceptionHandler::Storage
   def self.active_record(info)
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
-      RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
+      RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info, without_protection: true) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
     else
       RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
     end
@@ -9,14 +9,14 @@ class RailsExceptionHandler::Storage
 
   def self.mongoid(info)
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
-      RailsExceptionHandler::Mongoid::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
+      RailsExceptionHandler::Mongoid::ErrorMessage.create(info, without_protection: true) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
     else
       RailsExceptionHandler::Mongoid::ErrorMessage.create(info) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
     end
   end
 
   def self.rails_log(info)
-    message = ""
+    message = ''
     info.each do |key,val|
       message += "#{key.to_s.upcase}: #{val.to_s}\n"
     end
@@ -41,7 +41,7 @@ class RailsExceptionHandler::Storage
         flat_hash.merge!(flatten_hash(v, names))
       else
         key = flat_hash_key(names)
-        key += "[]" if v.is_a?(Array)
+        key += '[]' if v.is_a?(Array)
         flat_hash[key] = v
       end
     end
