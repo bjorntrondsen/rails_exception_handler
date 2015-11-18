@@ -22,6 +22,7 @@ class RailsExceptionHandler::Mongoid
       # ensuring inspect were called. Possibly in a future major release this can be switched, though not sure if any benefit will
       # actually be gained from changing the type.
       field :params,      type: String
+      field :count,       type: Integer, default: 0
     end
   end
 

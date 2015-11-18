@@ -26,7 +26,7 @@ http://travis-ci.org/#!/Sharagoz/rails_exception_handler
 Add the line below to your gemfile and run bundler
 
 ```
-gem 'rails_exception_handler', "~> 2"
+gem 'rails_exception_handler', '~> 2'
 ```
 
 Generate an initializer:
@@ -75,12 +75,6 @@ Note: public/500.html and public/400.html will be used if these exists. Remove t
 Create a set of responses and then map specific exceptions to these responses. There needs to be a response called :default which is used for the exceptions that are not explicitly mapped to a response.
 
 ```ruby
-config.responses = {
-  :default => "<h1>500</h1><p>Internal server error</p>",
-  :not_found => "<h1>404</h1><p>Page not found</p>",
-  :wrong_token => "<h1>500</h1><p>There was a problem authenticating the submitted form. Reload the page and try again.</p>",
-  :teapot => "<h1>418</h1><p>I'm a teapot</p>"
-}
 config.response_mapping = {
  'ActiveRecord::RecordNotFound' => :not_found,
  'ActionController:RoutingError' => :not_found,
@@ -120,7 +114,7 @@ Having some way of identifying the user can be very useful at times, so I always
 Since extracting current_user from the environment variable takes a little bit of work, this helper method exists to make it easier. The user info are stored in a field called "user_info".
 
 ```ruby
-config.store_user_info = {:method => :current_user, :field => :login}
+config.store_user_info = { method: :current_user, field: :login}
 ```
 
 Default value: false (no info will be stored)
@@ -136,8 +130,8 @@ No storage strategies are enabled by default. You can enable more than one stora
 config.storage_strategies = [:active_record]
 # Change database/table for the active_record storage strategy
 # config.active_record_store_in = {
-#  :database => 'exception_database',
-#  :record_table => 'error_messages'
+#  database: :exception_database,
+#  record_table: :error_messages
 # }
 ```
 This means that the error reports will be stored through active record directly to a database. A new entry called **exception_database** is needed in **database.yml**:
@@ -161,7 +155,7 @@ The exception database needs a table called **error_messages**. Here's a migrati
 
 ```ruby
 class CreateErrorMessages < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :error_messages do |t|
       t.text :class_name
       t.text :message
@@ -173,13 +167,9 @@ class CreateErrorMessages < ActiveRecord::Migration
       t.string :user_info
       t.string :app_name
       t.string :doc_root
-
+      t.integer :count, default: 0
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :error_messages
   end
 end
 ```
@@ -194,7 +184,7 @@ This means that the error reports will be stored through mongoid directly to Mon
 Instead, in your configuration initializer, set the location where errors should be saved. Below is an example of the default when this option is left blank:
 
 ```ruby
-config.mongoid_store_in :database => :exception_database, :collection => :error_message
+config.mongoid_store_in database: :exception_database, collection: :error_message
 ```
 
 Be sure to set username and password credentials if necessary! No migration script is necessary to run.
@@ -227,7 +217,7 @@ activesupport (3.0.7) lib/active_support/notifications.rb:54:in `instrument'
 ### Sending the error report as an HTTP POST request to another application
 
 ```ruby
-config.storage_strategies = [:remote_url => {:target => 'http://example.com/error_messages'}]
+config.storage_strategies = [ remote_url: { target: 'http://example.com/error_messages' } ]
 ```
 
 This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
@@ -271,7 +261,7 @@ This is very effective against bots. 99.9% of the time a routing error with no r
 Legit software will usually add something to the user agent string to let you know who they are. You can use this to filter out the errors they generate, and be pretty sure you are not going to get any false positives.
 
 ```ruby
-config.filters = [:user_agent_regxp => /\b(ZyBorg|Yandex|Jyxobot)\b/i]
+config.filters = [user_agent_regxp: /\b(ZyBorg|Yandex|Jyxobot)\b/i]
 ```
 
 If you (like me) dont know regular expressions by heart, then http://www.rubular.com/ is great tool to use when creating a regxp.
@@ -281,7 +271,7 @@ If you (like me) dont know regular expressions by heart, then http://www.rubular
 Sometimes black bots add a common user agent string and a referer to their requests to cloak themselfs, which makes it hard to filter them without filtering all routing errors. What you can often do is to filter on what they target, which is usually security holes in some widely used library/plugin. The example below will filter out all URLs containing ".php". This is the filter I most commonly use myself. Without it, it is only a matter of time before I'll one day get 200 exceptions in 10mins caused by a bot looking for security holes in myPhpAdmin or some other PHP library.
 
 ```ruby
-config.filters = [:target_url_regxp => /\.php/i]
+config.filters = [target_url_regxp: /\.php/i]
 ```
 
 ### :referer_url_regxp
@@ -289,7 +279,7 @@ config.filters = [:target_url_regxp => /\.php/i]
 Works the same way as :target_url_regxp. Enables you to get rid of error messages coming from spesific sources, like external links to assets that no longer exists.
 
 ```ruby
-config.filters = [:referer_url_regxp => /\problematicreferer/i]
+config.filters = [referer_url_regxp: /\problematicreferer/i]
 ```
 
 # Templating

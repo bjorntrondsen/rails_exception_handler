@@ -31,7 +31,7 @@ class RailsExceptionHandler::Handler
       if(strategy.class == Symbol)
         RailsExceptionHandler::Storage.send(strategy, @parsed_error.external_info)
       elsif(strategy.class == Hash && strategy[:remote_url])
-        RailsExceptionHandler::Storage.remote_url(strategy[:remote_url][:target],@parsed_error.external_info)
+        RailsExceptionHandler::Storage.remote_url(strategy[:remote_url][:target], @parsed_error.external_info)
       else
         raise "RailsExceptionHandler: Unknown storage strategy #{strategy.inspect}"
       end
