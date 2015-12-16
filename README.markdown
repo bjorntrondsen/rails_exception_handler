@@ -6,7 +6,7 @@ This is a flexible exception handler for Rails intended for those who wish to cr
 
 The exception handler enables you to save the key information from the error message in a database somewhere, via ActiveRecord or HTTP POST, and display a customized error message to the user within the applications layout file. You can hook this exception handler into all your rails apps and gather the exception reports in one place. The exception handler just contains the back end, you will have to create your own front end to view and manage the error reports. A Rails Engine admin interface, [rails_exception_handler_admin](https://github.com/mgwidmann/rails_exception_handler_admin), is a simple drop in interface or to use as an example for building your own.
 
-Does your app have an authorization mechanism? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
+Does your app have an authorization mechanism like Pundit, CanCan or Delarative authorization? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Interaction-with-authorization-mechanisms)
 
 Do you need to catch ruby errors [outside of Rack](https://github.com/Sharagoz/rails_exception_handler/wiki/Manual-exception-handling-outside-of-rack)?
 ```ruby
