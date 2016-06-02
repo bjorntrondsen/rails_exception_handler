@@ -7,9 +7,9 @@ class RailsExceptionHandler::Handler
     if(@env['action_controller.instance'])
       @controller = @env['action_controller.instance']
     else
-      # A routing error has occurred and no controller instance exists. Here I am firing off a 
+      # A routing error has occurred and no controller instance exists. Here I am firing off a
       # request to a dummy action that goes through the whole action dispatch stack, which will
-      # hopefully make sure that any authentication mechanism are properly initialized so that 
+      # hopefully make sure that any authentication mechanism are properly initialized so that
       # we may get the current_user object later.
       @controller = ErrorResponseController.new
       @controller.request = @request
@@ -23,7 +23,7 @@ class RailsExceptionHandler::Handler
     store_error unless(@parsed_error.ignore?)
     return response
   end
-  
+
   private
 
   def store_error
@@ -31,7 +31,7 @@ class RailsExceptionHandler::Handler
       if(strategy.class == Symbol)
         RailsExceptionHandler::Storage.send(strategy, @parsed_error.external_info)
       elsif(strategy.class == Hash && strategy[:remote_url])
-        RailsExceptionHandler::Storage.remote_url(strategy[:remote_url][:target],@parsed_error.external_info)
+        RailsExceptionHandler::Storage.remote_url(strategy[:remote_url][:target], @parsed_error.external_info)
       else
         raise "RailsExceptionHandler: Unknown storage strategy #{strategy.inspect}"
       end
@@ -40,30 +40,11 @@ class RailsExceptionHandler::Handler
 
   def response
     @env['exception_handler.layout'] = response_layout
-    @env['exception_handler.response'] = response_text
-    response = ErrorResponseController.action(:index).call(@env)
-
-    if @parsed_error.routing_error? 
-      response[0] = 404
-      file = "#{Rails.root}/public/404.html"
-      response = override_body_with_file_if_exists(response, file)
-    else
-      response[0] = 500
-      file = "#{Rails.root}/public/500.html"
-      response = override_body_with_file_if_exists(response, file)
-    end
-    return response
-  end
-
-  def override_body_with_file_if_exists(response, file)
-    return response unless File.exists?(file)
-
-    if defined? response[2].body=()
-      response[2].body = File.read(file)
-    else # Rails >= 4.2.0
-      response[2] = [File.read(file)]
-    end
-    return response
+    @env['exception_handler.exception_class'] = @exception.class.name
+    @env['exception_handler.response_mapping'] = response_mapping
+    @env['exception_handler.status_code'] = ActionDispatch::ExceptionWrapper.new(@env, @exception).status_code
+    @env['exception_handler.rescue_response'] = ActionDispatch::ExceptionWrapper.rescue_responses[@exception.class.name]
+    return ErrorResponseController.action(:index).call(@env)
   end
 
   def response_layout
@@ -71,7 +52,7 @@ class RailsExceptionHandler::Handler
       false
     else
       default_layout = @controller.send(:_default_layout)
-      if(default_layout.class.to_s == "ActionView::Template")
+      if(default_layout.class.to_s == 'ActionView::Template')
         layout = default_layout.virtual_path
       else
         layout = default_layout
@@ -80,11 +61,9 @@ class RailsExceptionHandler::Handler
     end
   end
 
-  def response_text
-    config = RailsExceptionHandler.configuration
+  def response_mapping
     klass = @parsed_error.internal_info[:error_class]
-    key = config.response_mapping[klass] || :default
-    return config.responses[key]
+    RailsExceptionHandler.configuration.response_mapping[klass] || :default
   end
 end
 

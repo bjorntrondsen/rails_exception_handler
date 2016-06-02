@@ -1,22 +1,26 @@
 class RailsExceptionHandler::Storage
   def self.active_record(info)
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
-      RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
+      error_message = RailsExceptionHandler::ActiveRecord::ErrorMessage.find_or_initialize_by(info, without_protection: true) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:find_or_initialize_by)
     else
-      RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
+      error_message = RailsExceptionHandler::ActiveRecord::ErrorMessage.find_or_initialize_by(info) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:find_or_initialize_by)
     end
+    error_message.count += 1
+    error_message.save
   end
 
   def self.mongoid(info)
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
-      RailsExceptionHandler::Mongoid::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
+      error_message = RailsExceptionHandler::Mongoid::ErrorMessage.find_or_initialize_by(info, without_protection: true) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:find_or_initialize_by)
     else
-      RailsExceptionHandler::Mongoid::ErrorMessage.create(info) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
+      error_message = RailsExceptionHandler::Mongoid::ErrorMessage.find_or_initialize_by(info) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:find_or_initialize_by)
     end
+    error_message.count += 1
+    error_message.save
   end
 
   def self.rails_log(info)
-    message = ""
+    message = ''
     info.each do |key,val|
       message += "#{key.to_s.upcase}: #{val.to_s}\n"
     end
@@ -41,7 +45,7 @@ class RailsExceptionHandler::Storage
         flat_hash.merge!(flatten_hash(v, names))
       else
         key = flat_hash_key(names)
-        key += "[]" if v.is_a?(Array)
+        key += '[]' if v.is_a?(Array)
         flat_hash[key] = v
       end
     end

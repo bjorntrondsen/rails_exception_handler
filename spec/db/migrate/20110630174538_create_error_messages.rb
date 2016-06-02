@@ -1,5 +1,5 @@
 class CreateErrorMessages < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :error_messages do |t|
       t.text :class_name
       t.text :message
@@ -10,16 +10,9 @@ class CreateErrorMessages < ActiveRecord::Migration
       t.text :user_agent
       t.string :user_info
       t.string :app_name
-      t.string :remote_ip
-      t.string :server_name
-      t.string :remote_addr
-      t.datetime :created_at
-
+      t.string :doc_root
+      t.integer :count, default: 0
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :error_messages
   end
 end

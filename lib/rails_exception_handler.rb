@@ -21,7 +21,6 @@ class RailsExceptionHandler
     unless Rails.configuration.middleware.class == ActionDispatch::MiddlewareStack && Rails.configuration.middleware.include?(RailsExceptionHandler)
       Rails.configuration.middleware.use(RailsExceptionHandler)
     end
-
     Rails.configuration.action_dispatch.show_exceptions = true
     Rails.configuration.consider_all_requests_local = false
     require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'

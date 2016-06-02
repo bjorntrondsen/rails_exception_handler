@@ -1,6 +1,6 @@
 class RailsExceptionHandler
   class InstallGenerator < Rails::Generators::Base
-    desc "Copy initialization file"
+    desc 'Copy initialization file'
     source_root File.expand_path('../templates', __FILE__)
     class_option :template_engine
 

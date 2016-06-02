@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20110702131654) do
     t.string   "remote_ip"
     t.string   "server_name"
     t.string   "remote_addr"
+    t.integer  "count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

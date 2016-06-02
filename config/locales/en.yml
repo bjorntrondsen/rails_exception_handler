@@ -1,0 +1,14 @@
+en:
+  error_response:
+    mapping:
+      default:
+        title: 'Internal server error'
+        desc: 'The server cannot process the request.'
+      not_found:
+        title: 'Page not found'
+        desc: 'The page you were looking for does not exists.'
+    exception:
+      action_controller:
+        routing_error:
+          title: 'Routing error'
+          desc: 'No route matches with the given Url.'
