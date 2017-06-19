@@ -9,6 +9,7 @@ module ActionDispatch
           raise "RailsExceptionHandler: This patch should not have been loaded"
         end
       end
-      alias_method_chain :render_exception, :template
+      alias_method :render_exception, :render_exception_with_template
+      alias_method :template, :render_exception
   end
 end
