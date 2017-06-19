@@ -17,7 +17,7 @@ end
 
 ## Compatiblity
 
-The gem should work with all versions of Rails 3 and 4. It does not work with Rails 2.
+The gem should work with all versions of Rails 3, 4 and 5.
 
 See Travis-CI for info on which rubies it is tested against:
 http://travis-ci.org/#!/Sharagoz/rails_exception_handler
@@ -49,6 +49,8 @@ config.environments = [:production, :test, :development]
 Default value: [:production]
 
 ### fallback_layout
+
+WARNING: This feature is currently broken in Rails v4.2 and above. Make sure your app has the default layout file (layouts/application).
 
 ```ruby
 config.fallback_layout = 'home'
@@ -302,4 +304,4 @@ Would you like to contribute? Here are some things on the todo list:
 
 # Licence
 
-Copyright © 2014 Bjørn Trondsen, released under the MIT license
+Copyright © 2017 Bjørn Trondsen, released under the MIT license
