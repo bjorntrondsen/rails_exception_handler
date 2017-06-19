@@ -1,17 +1,16 @@
 require 'spec_helper'
 
 describe RailsExceptionHandler::Storage do
+  render_views
+
   before(:each) do
     @handler = RailsExceptionHandler::Handler.new(create_env, create_exception)
   end
 
   it "should be able to use multiple storage strategies" do
+    clear_test_log
+    read_test_log.should == ''
     RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :mongoid, :rails_log] }
-    if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
-      read_test_log.should == "  Rendered text template (0.0ms)\n\\n"
-    else
-      read_test_log.should == ''
-    end
     @handler.handle_exception
     read_test_log.should match /undefined method `foo' for nil:NilClass/
     RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
@@ -70,12 +69,9 @@ describe RailsExceptionHandler::Storage do
 
   describe 'rails_log storage' do
     it "it should log an error to the rails log when storage_strategies includes :rails_log" do
+      clear_test_log
+      read_test_log.should == ''
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
-        read_test_log.should == "  Rendered text template (0.0ms)\n\\n"
-      else
-        read_test_log.should == ''
-      end
       @handler.handle_exception
       read_test_log.should match /undefined method `foo' for nil:NilClass/
       read_test_log.should match /spec\/test_macros\.rb:28/
@@ -86,15 +82,16 @@ describe RailsExceptionHandler::Storage do
     end
 
     it "should not log an error to the rails log when storage_strategies does not include :rails_log" do
+      clear_test_log
+      read_test_log.should == ''
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
-        read_test_log.should == "  Rendered text template (0.0ms)\n\\n"
-      else
-        read_test_log.should == ''
-      end
       @handler.handle_exception
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
-        read_test_log.should == "  Rendered text template (0.0ms)\n\\n  Rendered text template within layouts/fallback (0.0ms)\n\\n"
+      if Rails::VERSION::MAJOR > 4
+        read_test_log.should == "  Rendering text template\n\\n  Rendered text template (0.0ms)\n\\n"
+      elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR > 0
+        read_test_log.should == "  Rendered text template within layouts/fallback (0.0ms)\n\\n"
+      elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
+        read_test_log.should == "  Rendered text template within layouts/application (0.0ms)\n\\n"
       else
         read_test_log.should == ''
       end

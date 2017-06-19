@@ -88,6 +88,10 @@ module TestMacros
     end
   end
 
+  def rails_42_or_higher?
+    Rails::VERSION::MAJOR > 4 || (Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2)
+  end
+
   private
 
   def log_path
