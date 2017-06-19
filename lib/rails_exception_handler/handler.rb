@@ -70,7 +70,11 @@ class RailsExceptionHandler::Handler
     if(@request.xhr?)
       false
     else
-      default_layout = @controller.send(:_default_layout)
+      if Rails::VERSION::MAJOR > 4
+        default_layout = @controller.send(:_default_layout, [:html])
+      else
+        default_layout = @controller.send(:_default_layout)
+      end
       if(default_layout.class.to_s == "ActionView::Template")
         layout = default_layout.virtual_path
       else

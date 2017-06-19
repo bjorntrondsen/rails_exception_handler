@@ -8,18 +8,21 @@ group :test, :development do
    #gem 'mongoid'
    #gem 'bson_ext'
 
-  #gem "rails", '3.2.13'
+  #gem "rails", '3.2.22.5'
    #gem "rack-test", '0.6.2'
    #gem 'mongoid'
 
-  #gem "rails", '4.0.2'
-    #gem "rack-test", '0.6.2'
+  #gem "rails", '4.0.13'
+    #gem "rack-test", '0.6.3'
+    #gem 'mongoid'
 
   #gem "rails", '4.2.8'
-    #gem "rack-test", '0.6.2'
+    #gem "rack-test", '0.6.3'
+    #gem 'mongoid'
 
   gem "rails", '5.1.1'
     gem "rack-test", '0.6.3'
+    gem 'mongoid'
 
   gem 'rake' # Needed by tavis
 

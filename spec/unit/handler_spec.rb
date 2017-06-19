@@ -21,7 +21,7 @@ describe RailsExceptionHandler::Handler do
       response.length.should == 3
       response[0].should == 500 # response code
       response[1].class.should == Hash # headers
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+      if rails_42_or_higher?
         response[2].class.should == ActionDispatch::Response::RackBody # body
       else
         response[2].class.should == ActionDispatch::Response # body
@@ -86,7 +86,7 @@ describe RailsExceptionHandler::Handler do
       exception.stub(:class => ActiveRecord::RecordNotFound)
       handler = RailsExceptionHandler::Handler.new(env, exception)
       response = handler.handle_exception
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+      if rails_42_or_higher?
         response[2].should == ["content of 404.html"]
       else
         response[2].body.should == "content of 404.html"
@@ -98,7 +98,7 @@ describe RailsExceptionHandler::Handler do
       env = create_env
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
       response = handler.handle_exception
-      if Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2
+      if rails_42_or_higher?
         response[2].should == ["content of 500.html"]
       else
         response[2].body.should == "content of 500.html"

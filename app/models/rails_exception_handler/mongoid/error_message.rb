@@ -4,6 +4,7 @@ class RailsExceptionHandler::Mongoid
     if defined?(Mongoid)
       include Mongoid::Document
       include Mongoid::Timestamps
+      include Mongoid::Attributes::Dynamic if defined?(Mongoid::Attributes::Dynamic)
 
       store_in({:database => :exception_database, :collection => :error_message}.merge(RailsExceptionHandler.configuration.mongoid_store_in || {}))
 

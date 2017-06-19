@@ -31,15 +31,16 @@ ActiveRecord::Base.logger = nil
 ActionController::Base.logger = nil
 
 RSpec.configure do |config|
+  config.include RSpec::Rails::ViewRendering
   config.include Rack::Test::Methods
   config.include TestMacros
-  config.color_enabled = true
+  config.color = true
   config.full_backtrace = true
   config.before(:each) do
+    reset_configuration
+    clear_test_log
     RailsExceptionHandler::ActiveRecord::ErrorMessage.delete_all
     RailsExceptionHandler::Mongoid::ErrorMessage.delete_all if(defined?(Mongoid) && RailsExceptionHandler.configuration.activate? && RailsExceptionHandler.configuration.mongoid?)
-    clear_test_log
-    reset_configuration
   end
   config.before(:each) do
     delete_static_error_pages

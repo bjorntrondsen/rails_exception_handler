@@ -115,7 +115,7 @@ describe RailsExceptionHandler::Parser do
       RailsExceptionHandler.configure {|config| config.store_user_info = false}
       controller = double(ApplicationController)
       parser = create_parser(nil, nil, controller)
-      parser.anon_user?.should be_true
+      parser.anon_user?.should be_truthy
     end
 
     it "should return true if user_info is 'Anonymous'" do
@@ -123,14 +123,14 @@ describe RailsExceptionHandler::Parser do
       controller = double(ApplicationController, :current_user => nil)
       parser = create_parser(nil, nil, controller)
       parser.external_info[:user_info].should == 'Anonymous'
-      parser.anon_user?.should be_true
+      parser.anon_user?.should be_truthy
     end
 
     it "should return false if user info is present" do
       RailsExceptionHandler.configure {|config| config.store_user_info = {:method => :current_user, :field => :login}}
       controller = double(ApplicationController, :current_user => double(Object, :login => 'matz'))
       parser = create_parser(nil, nil, controller)
-      parser.anon_user?.should be_false
+      parser.anon_user?.should be_falsy
     end
   end
 end

@@ -3,6 +3,7 @@ module ActionDispatch
   class ShowExceptions
     private
       def render_exception_with_template(env, exception)
+        env = env.env if env.is_a?(ActionDispatch::Request) # Rails 5 passes in the whole request object
         if(RailsExceptionHandler.configuration.environments.include?(Rails.env.to_sym))
           RailsExceptionHandler::Handler.new(env, exception).handle_exception
         else

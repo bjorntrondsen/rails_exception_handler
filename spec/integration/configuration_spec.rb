@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RailsExceptionHandler::Configuration do
+  render_views
+
   describe ".storage_strategies" do
     it "should store errors in the database when storage_strategies contains :active_record" do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record] }
@@ -15,11 +17,14 @@ describe RailsExceptionHandler::Configuration do
     end
 
     it "should store errors in the rails log when storage_strategies contains :rails_log" do
+      clear_test_log
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       get('/home/model_error')
       read_test_log.should match /undefined method `foo' for nil:NilClass/
       if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0
         read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
+      elsif Rails::VERSION::MAJOR > 4
+        read_test_log.should match /action_controller\/metal\/basic_implicit_render\.rb:4/
       else
         read_test_log.should match /action_controller\/metal\/implicit_render\.rb:4/
       end
