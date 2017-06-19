@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.3.5 - June 19th 2017
+- Fix compatibility with Ruby 2.4 and Rails 5
+
 v2.3.4 - April 24th 2014
 - Make database name/table configurable for the Active Record storage strategy
 
