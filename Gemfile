@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+ruby File.read(".ruby-version").strip
 
 group :test, :development do
 
@@ -14,14 +15,17 @@ group :test, :development do
   #gem "rails", '4.0.2'
     #gem "rack-test", '0.6.2'
 
-  gem "rails", '4.2.0'
-    gem "rack-test", '0.6.2'
+  #gem "rails", '4.2.8'
+    #gem "rack-test", '0.6.2'
+
+  gem "rails", '5.1.1'
+    gem "rack-test", '0.6.3'
 
   gem 'rake' # Needed by tavis
 
   gem 'sqlite3'
   gem 'pry'
-  gem "rspec-rails", "2.14.2"
+  gem "rspec-rails", "3.6.0"
   gem "jeweler"
   gem "rails_exception_handler", :path => '.'
 end
