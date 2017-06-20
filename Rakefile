@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rails_exception_handler"
   gem.homepage = "http://github.com/Sharagoz/rails_exception_handler"
   gem.license = "MIT"
-  gem.summary = %Q{Exception Handling for Rails 3}
+  gem.summary = %Q{Highly customizable exception handling for Rails}
   gem.description = %Q{}
   gem.email = "contact@sharagoz.com"
   gem.authors = ["Sharagoz"]
