@@ -1,20 +1,35 @@
 class RailsExceptionHandler::Storage
+
   def self.active_record(info)
+  
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
       RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
     else
       RailsExceptionHandler::ActiveRecord::ErrorMessage.create(info) if RailsExceptionHandler::ActiveRecord::ErrorMessage.respond_to?(:create)
     end
+	
+	email = RailsExceptionHandler.configuration.email
+	RailsExceptionHandler::Storage.notify(info,email) unless email.blank?
+		
   end
 
   def self.mongoid(info)
+  
     if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR > 0
       RailsExceptionHandler::Mongoid::ErrorMessage.create(info, :without_protection => true) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
     else
       RailsExceptionHandler::Mongoid::ErrorMessage.create(info) if RailsExceptionHandler::Mongoid::ErrorMessage.respond_to?(:create)
     end
+	
+	email = RailsExceptionHandler.configuration.email
+	RailsExceptionHandler::Storage.notify(info,email) unless email.blank?
   end
 
+  # Notify application admin that an error occured
+  def self.notify(info,email)
+          ErrorMailer.send_error_mail_to_admin(info.to_json,email).deliver_later
+  end
+  
   def self.rails_log(info)
     message = ""
     info.each do |key,val|
