@@ -235,6 +235,21 @@ config.storage_strategies = [:remote_url => {:target => 'http://example.com/erro
 This option is meant for those who want to store the exception in a database table, but does not have direct access to the database itself, making active record store unsuitable. You need a web app on a server that has access to the database. An HTTP POST request will be sent to the specified URL with the error message as data.
 If you use a Rails app at the other end you should simply be able to do `RailsExceptionHandler::ActiveRecord::ErrorMessage.create(params[:error_message])` or `RailsExceptionHandler::Mongoid::ErrorMessage.create(params[:error_message])` to save the report depending upon your database choice.
 
+### Sending the error report as an email
+
+```ruby
+config.storage_strategies = [:email => {:recipients => "test1@example.com,test2@example.com"}]
+```
+
+Exceptions will be notified by email. Make sure the application got an
+`ApplicationMailer` with default from specified:
+
+```ruby
+class ApplicationMailer < ActionMailer::Base
+  default from: 'from@example.com'
+end
+```
+
 # Exception filters
 
 Sometimes it is necessary to filter errors. All filters are disabled by default and I recommend you deploy your application this way initially, and then add filters as they become necessary.
@@ -297,10 +312,6 @@ config.filters = [:referer_url_regxp => /\problematicreferer/i]
 # Contributors
 
 https://github.com/Sharagoz/rails_exception_handler/graphs/contributors
-
-Would you like to contribute? Here are some things on the todo list:
-
-* An email storage strategy for those that wish to be notified of the exceptions through email
 
 # Licence
 
