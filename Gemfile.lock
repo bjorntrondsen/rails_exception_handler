@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_exception_handler (2.3.4)
+    rails_exception_handler (2.3.5)
 
 GEM
   remote: http://rubygems.org/
@@ -191,4 +191,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.1
+   1.15.4
