@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.before(:each) do
     reset_configuration
     clear_test_log
+    ActionMailer::Base.deliveries = []
     RailsExceptionHandler::ActiveRecord::ErrorMessage.delete_all
     RailsExceptionHandler::Mongoid::ErrorMessage.delete_all if(defined?(Mongoid) && RailsExceptionHandler.configuration.activate? && RailsExceptionHandler.configuration.mongoid?)
   end
