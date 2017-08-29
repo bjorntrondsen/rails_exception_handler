@@ -116,4 +116,36 @@ describe RailsExceptionHandler::Storage do
       @handler.handle_exception
     end
   end
+
+  describe 'email storage' do
+    it "should send the error_message as an email :email is included" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:email => {:recipients => "test@example.com"}] }
+      @handler.handle_exception
+      ActionMailer::Base.deliveries.length.should == 1
+      email = ActionMailer::Base.deliveries.first
+      email.to.should == ['test@example.com']
+    end
+
+    it "should not send the error_message as an email when :email is not included" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
+      @handler.handle_exception
+      ActionMailer::Base.deliveries.length.should == 0
+    end
+
+    it "should not send to blank recipients" do
+      [nil, "", [] ].each do |value|
+        RailsExceptionHandler.configure { |config| config.storage_strategies = [:email => {:recipients => value}] }
+        @handler.handle_exception
+        ActionMailer::Base.deliveries.length.should == 0
+      end
+    end
+
+    it "should allow multiple receivers" do
+      RailsExceptionHandler.configure { |config| config.storage_strategies = [:email => {:recipients => "test@example.com,test2@example.com"}] }
+      @handler.handle_exception
+      ActionMailer::Base.deliveries.length.should == 1
+      email = ActionMailer::Base.deliveries.first
+      email.to.should == ['test@example.com','test2@example.com']
+    end
+  end
 end
