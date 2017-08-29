@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_exception_handler (2.3.5)
+    rails_exception_handler (2.4.0)
 
 GEM
   remote: http://rubygems.org/
