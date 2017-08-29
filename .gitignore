@@ -2,4 +2,5 @@
 *~
 *.swp
 pkg/
+spec/db/test.sqlite3
 TODO
