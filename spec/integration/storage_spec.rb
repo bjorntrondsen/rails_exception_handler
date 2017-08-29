@@ -87,11 +87,11 @@ describe RailsExceptionHandler::Storage do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
       @handler.handle_exception
       if Rails::VERSION::MAJOR > 4
-        read_test_log.should == "  Rendering html template within layouts/application\n\\n  Rendered html template within layouts/application (0.0ms)\n\\n"
+        read_test_log.should match /Rendering html template within layouts\/application/
       elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR > 0
-        read_test_log.should == "  Rendered text template within layouts/fallback (0.0ms)\n\\n"
+        read_test_log.should match /Rendered text template within layouts\/fallback/
       elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
-        read_test_log.should == "  Rendered text template within layouts/application (0.0ms)\n\\n"
+        read_test_log.should match /Rendered text template within layouts\/application/
       else
         read_test_log.should == ''
       end
@@ -127,11 +127,11 @@ describe RailsExceptionHandler::Storage do
       text_body = email.body.parts.first.to_s
       text_body.should include('TARGET_URL')
       text_body.should include('http://example.org/home?foo=bar')
-      text_body.should include("undefined method `foo' for nil:NilClass")
+      text_body.should include("undefined method `foo")
       html_body = email.body.parts.last.to_s
       html_body.should include('TARGET_URL')
       html_body.should include('http://example.org/home?foo=bar')
-      html_body.should include("undefined method `foo&#39; for nil:NilClass")
+      html_body.should include("undefined method `foo")
     end
 
     it "should not send the error_message as an email when :email is not included" do

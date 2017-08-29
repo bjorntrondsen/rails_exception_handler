@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 ruby File.read(".ruby-version").strip
+#ruby '1.9.3', :patchlevel => "125"
 
 group :test, :development do
 
@@ -7,10 +8,12 @@ group :test, :development do
    #gem "rack-test", '0.5.7'
    #gem 'mongoid'
    #gem 'bson_ext'
+   #gem 'nokogiri', '1.6.8.1'
 
   #gem "rails", '3.2.22.5'
    #gem "rack-test", '0.6.2'
    #gem 'mongoid'
+   #gem 'nokogiri', '1.6.8.1'
 
   #gem "rails", '4.0.13'
     #gem "rack-test", '0.6.3'
