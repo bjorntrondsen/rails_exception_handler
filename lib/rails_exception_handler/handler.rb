@@ -32,6 +32,8 @@ class RailsExceptionHandler::Handler
         RailsExceptionHandler::Storage.send(strategy, @parsed_error.external_info)
       elsif(strategy.class == Hash && strategy[:remote_url])
         RailsExceptionHandler::Storage.remote_url(strategy[:remote_url][:target],@parsed_error.external_info)
+      elsif(strategy.class == Hash && strategy[:email])
+        RailsExceptionHandler::Storage.email(strategy[:email][:recipients],@parsed_error.external_info)
       else
         raise "RailsExceptionHandler: Unknown storage strategy #{strategy.inspect}"
       end

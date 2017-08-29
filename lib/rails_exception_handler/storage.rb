@@ -28,7 +28,12 @@ class RailsExceptionHandler::Storage
     params = flatten_hash({:error_message => info})
     Net::HTTP::post_form(uri, params)
   end
-
+  
+  # Notify application admin that an error occured
+  def self.email(recipients,info)
+    ErrorMailer.send_error_mail_to_admin(info.to_json,recipients).deliver_later unless recipients.blank?
+	end
+  
   private
 
   # Credit: Hash flattening technique borrowed from Peter Marklund: http://marklunds.com/articles/one/314

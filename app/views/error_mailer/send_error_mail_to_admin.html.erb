@@ -1,0 +1,61 @@
+<p>
+    Hi boss,
+</p>
+<p>
+    an error occured at <%= @info["created_at"] %>
+</p>
+
+
+<p>
+    TARGET URL <br/>
+    <%= @info["target_url"] %>
+</p>
+
+
+<% unless @info["referer_url"].blank? %>
+  <p>
+      REFERER URL <br/>
+      <%= @info["referer_url"] %>
+  </p>
+<%end%>
+
+<p>
+    PARAMETERS <br/>
+    <%= @info["params"] %>
+</p>
+
+<p>
+    USER AGENT <br/>
+    <%= @info["user_agent"] %>
+</p>
+
+<p>
+    USER INFORMATION <br/>
+    <%= @info["user_info"] %>
+</p>
+
+<p>
+    CLASS NAME<br/>
+    <%= @info["class_name"] %>
+
+</p>
+
+<% unless @info["message"].blank? %>
+  <p>
+      MESSAGE<br/>
+      <%= @info["message"] %>
+  </p>
+<%end%>
+
+<p>
+    TRACE <br/>
+    <%= @info["trace"] %>
+</p>
+
+
+<% unless @info["doc_root"].blank? %>
+  <p>
+      DOC ROOT <br/>
+      <%= @info["doc_root"] %>
+  </p>
+<%end%>
