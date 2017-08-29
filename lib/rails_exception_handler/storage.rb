@@ -31,7 +31,7 @@ class RailsExceptionHandler::Storage
 
   # Notify application admin that an error occured
   def self.email(recipients,info)
-    ErrorMailer.send_error_mail_to_admin(info.to_json,recipients).deliver_later unless recipients.blank?
+    RailsExceptionHandler::ErrorMailer.send_error_mail_to_admin(info.to_json,recipients).deliver_later unless recipients.blank?
   end
 
   private
