@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.4.0
+- Email storage strategy, by https://github.com/lethunder
+
 v2.3.5 - June 19th 2017
 - Fix compatibility with Ruby 2.4 and Rails 5
 
