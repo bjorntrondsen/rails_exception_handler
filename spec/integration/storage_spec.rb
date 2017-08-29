@@ -87,7 +87,7 @@ describe RailsExceptionHandler::Storage do
       RailsExceptionHandler.configure { |config| config.storage_strategies = [] }
       @handler.handle_exception
       if Rails::VERSION::MAJOR > 4
-        read_test_log.should == "  Rendering text template\n\\n  Rendered text template (0.0ms)\n\\n"
+        read_test_log.should == "  Rendering html template within layouts/application\n\\n  Rendered html template within layouts/application (0.0ms)\n\\n"
       elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR > 0
         read_test_log.should == "  Rendered text template within layouts/fallback (0.0ms)\n\\n"
       elsif Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 0
