@@ -124,6 +124,14 @@ describe RailsExceptionHandler::Storage do
       ActionMailer::Base.deliveries.length.should == 1
       email = ActionMailer::Base.deliveries.first
       email.to.should == ['test@example.com']
+      text_body = email.body.parts.first.to_s
+      text_body.should include('TARGET_URL')
+      text_body.should include('http://example.org/home?foo=bar')
+      text_body.should include("undefined method `foo' for nil:NilClass")
+      html_body = email.body.parts.last.to_s
+      html_body.should include('TARGET_URL')
+      html_body.should include('http://example.org/home?foo=bar')
+      html_body.should include("undefined method `foo&#39; for nil:NilClass")
     end
 
     it "should not send the error_message as an email when :email is not included" do
