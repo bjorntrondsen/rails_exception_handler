@@ -1,4 +1,4 @@
-if(RailsExceptionHandler.configuration.activate?)
+if RailsExceptionHandler.configuration.activate? && RailsExceptionHandler.configuration.email?
   class RailsExceptionHandler::ErrorMailer < ApplicationMailer
 
     # Subject can be set in your I18n file at config/locales/en.yml
