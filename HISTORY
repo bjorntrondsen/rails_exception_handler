@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.4.1
+- Fix issue with missing ApplicationMailer
+
 v2.4.0
 - Email storage strategy, by https://github.com/lethunder
 
