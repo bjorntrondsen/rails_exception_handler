@@ -23,6 +23,10 @@ class RailsExceptionHandler::Configuration
     @storage_strategies.include?(:mongoid)
   end
 
+  def email?
+    @storage_strategies.collect{|s| s.is_a?(Hash) ? s.keys : s}.flatten.include?(:email)
+  end
+
   def activate?
     environments.include?(Rails.env.to_sym)
   end
