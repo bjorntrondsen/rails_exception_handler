@@ -1,7 +1,23 @@
+GIT
+  remote: git@github.com:technicalpickles/jeweler.git
+  revision: 2ab86309fc2494ba2a4e9c86c514742cd4f681c2
+  specs:
+    jeweler (2.3.9)
+      builder
+      bundler
+      git (>= 1.2.5)
+      github_api (~> 0.16.0)
+      highline (>= 1.6.15)
+      nokogiri (>= 1.5.10)
+      psych
+      rake
+      rdoc
+      semver2
+
 PATH
   remote: .
   specs:
-    rails_exception_handler (2.4.2)
+    rails_exception_handler (2.4.3)
 
 GEM
   remote: http://rubygems.org/
@@ -86,17 +102,6 @@ GEM
     highline (2.0.2)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    jeweler (2.3.9)
-      builder
-      bundler
-      git (>= 1.2.5)
-      github_api (~> 0.16.0)
-      highline (>= 1.6.15)
-      nokogiri (>= 1.5.10)
-      psych
-      rake
-      rdoc
-      semver2
     jwt (2.2.1)
     loofah (2.3.0)
       crass (~> 1.0.2)
@@ -197,7 +202,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  jeweler
+  jeweler!
   pry
   rack-test (= 0.6.3)
   rails (= 6.0.0)

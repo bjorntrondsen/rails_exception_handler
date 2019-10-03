@@ -42,6 +42,6 @@ group :test, :development do
 
   gem 'pry'
   gem "rspec-rails", "3.6.0"
-  gem "jeweler"
+  gem "jeweler", git: "git@github.com:technicalpickles/jeweler.git" # ruby 2.6 compatibility is not released yet
   gem "rails_exception_handler", :path => '.'
 end
