@@ -14,8 +14,9 @@ group :test, :development do
   #gem "rails", '3.2.22.5'
     #gem "rack-test", '0.6.2'
     #gem 'sqlite3','1.3.13'
-    #gem 'mongoid'
     #gem 'nokogiri', '1.6.8.1'
+    #gem 'test-unit', '~> 3.0'
+    #gem 'mongoid'
 
   #gem "rails", '4.0.13'
     #gem "rack-test", '0.6.3'

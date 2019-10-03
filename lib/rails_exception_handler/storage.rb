@@ -37,7 +37,7 @@ class RailsExceptionHandler::Storage
     else
       delivery_method = :deliver_now
     end
-    RailsExceptionHandler::ErrorMailer.send_error_mail_to_admin(info.to_json,recipients).send(delivery_method)
+    Kernel.const_get("RailsExceptionHandler::ErrorMailer").send_error_mail_to_admin(info.to_json,recipients).send(delivery_method)
   end
 
   private
