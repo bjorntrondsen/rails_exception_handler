@@ -96,7 +96,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/Sharagoz/rails_exception_handler".freeze
   s.licenses = ["MIT".freeze]
-  s.rubygems_version = "3.0.4".freeze
+  s.rubygems_version = "2.7.6".freeze
   s.summary = "Highly customizable exception handling for Ruby on Rails".freeze
 
   if s.respond_to? :specification_version then
