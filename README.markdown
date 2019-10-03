@@ -17,7 +17,7 @@ end
 
 ## Compatiblity
 
-The gem should work with all versions of Rails 3, 4 and 5.
+The gem should work with all versions of Rails 3, 4, 5 and 6.
 
 See Travis-CI for info on which rubies it is tested against:
 http://travis-ci.org/#!/Sharagoz/rails_exception_handler

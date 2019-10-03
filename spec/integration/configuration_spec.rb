@@ -24,7 +24,7 @@ describe RailsExceptionHandler::Configuration do
       if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0
         read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
       elsif Rails::VERSION::MAJOR > 4
-        read_test_log.should match /action_controller\/metal\/basic_implicit_render\.rb:4/
+        read_test_log.should match /action_controller\/metal\/basic_implicit_render\.rb:\d/
       else
         read_test_log.should match /action_controller\/metal\/implicit_render\.rb:4/
       end

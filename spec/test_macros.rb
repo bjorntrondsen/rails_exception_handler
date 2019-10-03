@@ -82,7 +82,7 @@ module TestMacros
         storage[:remote_addr] = env['REMOTE_ADDR']
       end
       config.store_global_info do |storage|
-        storage[:app_name] =     Rails.application.class.parent_name
+        storage[:app_name] =     rails_6? ? Rails.application.class.module_parent_name : Rails.application.class.parent_name
         storage[:created_at] =   Time.now
       end
     end
@@ -90,6 +90,10 @@ module TestMacros
 
   def rails_42_or_higher?
     Rails::VERSION::MAJOR > 4 || (Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2)
+  end
+
+  def rails_6?
+    Rails::VERSION::MAJOR > 5
   end
 
   private
