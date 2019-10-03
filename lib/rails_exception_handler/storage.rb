@@ -35,7 +35,7 @@ class RailsExceptionHandler::Storage
     if Rails::VERSION::MAJOR == 3 || (Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR < 2)
       delivery_method = :deliver
     else
-      delivery_method = :deliver_later
+      delivery_method = :deliver_now
     end
     RailsExceptionHandler::ErrorMailer.send_error_mail_to_admin(info.to_json,recipients).send(delivery_method)
   end

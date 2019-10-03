@@ -74,7 +74,7 @@ describe RailsExceptionHandler::Handler do
     it "should use the fallback layout when no layout is defined" do
       env = create_env(:target => '/routing_error')
       handler = RailsExceptionHandler::Handler.new(env, create_exception)
-      handler.instance_variable_set("@controller",double(Object, :_default_layout => nil))
+      handler.instance_variable_set("@controller",double(Object, :_default_layout => nil, :view_paths => nil))
       handler.handle_exception
       env['exception_handler.layout'].should == 'fallback'
     end

@@ -25,7 +25,7 @@ describe RailsExceptionHandler::Storage do
       msg = RailsExceptionHandler::ActiveRecord::ErrorMessage.first
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
-      msg.message.should ==       "undefined method `foo' for nil:NilClass"
+      msg.message.should include  "undefined method `foo' for nil:NilClass"
       msg.trace.should match      /spec\/test_macros\.rb:28/
       msg.params.should match     /\"foo\"=>\"bar\"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
@@ -50,7 +50,7 @@ describe RailsExceptionHandler::Storage do
         msg = RailsExceptionHandler::Mongoid::ErrorMessage.first
         msg.app_name.should ==      'ExceptionHandlerTestApp'
         msg.class_name.should ==    'NoMethodError'
-        msg.message.should ==       "undefined method `foo' for nil:NilClass"
+        msg.message.should include  "undefined method `foo' for nil:NilClass"
         msg.trace.should match      /spec\/test_macros\.rb:28/
         msg.params.should match     /\"foo\"=>\"bar\"/
         msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
