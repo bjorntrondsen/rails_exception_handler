@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_exception_handler (2.4.1)
+    rails_exception_handler (2.4.2)
 
 GEM
   remote: http://rubygems.org/
@@ -207,7 +207,7 @@ DEPENDENCIES
   sqlite3 (= 1.4.1)
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.17.3
