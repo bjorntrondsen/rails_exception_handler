@@ -309,10 +309,26 @@ Works the same way as :target_url_regxp. Enables you to get rid of error message
 config.filters = [:referer_url_regxp => /\problematicreferer/i]
 ```
 
+# Rspec
+
+If you want to test the exception handler it can be temporarily activated for a test group:
+
+```ruby
+context 'exception handling is active' do
+  before do
+    RailsExceptionHandler.configuration.environments << :test
+  end
+
+  after do
+    RailsExceptionHandler.configuration.environments -= [:test]
+  end
+end
+```
+
 # Contributors
 
 https://github.com/Sharagoz/rails_exception_handler/graphs/contributors
 
 # Licence
 
-Copyright © 2017 Bjørn Trondsen, released under the MIT license
+Copyright © 2020 Bjørn Trondsen, released under the MIT license

@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.4.5
+- Rails 6 compatibility
+
 v2.4.1
 - Fix issue with missing ApplicationMailer
 
