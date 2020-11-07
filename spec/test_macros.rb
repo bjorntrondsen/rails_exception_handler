@@ -75,7 +75,7 @@ module TestMacros
       config.store_exception_info do |storage,exception|
         storage[:class_name] =   exception.class.to_s
         storage[:message] =      exception.to_s
-        storage[:trace] =        exception.backtrace.join("\n")
+        storage[:trace] =        exception.backtrace&.join("\n")
       end
       config.store_environment_info do |storage,env|
         storage[:server_name] = env['SERVER_NAME']
