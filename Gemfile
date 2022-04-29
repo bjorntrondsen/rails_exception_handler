@@ -36,6 +36,8 @@ group :test, :development do
     gem "rack-test", '1.1.0'
     gem "sqlite3", "~> 1.4"
 
+
+  gem "juwelier", git: "git@github.com:flajann2/juwelier.git"
   #gem 'mongoid'
   gem 'pry'
   gem "rspec-rails", "5.1.2"
