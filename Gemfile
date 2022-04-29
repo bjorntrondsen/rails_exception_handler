@@ -1,13 +1,11 @@
 source "http://rubygems.org"
 ruby File.read(".ruby-version").strip
-#ruby '1.9.3', :patchlevel => "125"
 
 group :test, :development do
 
   #gem "rails", '3.0.20'
     #gem "rack-test", '0.5.7'
     #gem 'sqlite3','1.3.13'
-    #gem 'mongoid'
     #gem 'bson_ext'
     #gem 'nokogiri', '1.6.8.1'
 
@@ -16,32 +14,25 @@ group :test, :development do
     #gem 'sqlite3','1.3.13'
     #gem 'nokogiri', '1.6.8.1'
     #gem 'test-unit', '~> 3.0'
-    #gem 'mongoid'
 
   #gem "rails", '4.0.13'
     #gem "rack-test", '0.6.3'
     #gem 'sqlite3','1.3.13'
-    #gem 'mongoid'
 
   #gem "rails", '4.2.8'
     #gem "rack-test", '0.6.3'
     #gem 'sqlite3','1.3.13'
-    #gem 'mongoid'
 
   #gem "rails", '5.1.1'
     #gem "rack-test", '0.6.3'
     #gem 'sqlite3','1.3.13'
-    #gem 'mongoid'
 
-  gem "rails", '6.0.0'
-    gem "rack-test", '0.6.3'
-    gem 'sqlite3','1.4.1'
-    #gem 'mongoid'
+  gem "rails", '6.1.4.7'
+    gem "rack-test", '1.1.0'
+    gem "sqlite3", "~> 1.4"
 
-  gem 'rake' # Needed by tavis
-
+  #gem 'mongoid'
   gem 'pry'
-  gem "rspec-rails", "3.6.0"
-  gem "jeweler", git: "git@github.com:technicalpickles/jeweler.git" # ruby 2.6 compatibility is not released yet
+  gem "rspec-rails", "5.1.2"
   gem "rails_exception_handler", :path => '.'
 end
