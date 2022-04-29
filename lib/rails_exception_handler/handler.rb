@@ -2,6 +2,7 @@ class RailsExceptionHandler::Handler
   def initialize(env, exception)
     @exception = exception
     @env = env
+    @env['rack.session'] ||= RailsExceptionHandler::FakeSession.new if Rails::VERSION::MAJOR > 6
     @request = ActionDispatch::Request.new(@env)
     @parsed_error = nil
     if(@env['action_controller.instance'])
