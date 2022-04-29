@@ -23,13 +23,18 @@ group :test, :development do
     #gem "rack-test", '1.1.0'
     #gem "sqlite3", "~> 1.4"
 
-  gem "rails", '5.2.7.1'
-    gem "rack-test", '1.1.0'
-    gem "sqlite3", "~> 1.4"
+  #gem "rails", '5.2.7.1'
+    #gem "rack-test", '1.1.0'
+    #gem "sqlite3", "~> 1.4"
 
   #gem "rails", '6.1.4.7'
     #gem "rack-test", '1.1.0'
     #gem "sqlite3", "~> 1.4"
+
+  gem "rails", '7.0.2.4'
+    gem "sprockets-rails"
+    gem "rack-test", '1.1.0'
+    gem "sqlite3", "~> 1.4"
 
   #gem 'mongoid'
   gem 'pry'
