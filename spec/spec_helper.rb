@@ -5,7 +5,7 @@ require 'rails'
 if(Rails::VERSION::MAJOR == 6 && Rails::VERSION::MINOR == 1)
   puts "Testing against a rails 6.0 dummy app"
   TEST_APP = 'dummy_60'
-elsif(Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR == 1)
+elsif(Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR == 2)
   puts "Testing against a rails 5.1 dummy app"
   TEST_APP = 'dummy_51'
 elsif(Rails::VERSION::MAJOR == 4 && Rails::VERSION::MINOR == 2)
