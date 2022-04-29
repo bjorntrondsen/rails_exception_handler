@@ -7,6 +7,7 @@ class RailsExceptionHandler
   def call(env)
     @app.call(env)
   rescue Exception => e
+    raise e unless RailsExceptionHandler.configuration.activate?
     Handler.new(env, e).handle_exception
   end
 
