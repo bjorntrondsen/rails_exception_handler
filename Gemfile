@@ -19,17 +19,17 @@ group :test, :development do
     #gem "rack-test", '0.6.3'
     #gem 'sqlite3','1.3.13'
 
-  #gem "rails", '4.2.8'
-    #gem "rack-test", '0.6.3'
-    #gem 'sqlite3','1.3.13'
+  #gem "rails", '4.2.11.3'
+    #gem "rack-test", '1.1.0'
+    #gem "sqlite3", "~> 1.4"
 
-  #gem "rails", '5.1.1'
-    #gem "rack-test", '0.6.3'
-    #gem 'sqlite3','1.3.13'
-
-  gem "rails", '6.1.4.7'
+  gem "rails", '5.2.7.1'
     gem "rack-test", '1.1.0'
     gem "sqlite3", "~> 1.4"
+
+  #gem "rails", '6.1.4.7'
+    #gem "rack-test", '1.1.0'
+    #gem "sqlite3", "~> 1.4"
 
   #gem 'mongoid'
   gem 'pry'
