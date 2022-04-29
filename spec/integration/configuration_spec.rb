@@ -172,7 +172,6 @@ describe RailsExceptionHandler::Configuration do
     end
 
     it "should not log regular errors if the current rails environment is not included" do
-      pending "Must find new way to unhook the exception handler here"
       RailsExceptionHandler.configure { |config| config.environments = [:production] }
       lambda { get('/home/model_error') }.should raise_exception
       RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 0
