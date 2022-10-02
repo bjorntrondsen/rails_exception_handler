@@ -19,12 +19,12 @@ end
 Juwelier::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rails_exception_handler"
-  gem.homepage = "http://github.com/Sharagoz/rails_exception_handler"
+  gem.homepage = "https://github.com/bjorntrondsen/rails_exception_handler"
   gem.license = "MIT"
   gem.summary = %Q{Highly customizable exception handling for Ruby on Rails}
   gem.description = %Q{}
-  gem.email = "contact@sharagoz.com"
-  gem.authors = ["Sharagoz"]
+  gem.email = ""
+  gem.authors = ["btrondsen"]
   gem.extra_rdoc_files = ['README.markdown']
   gem.require_paths = ["lib"]
   gem.files.exclude 'spec/**/*'
