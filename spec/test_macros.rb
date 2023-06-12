@@ -52,9 +52,9 @@ module TestMacros
 
   def delete_static_error_pages
     path = Rails.root + 'public/404.html'
-    File.delete(path) if File.exists?(path)
+    File.delete(path) if File.exist?(path)
     path = Rails.root + 'public/500.html'
-    File.delete(path) if File.exists?(path)
+    File.delete(path) if File.exist?(path)
   end
 
   def reset_configuration
