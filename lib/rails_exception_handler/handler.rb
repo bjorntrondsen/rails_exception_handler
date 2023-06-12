@@ -59,7 +59,7 @@ class RailsExceptionHandler::Handler
   end
 
   def override_body_with_file_if_exists(response, file)
-    return response unless File.exists?(file)
+    return response unless File.exist?(file)
 
     if defined? response[2].body=()
       response[2].body = File.read(file)
