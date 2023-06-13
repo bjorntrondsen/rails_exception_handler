@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.4.7 May 13th 2023
+- Ruby 3.2 compatibility
+
 v2.4.6 April 29th 2022
 - Rails 7 compatibility
 
