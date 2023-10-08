@@ -2,5 +2,6 @@
 *~
 *.swp
 pkg/
-spec/db/test.sqlite3
+spec/db/test.sqlite3*
 TODO
+.ruby-version

@@ -27,11 +27,16 @@ group :test, :development do
     #gem "rack-test", '1.1.0'
     #gem "sqlite3", "~> 1.4"
 
-  #gem "rails", '6.1.4.7'
+  #gem "rails", '6.1.7.6'
     #gem "rack-test", '1.1.0'
     #gem "sqlite3", "~> 1.4"
 
-  gem "rails", '7.0.2.4'
+  #gem "rails", '7.0.8'
+    #gem "sprockets-rails"
+    #gem "rack-test", '1.1.0'
+    #gem "sqlite3", "~> 1.4"
+
+  gem "rails", '7.1.0'
     gem "sprockets-rails"
     gem "rack-test", '1.1.0'
     gem "sqlite3", "~> 1.4"

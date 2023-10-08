@@ -5,6 +5,7 @@ class RailsExceptionHandler::Parser
     @env = env
     @request  = request
     @exception = exception
+    @exception = exception.exception if @exception.class.to_s == "ActionDispatch::ExceptionWrapper"
     @controller = controller
     @external_info = {}
     @internal_info = {}
