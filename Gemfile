@@ -45,6 +45,6 @@ group :test, :development do
   gem "juwelier", git: "git@github.com:flajann2/juwelier.git"
   #gem 'mongoid'
   gem 'pry'
-  gem "rspec-rails", "4.1.2"
+  gem "rspec-rails", "6.0.3"
   gem "rails_exception_handler", :path => '.'
 end

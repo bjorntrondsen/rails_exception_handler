@@ -166,14 +166,14 @@ describe RailsExceptionHandler::Configuration do
   describe ".environments" do
     it "should not log routing errors if the current rails environment is not included" do
       RailsExceptionHandler.configure { |config| config.environments = [:production] }
-      lambda { get('/incorrect_route') }.should raise_exception
+      lambda { get('/incorrect_route') }.should raise_exception(ActionController::RoutingError)
       RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 0
       RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 0 if defined?(Mongoid)
     end
 
     it "should not log regular errors if the current rails environment is not included" do
       RailsExceptionHandler.configure { |config| config.environments = [:production] }
-      lambda { get('/home/model_error') }.should raise_exception
+      lambda { get('/home/model_error') }.should raise_exception(NoMethodError)
       RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 0
       RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 0 if defined?(Mongoid)
     end
