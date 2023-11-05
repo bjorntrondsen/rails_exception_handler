@@ -55,4 +55,6 @@ RSpec.configure do |config|
   config.before(:each) do
     delete_static_error_pages
   end
+  config.expect_with(:rspec) { |c| c.syntax = [:expect, :should] }
+  config.mock_with(:rspec) { |c| c.syntax = [:expect, :should] }
 end
