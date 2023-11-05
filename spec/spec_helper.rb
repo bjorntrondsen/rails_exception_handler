@@ -27,7 +27,7 @@ elsif(Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0)
   puts "Testing against a rails 3.0 dummy app"
   TEST_APP = 'dummy_30'
 else
-  raise "Dont know which version of Rails to test again for #{Rails.version}"
+  raise "Dont know which version of Rails to test against for #{Rails.version}"
 end
 require File.expand_path(File.dirname(__FILE__)) + "/#{TEST_APP}/config/environment.rb"
 
