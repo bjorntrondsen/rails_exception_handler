@@ -23,7 +23,12 @@ class RailsExceptionHandler
       Rails.configuration.middleware.use(RailsExceptionHandler)
     end
 
-    Rails.configuration.action_dispatch.show_exceptions = true
+
+    Rails.configuration.action_dispatch.show_exceptions = if Rails::VERSION::MAJOR < 7 || (Rails::VERSION::MAJOR == 7 && Rails::VERSION::MINOR == 0)
+      true
+    else
+      :all
+    end
     Rails.configuration.consider_all_requests_local = false
     require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'
     configuration.run_callback
