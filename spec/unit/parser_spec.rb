@@ -11,7 +11,7 @@ describe RailsExceptionHandler::Parser do
   describe ".external_info" do
     it("should return app_name") { @parser.external_info[:app_name].should == 'ExceptionHandlerTestApp' }
     it("should return class_name") { @parser.external_info[:class_name].should == 'NoMethodError' }
-    it("should return message") { @parser.external_info[:message].should include("undefined method `foo' for nil:NilClass") }
+    it("should return message") { @parser.external_info[:message].should include("undefined method `foo' for nil") }
     it("should return trace") { @parser.external_info[:trace].should match /spec\/test_macros\.rb:28/ }
     it("should return target_url") { @parser.external_info[:target_url].should == 'http://example.org/home?foo=bar' }
     it("should return referer_url") { @parser.external_info[:referer_url].should == 'http://google.com/' }

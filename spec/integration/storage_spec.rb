@@ -12,7 +12,7 @@ describe RailsExceptionHandler::Storage do
     read_test_log.should == ''
     RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :mongoid, :rails_log] }
     @handler.handle_exception
-    read_test_log.should match /undefined method `foo' for nil:NilClass/
+    read_test_log.should match /undefined method `foo' for nil/
     RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 1 if defined?(Mongoid)
   end
@@ -25,7 +25,7 @@ describe RailsExceptionHandler::Storage do
       msg = RailsExceptionHandler::ActiveRecord::ErrorMessage.first
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
-      msg.message.should include  "undefined method `foo' for nil:NilClass"
+      msg.message.should include  "undefined method `foo' for nil"
       msg.trace.should match      /spec\/test_macros\.rb:28/
       msg.params.should match     /\"foo\"=>\"bar\"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
@@ -50,7 +50,7 @@ describe RailsExceptionHandler::Storage do
         msg = RailsExceptionHandler::Mongoid::ErrorMessage.first
         msg.app_name.should ==      'ExceptionHandlerTestApp'
         msg.class_name.should ==    'NoMethodError'
-        msg.message.should include  "undefined method `foo' for nil:NilClass"
+        msg.message.should include  "undefined method `foo' for nil"
         msg.trace.should match      /spec\/test_macros\.rb:28/
         msg.params.should match     /\"foo\"=>\"bar\"/
         msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
@@ -73,7 +73,7 @@ describe RailsExceptionHandler::Storage do
       read_test_log.should == ''
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       @handler.handle_exception
-      read_test_log.should match /undefined method `foo' for nil:NilClass/
+      read_test_log.should match /undefined method `foo' for nil/
       read_test_log.should match /spec\/test_macros\.rb:28/
       read_test_log.should match /PARAMS:\s+\{\"foo\"=>\"bar\"\}/
       read_test_log.should match /USER_AGENT:\s+Mozilla\/4.0 \(compatible; MSIE 8\.0\)/

@@ -56,7 +56,7 @@ describe RailsExceptionHandler do
     msgs.each do |msg|
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
-      msg.message.should include   "undefined method `foo' for nil:NilClass"
+      msg.message.should include   "undefined method `foo' for nil"
       msg.trace.should match      /#{TEST_APP}\/app\/controllers\/home_controller.rb:4:in `controller_error'/
       msg.params.should match     /"controller"=>"home"/
       msg.params.should match     /"action"=>"controller_error"/

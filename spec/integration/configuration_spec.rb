@@ -20,7 +20,7 @@ describe RailsExceptionHandler::Configuration do
       clear_test_log
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       get('/home/model_error')
-      read_test_log.should match /undefined method `foo' for nil:NilClass/
+      read_test_log.should match /undefined method `foo' for nil/
       if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0
         read_test_log.should match /lib\/active_support\/whiny_nil\.rb:48/
       elsif Rails::VERSION::MAJOR > 4
