@@ -36,10 +36,15 @@ group :test, :development do
     #gem "rack-test", '1.1.0'
     #gem "sqlite3", "~> 1.4"
 
-  gem "rails", '7.2.2'
+  # gem "rails", '7.2.2'
+    # gem "sprockets-rails"
+    # gem "rack-test", '1.1.0'
+    # gem "sqlite3", "~> 1.4"
+
+  gem "rails", '8.0.0'
     gem "sprockets-rails"
     gem "rack-test", '1.1.0'
-    gem "sqlite3", "~> 1.4"
+    gem "sqlite3", "~> 2.0"
 
 
   gem "juwelier", git: "git@github.com:flajann2/juwelier.git"

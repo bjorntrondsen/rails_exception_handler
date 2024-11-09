@@ -1,6 +1,4 @@
-# Rails Exception Handler [![Build Status](https://travis-ci.org/Sharagoz/rails_exception_handler.png?branch=master)](http://travis-ci.org/#!/Sharagoz/rails_exception_handler)
-
-Upgrading from version 1? [See wiki](https://github.com/Sharagoz/rails_exception_handler/wiki/Version-2.0-upgrade-instructions)
+# Rails Exception Handler
 
 This is a flexible exception handler for Rails intended for those who wish to create their own error tracking service. It is aimed at experienced Rails developers who are administrating more than just a couple of rails applications. Dont be intimidated if you're new to Rails though, it's not that hard to set up.
 
@@ -17,10 +15,7 @@ end
 
 ## Compatiblity
 
-The gem should work with all versions of Rails 3 - 7.
-
-See Travis-CI for info on which rubies it is tested against:
-http://travis-ci.org/#!/Sharagoz/rails_exception_handler
+The gem should work with all versions of Rails 3 - 8.
 
 ## Installation
 Add the line below to your gemfile and run bundler
