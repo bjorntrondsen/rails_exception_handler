@@ -1,5 +1,8 @@
 CHANGELOG
 
+v2.4.10 April 10th 2025
+- Fix Rails 8.0.2 compatibility
+
 v2.4.9 November 5th 2023
 - Fix Rails 7.1 deprecation warning
 
