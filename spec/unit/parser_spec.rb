@@ -11,11 +11,11 @@ describe RailsExceptionHandler::Parser do
   describe ".external_info" do
     it("should return app_name") { @parser.external_info[:app_name].should == 'ExceptionHandlerTestApp' }
     it("should return class_name") { @parser.external_info[:class_name].should == 'NoMethodError' }
-    it("should return message") { @parser.external_info[:message].should include("undefined method `foo' for nil") }
-    it("should return trace") { @parser.external_info[:trace].should match /spec\/test_macros\.rb:28/ }
+    it("should return message") { @parser.external_info[:message].should match(/undefined method ['`]foo' for nil/) }
+    it("should return trace") { @parser.external_info[:trace].should match(/spec\/test_macros\.rb:28/) }
     it("should return target_url") { @parser.external_info[:target_url].should == 'http://example.org/home?foo=bar' }
     it("should return referer_url") { @parser.external_info[:referer_url].should == 'http://google.com/' }
-    it("should return params") { @parser.external_info[:params].should match(/\"foo\"=>\"bar\"/) }
+    it("should return params") { @parser.external_info[:params].should match(/\"foo\"\s*=>\s*\"bar\"/) }
     it("should return user_agent") { @parser.external_info[:user_agent].should == "Mozilla/4.0 (compatible; MSIE 8.0)" }
     it("should return user_info") { @parser.external_info[:user_info].should == nil }
     it("should return created_at") { @parser.external_info[:created_at].should be > 5.seconds.ago }

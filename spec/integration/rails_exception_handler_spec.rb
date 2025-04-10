@@ -56,10 +56,10 @@ describe RailsExceptionHandler do
     msgs.each do |msg|
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
-      msg.message.should include   "undefined method `foo' for nil"
-      msg.trace.should match      /#{TEST_APP}\/app\/controllers\/home_controller.rb:4:in `controller_error'/
-      msg.params.should match     /"controller"=>"home"/
-      msg.params.should match     /"action"=>"controller_error"/
+      msg.message.should match    /undefined method ['`]foo' for nil/
+      msg.trace.should match      /#{TEST_APP}\/app\/controllers\/home_controller.rb:4:in.*controller_error'/
+      msg.params.should match     /"controller"\s*=>\s*"home"/
+      msg.params.should match     /"action"\s*=>\s*"controller_error"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
       msg.target_url.should ==    'http://example.org/home/controller_error'
       msg.referer_url.should ==   'http://google.com/'

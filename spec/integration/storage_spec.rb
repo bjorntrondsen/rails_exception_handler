@@ -12,7 +12,7 @@ describe RailsExceptionHandler::Storage do
     read_test_log.should == ''
     RailsExceptionHandler.configure { |config| config.storage_strategies = [:active_record, :mongoid, :rails_log] }
     @handler.handle_exception
-    read_test_log.should match /undefined method `foo' for nil/
+    read_test_log.should match /undefined method ['`]foo' for nil/
     RailsExceptionHandler::ActiveRecord::ErrorMessage.count.should == 1
     RailsExceptionHandler::Mongoid::ErrorMessage.count.should == 1 if defined?(Mongoid)
   end
@@ -25,9 +25,9 @@ describe RailsExceptionHandler::Storage do
       msg = RailsExceptionHandler::ActiveRecord::ErrorMessage.first
       msg.app_name.should ==      'ExceptionHandlerTestApp'
       msg.class_name.should ==    'NoMethodError'
-      msg.message.should include  "undefined method `foo' for nil"
+      msg.message.should match    /undefined method ['`]foo' for nil/
       msg.trace.should match      /spec\/test_macros\.rb:28/
-      msg.params.should match     /\"foo\"=>\"bar\"/
+      msg.params.should match     /\"foo\"\s*=>\s*\"bar\"/
       msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
       msg.target_url.should ==    'http://example.org/home?foo=bar'
       msg.referer_url.should ==   'http://google.com/'
@@ -50,9 +50,9 @@ describe RailsExceptionHandler::Storage do
         msg = RailsExceptionHandler::Mongoid::ErrorMessage.first
         msg.app_name.should ==      'ExceptionHandlerTestApp'
         msg.class_name.should ==    'NoMethodError'
-        msg.message.should include  "undefined method `foo' for nil"
+        msg.message.should match    /undefined method ['`]foo' for nil/
         msg.trace.should match      /spec\/test_macros\.rb:28/
-        msg.params.should match     /\"foo\"=>\"bar\"/
+        msg.params.should match     /\"foo\"\s*=>\s*\"bar\"/
         msg.user_agent.should ==    'Mozilla/4.0 (compatible; MSIE 8.0)'
         msg.target_url.should ==    'http://example.org/home?foo=bar'
         msg.referer_url.should ==   'http://google.com/'
@@ -73,9 +73,9 @@ describe RailsExceptionHandler::Storage do
       read_test_log.should == ''
       RailsExceptionHandler.configure { |config| config.storage_strategies = [:rails_log] }
       @handler.handle_exception
-      read_test_log.should match /undefined method `foo' for nil/
+      read_test_log.should match /undefined method [`']foo' for nil/
       read_test_log.should match /spec\/test_macros\.rb:28/
-      read_test_log.should match /PARAMS:\s+\{\"foo\"=>\"bar\"\}/
+      read_test_log.should match /PARAMS:\s+\{\"foo\"\s*=>\s*\"bar\"\}/
       read_test_log.should match /USER_AGENT:\s+Mozilla\/4.0 \(compatible; MSIE 8\.0\)/
       read_test_log.should match /TARGET_URL: http:\/\/example\.org\/home\?foo=bar/
       read_test_log.should match /REFERER_URL: http:\/\/google\.com\//
@@ -127,11 +127,11 @@ describe RailsExceptionHandler::Storage do
       text_body = email.body.parts.first.to_s
       text_body.should include('TARGET_URL')
       text_body.should include('http://example.org/home?foo=bar')
-      text_body.should include("undefined method `foo")
+      text_body.should match(/undefined method [`']foo/)
       html_body = email.body.parts.last.to_s
       html_body.should include('TARGET_URL')
       html_body.should include('http://example.org/home?foo=bar')
-      html_body.should include("undefined method `foo")
+      html_body.should match(/undefined method.*foo.*for.nil/)
     end
 
     it "should not send the error_message as an email when :email is not included" do
