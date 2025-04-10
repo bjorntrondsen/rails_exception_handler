@@ -73,7 +73,11 @@ class RailsExceptionHandler::Handler
     if(@request.xhr?)
       false
     else
-      if Rails::VERSION::MAJOR > 5
+      if Gem::Version.new(Rails.version) > Gem::Version.new('8.0.1')
+        paths = @controller.view_paths
+        lookup_context = ActionView::LookupContext.new(paths)
+        default_layout = @controller.send(:_default_layout, lookup_context, [:html], [])
+      elsif Rails::VERSION::MAJOR > 5
         paths = @controller.view_paths
         lookup_context = ActionView::LookupContext.new(paths)
         default_layout = @controller.send(:_default_layout, lookup_context, [:html])
