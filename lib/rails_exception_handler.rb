@@ -40,11 +40,11 @@ end
 class RailsExceptionHandler::Mongoid
 end
 
-require 'rails_exception_handler/configuration.rb'
-require 'rails_exception_handler/handler.rb'
-require 'rails_exception_handler/parser.rb'
-require 'rails_exception_handler/storage.rb'
-require 'rails_exception_handler/engine.rb'
-require 'rails_exception_handler/catcher.rb'
-require 'rails_exception_handler/fake_session.rb'
+require_relative 'rails_exception_handler/configuration.rb'
+require_relative 'rails_exception_handler/handler.rb'
+require_relative 'rails_exception_handler/parser.rb'
+require_relative 'rails_exception_handler/storage.rb'
+require_relative 'rails_exception_handler/engine.rb'
+require_relative 'rails_exception_handler/catcher.rb'
+require_relative 'rails_exception_handler/fake_session.rb'
 require 'net/http'
