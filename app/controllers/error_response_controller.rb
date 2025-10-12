@@ -1,5 +1,5 @@
-if(RailsExceptionHandler.configuration.activate?)
-  class ErrorResponseController < ApplicationController
+class ErrorResponseController < ApplicationController
+  if(RailsExceptionHandler.configuration.activate?)
 
     if Rails::VERSION::MAJOR > 3
       skip_before_action :verify_authenticity_token
