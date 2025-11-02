@@ -41,7 +41,7 @@ group :test, :development do
     # gem "rack-test", '1.1.0'
     # gem "sqlite3", "~> 1.4"
 
-  gem "rails", '8.0.0'
+  gem "rails", '8.1.0'
     gem "sprockets-rails"
     gem "rack-test", '1.1.0'
     gem "sqlite3", "~> 2.0"

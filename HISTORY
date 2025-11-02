@@ -1,5 +1,9 @@
 CHANGELOG
 
+v2.4.11 November 2nd 2025
+- Fix Docker loading error
+- Add 8.1.0 testing
+
 v2.4.10 April 10th 2025
 - Fix Rails 8.0.2 compatibility
 
